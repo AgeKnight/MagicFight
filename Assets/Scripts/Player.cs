@@ -5,13 +5,19 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed;
+    float bulletHorizontal=0;
     public GameObject Bullet;
     public GameObject Knife;
     public Transform KnifePosition;
+    public float JumpSpeed;
+    bool canJump=true;
+    Rigidbody2D rigidBody;
+    Vector3 eulerPlayer;
+    public Transform bulletPosition;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        rigidBody=GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -20,41 +26,41 @@ public class Player : MonoBehaviour
         Move();
         Shoot();
         EnterBattle();
+        Jump();
     }
 
     void Move()
-    {
-        float horizontal = 0;
-        float vertical = 0;
-
-        if(Input.GetKey(KeyCode.W))
-        {
-            horizontal = 0;
-            vertical = 1;
-        }
-        if(Input.GetKey(KeyCode.S))
-        {
-            horizontal = 0;
-            vertical = -1;
-        }
+    {     
+        float horizontal = 0 ; 
         if(Input.GetKey(KeyCode.A))
         {
-            horizontal = -1;
-            vertical = 0;
+            horizontal = -1;   
+            bulletHorizontal = -1;  
+            eulerPlayer = new Vector3(0,0,0);          
         }
-        if(Input.GetKey(KeyCode.D))
+        else if(Input.GetKey(KeyCode.D))
         {
             horizontal = 1;
-            vertical = 0;
+            bulletHorizontal = 1;
+            eulerPlayer = new Vector3(0,180,0);
         }
+        transform.Translate(new Vector2(horizontal*speed*Time.deltaTime,0),Space.World);
+        transform.rotation = Quaternion.Euler(eulerPlayer);
 
-        transform.Translate(new Vector2(horizontal*speed*Time.deltaTime,vertical*speed*Time.deltaTime),Space.World);
+    }
+    void Jump()
+    {
+        if((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.Space))&&canJump)
+        {
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x,JumpSpeed);
+        }
     }
     void Shoot()
     {
         if(Input.GetKeyDown(KeyCode.J))
         {
-            Instantiate(Bullet,this.transform.position,Quaternion.identity);
+            Bullet bullet = Instantiate(Bullet,bulletPosition.position,Quaternion.identity).GetComponent<Bullet>();
+            bullet.Horizontal = bulletHorizontal;
         }
     }
     void EnterBattle()
@@ -63,5 +69,27 @@ public class Player : MonoBehaviour
         {
             Instantiate(Knife,KnifePosition.position,Knife.transform.rotation);
         }
+    }
+    void OnCollisionEnter2D(Collision2D other) 
+    {
+        switch(other.gameObject.tag)
+        {
+            case "Floor":
+            {
+                canJump=true;
+                break;
+            }          
+        }        
+    }
+    void OnCollisionExit2D(Collision2D other) 
+    {
+        switch(other.gameObject.tag)
+        {
+            case "Floor":
+            {
+                canJump=false;
+                break;
+            }          
+        }      
     }
 }
