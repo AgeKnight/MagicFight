@@ -38,6 +38,7 @@ public class Bullet : MonoBehaviour
         if (flyTime >= allFlyTime)
         {
             transform.Translate(0, 0, 0);
+            rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
         }
         else
         {
@@ -51,15 +52,11 @@ public class Bullet : MonoBehaviour
         {
             other.gameObject.tag = "MeetBullet";
             this.gameObject.tag = "MeetBullet";
-            rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
             flyTime = allFlyTime;
         }
         else if (other.gameObject.tag == "MeetBullet"&&this.gameObject.tag == "Bullet")
         {
-            other.gameObject.tag = "CanThreeDelete";
             this.gameObject.tag = "CanThreeDelete";
-            rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
-            flyTime = allFlyTime;
         }
     }
     void OnCollisionStay2D(Collision2D other)
@@ -68,8 +65,9 @@ public class Bullet : MonoBehaviour
         {
             case "CanThreeDelete":
                 {
-                    gameManager.bullets.Add(this);
+                    flyTime = allFlyTime;
                     this.gameObject.tag = "CanThreeDelete";
+                    gameManager.bullets.Add(this);
                     canThreeDelete = true;
                     break;
                 }
