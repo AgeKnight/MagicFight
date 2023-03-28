@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [HideInInspector]
     public bool canThreeDelete = false;
     float horizontal = 0;
+    [HideInInspector]
     public float Horizontal { get => horizontal; set => horizontal = value; }
     public float speed;
     public float allFlyTime = 0.1f;
     float flyTime = 0;
     public float allDestroyTime;
     float destoyTime;
-    Rigidbody2D rigidbody2D;
+    Rigidbody2D newRigidbody;
+    [HideInInspector]
     public GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        newRigidbody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -38,7 +41,7 @@ public class Bullet : MonoBehaviour
         if (flyTime >= allFlyTime)
         {
             transform.Translate(0, 0, 0);
-            rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+            newRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
         }
         else
         {

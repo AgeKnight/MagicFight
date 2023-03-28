@@ -5,14 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed;
-    float bulletHorizontal=0;
+    float bulletHorizontal=1;
     public GameObject Bullet;
     public GameObject Knife;
     public Transform KnifePosition;
     public float JumpSpeed;
     bool canJump=true;
     Rigidbody2D rigidBody;
-    Vector3 eulerPlayer;
+    Vector3 eulerPlayer = new Vector3(0,180,0);
     public Transform bulletPosition;
     // Start is called before the first frame update
     void Awake()
