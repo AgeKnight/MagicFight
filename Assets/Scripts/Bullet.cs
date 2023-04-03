@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [HideInInspector]
-    public bool canThreeDelete = false;
     float horizontal = 0;
     [HideInInspector]
     public float Horizontal { get => horizontal; set => horizontal = value; }
@@ -53,12 +51,13 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.tag == "Bullet" && this.gameObject.tag == "Bullet")
         {
+            flyTime = allFlyTime;
             other.gameObject.tag = "MeetBullet";
             this.gameObject.tag = "MeetBullet";
-            flyTime = allFlyTime;
         }
         else if (other.gameObject.tag == "MeetBullet"&&this.gameObject.tag == "Bullet")
         {
+            flyTime = allFlyTime;
             this.gameObject.tag = "CanThreeDelete";
         }
     }
@@ -68,10 +67,8 @@ public class Bullet : MonoBehaviour
         {
             case "CanThreeDelete":
                 {
-                    flyTime = allFlyTime;
                     this.gameObject.tag = "CanThreeDelete";
                     gameManager.bullets.Add(this);
-                    canThreeDelete = true;
                     break;
                 }
             default:

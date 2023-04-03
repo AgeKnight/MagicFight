@@ -6,13 +6,17 @@ public class Player : MonoBehaviour
 {
     public float speed;
     float bulletHorizontal=1;
+    [HideInInspector]
     public GameObject Bullet;
+    [HideInInspector]
     public GameObject Knife;
+    [HideInInspector]
     public Transform KnifePosition;
     public float JumpSpeed;
     bool canJump=true;
     Rigidbody2D rigidBody;
     Vector3 eulerPlayer = new Vector3(0,180,0);
+    [HideInInspector]
     public Transform bulletPosition;
     // Start is called before the first frame update
     void Awake()

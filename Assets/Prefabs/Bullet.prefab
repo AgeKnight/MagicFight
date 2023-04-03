@@ -97,8 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67a7488d9f3bcd4ca7bcd5252e31915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canThreeDelete: 0
-  speed: 10
+  speed: 12
   allFlyTime: 0.5
   allDestroyTime: 10
   gameManager: {fileID: 0}
