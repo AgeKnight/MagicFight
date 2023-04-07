@@ -13,8 +13,6 @@ public class Bullet : MonoBehaviour
     public float allDestroyTime;
     float destoyTime;
     Rigidbody2D newRigidbody;
-    [HideInInspector]
-    public GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -68,7 +66,7 @@ public class Bullet : MonoBehaviour
             case "CanThreeDelete":
                 {
                     this.gameObject.tag = "CanThreeDelete";
-                    gameManager.bullets.Add(this);
+                    GameManager.Instance.bullets.Add(this);
                     break;
                 }
             default:
@@ -77,12 +75,9 @@ public class Bullet : MonoBehaviour
                 }
         }
     }
-    public void Init(GameManager gameManager)
-    {
-        this.gameManager = gameManager;
-    }
     public void Die()
     {
         Destroy(this.gameObject);
+        GameManager.Instance.bullets.Remove(this);
     }
 }

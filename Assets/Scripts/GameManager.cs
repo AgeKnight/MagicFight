@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        bullet.Init(this);
     }
     void Update()
     {
@@ -24,11 +23,9 @@ public class GameManager : MonoBehaviour
     }
     void ThreeDie()
     {
-        Debug.Log("可以三消了");
         for (int i = bullets.Count - 1; i >= 0; i--)
         {
             bullets[i].Die();
         }
-        bullets.Clear();
     }
 }
