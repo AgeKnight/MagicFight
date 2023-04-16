@@ -7,10 +7,11 @@ public class Player : MonoBehaviour
 {
     float hp;
     float mp;
-    bool canJump=true;
+    bool canJump = true;
     Rigidbody2D rigidBody;
-    Vector3 eulerPlayer = new Vector3(0,180,0);
-    float bulletHorizontal=1;
+    Vector3 eulerPlayer = new Vector3(0, 180, 0);
+    Bullet bullet;
+    float bulletHorizontal = 1;
     [HideInInspector]
     public GameObject Bullet;
     [HideInInspector]
@@ -27,7 +28,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        rigidBody=GetComponent<Rigidbody2D>();
+        bullet = GetComponent<Bullet>();
+        rigidBody = GetComponent<Rigidbody2D>();
         hp = totalHP;
         mp = totalMP;
     }
@@ -35,8 +37,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        slider[0].value = hp/totalHP;
-        slider[1].value = mp/totalMP;
+        slider[0].value = hp / totalHP;
+        slider[1].value = mp / totalMP;
         Move();
         Shoot();
         EnterBattle();
@@ -44,71 +46,75 @@ public class Player : MonoBehaviour
     }
 
     void Move()
-    {     
-        float horizontal = 0 ; 
-        if(Input.GetKey(KeyCode.A))
+    {
+        float horizontal = 0;
+        if (Input.GetKey(KeyCode.A))
         {
-            horizontal = -1;   
-            bulletHorizontal = -1;  
-            eulerPlayer = new Vector3(0,0,0);          
+            horizontal = -1;
+            bulletHorizontal = -1;
+            eulerPlayer = new Vector3(0, 0, 0);
         }
-        else if(Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
             horizontal = 1;
             bulletHorizontal = 1;
-            eulerPlayer = new Vector3(0,180,0);
+            eulerPlayer = new Vector3(0, 180, 0);
         }
-        transform.Translate(new Vector2(horizontal*speed*Time.deltaTime,0),Space.World);
+        transform.Translate(new Vector2(horizontal * speed * Time.deltaTime, 0), Space.World);
         transform.rotation = Quaternion.Euler(eulerPlayer);
 
     }
     void Jump()
     {
-        if((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.Space))&&canJump)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump)
         {
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x,JumpSpeed);
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, JumpSpeed);
         }
     }
     void Shoot()
     {
-        if(Input.GetKeyDown(KeyCode.J)&&mp>0)
+        if (Input.GetKeyDown(KeyCode.J) && mp > 0)
         {
-            Bullet bullet = Instantiate(Bullet,bulletPosition.position,Quaternion.identity).GetComponent<Bullet>();
+            bullet = Instantiate(Bullet, bulletPosition.position, Quaternion.identity).GetComponent<Bullet>();
             bullet.Horizontal = bulletHorizontal;
             mp -= bullet.useMP;
-            if(mp<0)
+            if (mp < 0)
             {
-                mp=0;
+                mp = 0;
             }
+        }
+        if (Input.GetKeyUp(KeyCode.J))
+        {
+            bullet.canShoot = true;
         }
     }
     void EnterBattle()
     {
-        if(Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K))
         {
-            Instantiate(Knife,KnifePosition.position,Knife.transform.rotation);
+            Instantiate(Knife, KnifePosition.position, Knife.transform.rotation);
         }
     }
-    void OnCollisionEnter2D(Collision2D other) 
+    void OnCollisionEnter2D(Collision2D other)
     {
-        switch(other.gameObject.tag)
+        switch (other.gameObject.tag)
         {
             case "Floor":
-            {
-                canJump=true;
-                break;
-            }          
-        }        
+                {
+                    canJump = true;
+                    break;
+                }
+        }
     }
-    void OnCollisionExit2D(Collision2D other) 
+    void OnCollisionExit2D(Collision2D other)
     {
-        switch(other.gameObject.tag)
+        switch (other.gameObject.tag)
         {
             case "Floor":
-            {
-                canJump=false;
-                break;
-            }          
-        }      
+                {
+                    canJump = false;
+                    break;
+                }
+        }
     }
 }

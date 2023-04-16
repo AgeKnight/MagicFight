@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
     public float allDestroyTime;
     public float damage;
     public float useMP;
+    public bool canShoot = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,11 +29,14 @@ public class Bullet : MonoBehaviour
         {
             Die();
         }
-        else
+        else if(flyTime!=0)
         {
             destoyTime += Time.deltaTime;
         }
-        Move();
+        if(canShoot)
+        {
+            Move();
+        }
     }
     void Move()
     {
