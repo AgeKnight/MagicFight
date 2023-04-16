@@ -5,14 +5,16 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     float horizontal = 0;
+    float flyTime = 0;
+    float destoyTime;
+    Rigidbody2D newRigidbody;
     [HideInInspector]
     public float Horizontal { get => horizontal; set => horizontal = value; }
     public float speed;
     public float allFlyTime = 0.1f;
-    float flyTime = 0;
     public float allDestroyTime;
-    float destoyTime;
-    Rigidbody2D newRigidbody;
+    public float damage;
+    public float useMP;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,12 +39,20 @@ public class Bullet : MonoBehaviour
         if (flyTime >= allFlyTime)
         {
             transform.Translate(0, 0, 0);
-            newRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
         }
         else
         {
             transform.Translate(horizontal * speed * Time.deltaTime, 0, 0);
+            StartCoroutine(Bigger());
+        }
+    }
+    IEnumerator Bigger()
+    {
+        while (flyTime < allFlyTime)
+        {
             flyTime += Time.deltaTime;
+            transform.localScale = new Vector3(transform.localScale.x+flyTime/100,transform.localScale.y+flyTime/100,transform.localScale.z);
+            yield return new WaitForSeconds(allFlyTime);
         }
     }
     void OnCollisionEnter2D(Collision2D other)
@@ -53,10 +63,16 @@ public class Bullet : MonoBehaviour
             other.gameObject.tag = "MeetBullet";
             this.gameObject.tag = "MeetBullet";
         }
-        else if (other.gameObject.tag == "MeetBullet"&&this.gameObject.tag == "Bullet")
+        else if (other.gameObject.tag == "MeetBullet" && this.gameObject.tag == "Bullet")
         {
             flyTime = allFlyTime;
             this.gameObject.tag = "CanThreeDelete";
+        }
+        else if(other.gameObject.tag == "Enemy")
+        {
+            flyTime = allFlyTime;
+            other.gameObject.GetComponent<Enemy>().OnDamage(damage);
+            Die();
         }
     }
     void OnCollisionStay2D(Collision2D other)

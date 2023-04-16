@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public float speed;
+    float hp;
+    float mp;
+    bool canJump=true;
+    Rigidbody2D rigidBody;
+    Vector3 eulerPlayer = new Vector3(0,180,0);
     float bulletHorizontal=1;
     [HideInInspector]
     public GameObject Bullet;
@@ -12,21 +17,26 @@ public class Player : MonoBehaviour
     public GameObject Knife;
     [HideInInspector]
     public Transform KnifePosition;
-    public float JumpSpeed;
-    bool canJump=true;
-    Rigidbody2D rigidBody;
-    Vector3 eulerPlayer = new Vector3(0,180,0);
     [HideInInspector]
     public Transform bulletPosition;
+    public Slider[] slider;
+    public float JumpSpeed;
+    public float speed;
+    public float totalHP;
+    public float totalMP;
     // Start is called before the first frame update
     void Awake()
     {
         rigidBody=GetComponent<Rigidbody2D>();
+        hp = totalHP;
+        mp = totalMP;
     }
 
     // Update is called once per frame
     void Update()
     {
+        slider[0].value = hp/totalHP;
+        slider[1].value = mp/totalMP;
         Move();
         Shoot();
         EnterBattle();
@@ -61,10 +71,15 @@ public class Player : MonoBehaviour
     }
     void Shoot()
     {
-        if(Input.GetKeyDown(KeyCode.J))
+        if(Input.GetKeyDown(KeyCode.J)&&mp>0)
         {
             Bullet bullet = Instantiate(Bullet,bulletPosition.position,Quaternion.identity).GetComponent<Bullet>();
             bullet.Horizontal = bulletHorizontal;
+            mp -= bullet.useMP;
+            if(mp<0)
+            {
+                mp=0;
+            }
         }
     }
     void EnterBattle()

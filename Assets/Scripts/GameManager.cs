@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [HideInInspector]
     public List<Bullet> bullets = new List<Bullet>();
-    [HideInInspector]
     public Bullet bullet;
     static GameManager instance;
     public static GameManager Instance { get => instance; set => instance = value; }
