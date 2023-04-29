@@ -4,18 +4,35 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    #region "Internal"
     float horizontal = 0;
-    float flyTime = 0;
     float destoyTime;
+    float bigTime = 0;
+    float flyTime = 0;
     Rigidbody2D newRigidbody;
+    #endregion
+    #region "Hide"
     [HideInInspector]
     public float Horizontal { get => horizontal; set => horizontal = value; }
+    [HideInInspector]
+    public bool canShoot = false;
+    [HideInInspector]
+    public bool isGas = false;
+    [HideInInspector]
+    public BulletCancel bulletCancel;
+    [HideInInspector]
+    public GameObject bulletCanceled;
+    #endregion
+    #region "public"
     public float speed;
-    public float allFlyTime = 0.1f;
     public float allDestroyTime;
     public float damage;
     public float useMP;
-    public bool canShoot = false;
+    public float BiggiestScale;
+    public float allFlyTime;
+    public float slowSpeed;
+    public float gasScale;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -29,34 +46,53 @@ public class Bullet : MonoBehaviour
         {
             Die();
         }
-        else if(flyTime!=0)
+        else if (flyTime >= allFlyTime)
         {
             destoyTime += Time.deltaTime;
         }
-        if(canShoot)
+        if (canShoot)
         {
             Move();
+            flyTime += Time.deltaTime;
+            if (flyTime >= allFlyTime)
+            {
+                flyTime = allFlyTime;
+            }
         }
     }
     void Move()
     {
         if (flyTime >= allFlyTime)
         {
+            bigTime = BiggiestScale;
+            transform.localScale = new Vector3(bigTime, bigTime, bigTime);
             transform.Translate(0, 0, 0);
         }
         else
         {
-            transform.Translate(horizontal * speed * Time.deltaTime, 0, 0);
+            if (isGas)
+            {
+                transform.Translate(horizontal * slowSpeed * Time.deltaTime, 0, 0);
+            }
+            else
+            {
+                transform.Translate(horizontal * speed * Time.deltaTime, 0, 0);
+            }
             StartCoroutine(Bigger());
         }
     }
-    IEnumerator Bigger()
+    public IEnumerator Bigger()
     {
-        while (flyTime < allFlyTime)
+        while (bigTime <= BiggiestScale)
         {
-            flyTime += Time.deltaTime;
-            transform.localScale = new Vector3(transform.localScale.x+flyTime/100,transform.localScale.y+flyTime/100,transform.localScale.z);
-            yield return new WaitForSeconds(allFlyTime);
+            bigTime += Time.deltaTime;
+            transform.localScale = new Vector3(bigTime, bigTime, bigTime);
+            if (bigTime > BiggiestScale)
+            {
+                bigTime = BiggiestScale;
+                break;
+            }
+            yield return new WaitForSeconds(bigTime);
         }
     }
     void OnCollisionEnter2D(Collision2D other)
@@ -72,9 +108,13 @@ public class Bullet : MonoBehaviour
             flyTime = allFlyTime;
             this.gameObject.tag = "CanThreeDelete";
         }
-        else if(other.gameObject.tag == "Enemy")
+        else if (other.gameObject.tag == "Enemy")
         {
             flyTime = allFlyTime;
+            if(isGas)
+            {
+                damage*=3;
+            }
             other.gameObject.GetComponent<Enemy>().OnDamage(damage);
             Die();
         }
@@ -86,6 +126,7 @@ public class Bullet : MonoBehaviour
             case "CanThreeDelete":
                 {
                     this.gameObject.tag = "CanThreeDelete";
+                    bulletCanceled.SetActive(true);
                     GameManager.Instance.bullets.Add(this);
                     break;
                 }
@@ -97,6 +138,7 @@ public class Bullet : MonoBehaviour
     }
     public void Die()
     {
+        StopAllCoroutines();
         Destroy(this.gameObject);
         GameManager.Instance.bullets.Remove(this);
     }

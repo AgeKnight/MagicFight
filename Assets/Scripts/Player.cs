@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     float hp;
     float mp;
+    float PressTime = 0;
     bool canJump = true;
     Rigidbody2D rigidBody;
     Vector3 eulerPlayer = new Vector3(0, 180, 0);
@@ -44,7 +45,6 @@ public class Player : MonoBehaviour
         EnterBattle();
         Jump();
     }
-
     void Move()
     {
         float horizontal = 0;
@@ -83,8 +83,28 @@ public class Player : MonoBehaviour
                 mp = 0;
             }
         }
+        if (Input.GetKey(KeyCode.J))
+        {
+            PressTime += Time.deltaTime;
+            if (PressTime > 0.3f)
+            {
+                bullet.isGas = true;
+                bullet.BiggiestScale = bullet.gasScale;
+                StartCoroutine(bullet.Bigger());
+            }
+        }
         if (Input.GetKeyUp(KeyCode.J))
         {
+            StopCoroutine(bullet.Bigger());
+            if (bullet.isGas)
+            {
+                mp -= bullet.useMP * 2;
+                if (mp < 0)
+                {
+                    mp = 0;
+                }
+            }
+            PressTime = 0;
             bullet.canShoot = true;
         }
     }
