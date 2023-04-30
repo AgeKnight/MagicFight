@@ -159,6 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67a7488d9f3bcd4ca7bcd5252e31915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blowTime: 0
   canShoot: 0
   isGas: 0
   bulletCancel: {fileID: 6761565252404433508}
@@ -171,7 +172,6 @@ MonoBehaviour:
   allFlyTime: 1
   slowSpeed: 3
   gasScale: 0.8
-  allBlowTime: 1
 --- !u!50 &-794484796067535116
 Rigidbody2D:
   serializedVersion: 4

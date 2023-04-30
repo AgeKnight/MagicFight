@@ -16,18 +16,17 @@ public class Player : MonoBehaviour
     Bullet Bubbles;
     Bullet bullet;
     SpriteRenderer sprite;
-    Transform realKnifePosition;
-    Transform realBulletPosition;
+    Vector3 eulerPlayer = new Vector3(0,180,0);
     #endregion
     #region "Hide"
     [HideInInspector]
     public GameObject Bullet;
     [HideInInspector]
     public GameObject Knife;
-    
-    public Transform[] KnifePosition;
-    
-    public Transform[] bulletPosition;
+    [HideInInspector]
+    public Transform KnifePosition;
+    [HideInInspector]
+    public Transform bulletPosition;
     [HideInInspector]
     public Slider[] slider;
     [HideInInspector]
@@ -47,8 +46,6 @@ public class Player : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
-        realKnifePosition = KnifePosition[0].transform;
-        realBulletPosition = bulletPosition[0].transform;
         hp = totalHP;
         mp = totalMP;
     }
@@ -62,8 +59,9 @@ public class Player : MonoBehaviour
             if (dodgeTime >= allDodge)
             {               
                 dodgeTime = 0;
-                isDodge = false;    
-                animator.SetBool("isDodge", isDodge);                 
+                isDodge = false;  
+                animator.SetBool("isDodge",isDodge);     
+                animator.enabled = false;      
             }
         }
         Move();
@@ -84,19 +82,16 @@ public class Player : MonoBehaviour
         {
             horizontal = -1;
             bulletHorizontal = -1;
-            sprite.flipX = true;
-            realKnifePosition = KnifePosition[1].transform;
-            realBulletPosition = bulletPosition[1].transform;
+            eulerPlayer = new Vector3(0,0,0);    
         }
         if (Input.GetKey(KeyCode.D))
         {
             horizontal = 1;
             bulletHorizontal = 1;
-            sprite.flipX = false;
-            realKnifePosition = KnifePosition[0].transform;
-            realBulletPosition = bulletPosition[0].transform;
+            eulerPlayer = new Vector3(0,180,0);
         }
         transform.Translate(new Vector2(horizontal * speed * Time.deltaTime, 0), Space.World);
+        transform.rotation = Quaternion.Euler(eulerPlayer);
 
     }
     /// <summary>
@@ -119,7 +114,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.J) && mp > 0)
         {
-            bullet = Instantiate(Bullet, realBulletPosition.position, Quaternion.identity).GetComponent<Bullet>();
+            bullet = Instantiate(Bullet, bulletPosition.position, Quaternion.identity).GetComponent<Bullet>();
             bullet.Horizontal = bulletHorizontal;
             mp -= bullet.useMP;
             if (mp < 0)
@@ -160,7 +155,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            Instantiate(Knife, realKnifePosition.position, Knife.transform.rotation);
+            Instantiate(Knife, KnifePosition.position, Knife.transform.rotation);
         }
     }
     /// <summary>
@@ -190,8 +185,9 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S) && !isDodge)
         {
+            animator.enabled = true;
             isDodge = true;
-            animator.SetBool("isDodge", isDodge);
+            animator.SetBool("isDodge",isDodge);          
         }
     }
     #endregion
