@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     float AnabiosisTime = 0;
     int CountAnabiosis = 0;
     bool canMove = true;
+    bool isAttack = false;
+    float attackTime = 0;
     [HideInInspector]
     public Slider HPBar;
     public float totalHP;
@@ -17,6 +19,7 @@ public class Enemy : MonoBehaviour
     public float AllMovetime;
     public float AllAnabiosisTime;
     public int AllCountAnabiosis;
+    public int damage;
     void Awake()
     {
         hp = totalHP;
@@ -40,6 +43,15 @@ public class Enemy : MonoBehaviour
                 canMove = true;
                 hp += 10;
                 AnabiosisTime = 0;
+            }
+        }
+        if(isAttack)
+        {
+            attackTime+=Time.deltaTime;
+            if(attackTime>=1f)
+            {
+                attackTime=0;
+                isAttack=false;
             }
         }
     }
@@ -76,5 +88,13 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         Destroy(this.gameObject);
+    }
+    void OnCollisionStay2D(Collision2D other) 
+    {
+        if(other.gameObject.tag=="Player"&&!isAttack)
+        {
+            other.gameObject.GetComponent<Player>().OnDamage(damage);
+            isAttack=true;
+        }       
     }
 }

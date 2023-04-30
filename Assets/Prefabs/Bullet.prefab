@@ -161,16 +161,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canShoot: 0
   isGas: 0
+  bulletCancel: {fileID: 6761565252404433508}
+  bulletCanceled: {fileID: 951366846}
   speed: 10
   allDestroyTime: 10
   damage: 20
-  useMP: 10
+  useMP: 5
   BiggiestScale: 0.6
   allFlyTime: 1
   slowSpeed: 3
   gasScale: 0.8
-  bulletCancel: {fileID: 6761565252404433508}
-  bulletCanceled: {fileID: 951366846}
+  allBlowTime: 1
 --- !u!50 &-794484796067535116
 Rigidbody2D:
   serializedVersion: 4

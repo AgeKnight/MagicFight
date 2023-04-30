@@ -15,6 +15,8 @@ public class Bullet : MonoBehaviour
     [HideInInspector]
     public float Horizontal { get => horizontal; set => horizontal = value; }
     [HideInInspector]
+    public float blowTime = 0;
+    [HideInInspector]
     public bool canShoot = false;
     [HideInInspector]
     public bool isGas = false;
@@ -22,6 +24,7 @@ public class Bullet : MonoBehaviour
     public BulletCancel bulletCancel;
     [HideInInspector]
     public GameObject bulletCanceled;
+    public Coroutine nowCorotine;
     #endregion
     #region "public"
     public float speed;
@@ -78,7 +81,20 @@ public class Bullet : MonoBehaviour
             {
                 transform.Translate(horizontal * speed * Time.deltaTime, 0, 0);
             }
-            StartCoroutine(Bigger());
+            nowCorotine = StartCoroutine(Bigger());
+        }
+    }
+    public IEnumerator BeBlow()
+    {    
+        while(true)
+        {
+            transform.Translate(horizontal*4f*Time.deltaTime,0,0);
+            blowTime+=Time.deltaTime;
+            if(nowCorotine==null)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(blowTime);
         }
     }
     public IEnumerator Bigger()
@@ -97,23 +113,24 @@ public class Bullet : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Bullet" && this.gameObject.tag == "Bullet")
+        if(other.gameObject.tag!="Player")
         {
             flyTime = allFlyTime;
+        }       
+        if (other.gameObject.tag == "Bullet" && this.gameObject.tag == "Bullet"&&!isGas&&!other.gameObject.GetComponent<Bullet>().isGas)
+        {
             other.gameObject.tag = "MeetBullet";
             this.gameObject.tag = "MeetBullet";
         }
-        else if (other.gameObject.tag == "MeetBullet" && this.gameObject.tag == "Bullet")
+        else if (other.gameObject.tag == "MeetBullet" && this.gameObject.tag == "Bullet"&&!isGas&&!other.gameObject.GetComponent<Bullet>().isGas)
         {
-            flyTime = allFlyTime;
             this.gameObject.tag = "CanThreeDelete";
         }
         else if (other.gameObject.tag == "Enemy")
         {
-            flyTime = allFlyTime;
-            if(isGas)
+            if (isGas)
             {
-                damage*=3;
+                damage *= 3;
             }
             other.gameObject.GetComponent<Enemy>().OnDamage(damage);
             Die();
@@ -138,7 +155,11 @@ public class Bullet : MonoBehaviour
     }
     public void Die()
     {
-        StopAllCoroutines();
+        if (nowCorotine != null)
+        {
+            StopCoroutine(nowCorotine);
+            nowCorotine = null;
+        }
         Destroy(this.gameObject);
         GameManager.Instance.bullets.Remove(this);
     }

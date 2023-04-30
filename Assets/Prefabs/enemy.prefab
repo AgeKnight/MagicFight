@@ -516,3 +516,4 @@ MonoBehaviour:
   AllMovetime: 0.5
   AllAnabiosisTime: 0.5
   AllCountAnabiosis: 1
+  damage: 5
