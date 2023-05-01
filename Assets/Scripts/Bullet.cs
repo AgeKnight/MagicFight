@@ -153,6 +153,14 @@ public class Bullet : MonoBehaviour
                 }
         }
     }
+    void OnCollisionExit2D(Collision2D other) 
+    {
+        if (other.gameObject.tag == "MeetBullet")
+        {
+            other.gameObject.tag = "Bullet";
+            this.gameObject.tag = "Bullet";
+        }
+    }
     public void Die()
     {
         if (nowCorotine != null)

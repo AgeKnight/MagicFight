@@ -12,11 +12,13 @@ public class Player : MonoBehaviour
     float bulletHorizontal = 1;
     float dodgeTime = 0;
     bool canJump = true;
+    int scaleX = 1;
     Rigidbody2D rigidBody;
     Bullet Bubbles;
     Bullet bullet;
     SpriteRenderer sprite;
-    Vector3 eulerPlayer = new Vector3(0,180,0);
+    Animator animator;
+    Vector3 scale;
     #endregion
     #region "Hide"
     [HideInInspector]
@@ -38,7 +40,6 @@ public class Player : MonoBehaviour
     public float totalHP;
     public float totalMP;
     public float allDodge;
-    Animator animator;
     #endregion
     void Awake()
     {
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        scale = transform.localScale;
         hp = totalHP;
         mp = totalMP;
     }
@@ -60,8 +62,8 @@ public class Player : MonoBehaviour
             {               
                 dodgeTime = 0;
                 isDodge = false;  
-                animator.SetBool("isDodge",isDodge);     
-                animator.enabled = false;      
+                animator.SetBool("isDodgeL",false); 
+                animator.SetBool("isDodgeR",false);      
             }
         }
         Move();
@@ -82,17 +84,16 @@ public class Player : MonoBehaviour
         {
             horizontal = -1;
             bulletHorizontal = -1;
-            eulerPlayer = new Vector3(0,0,0);    
+            scaleX = 1;
         }
         if (Input.GetKey(KeyCode.D))
         {
             horizontal = 1;
             bulletHorizontal = 1;
-            eulerPlayer = new Vector3(0,180,0);
+            scaleX = -1;
         }
         transform.Translate(new Vector2(horizontal * speed * Time.deltaTime, 0), Space.World);
-        transform.rotation = Quaternion.Euler(eulerPlayer);
-
+        transform.localScale = new Vector3(scale.x*scaleX,scale.y,scale.z);
     }
     /// <summary>
     /// 跳躍
@@ -185,9 +186,15 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S) && !isDodge)
         {
-            animator.enabled = true;
             isDodge = true;
-            animator.SetBool("isDodge",isDodge);          
+            if(scaleX>0)
+            {
+                animator.SetBool("isDodgeL",isDodge); 
+            }
+            if(scaleX<0)
+            {
+                animator.SetBool("isDodgeR",isDodge); 
+            }         
         }
     }
     #endregion
