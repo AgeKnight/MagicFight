@@ -5,36 +5,56 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    float MoveTime = 0;
     float hp;
     float AnabiosisTime = 0;
     int CountAnabiosis = 0;
     bool canMove = true;
     bool isAttack = false;
+    bool canReturn = false;
     float attackTime = 0;
-    [HideInInspector]
+    Vector2 thisPosition;
+    Vector2 targetPosition;
+    Vector2 hurtPosition;
     public Slider HPBar;
     public float totalHP;
     public float speed;
-    public float AllMovetime;
+    public float moveDistance;
     public float AllAnabiosisTime;
     public int AllCountAnabiosis;
     public int damage;
     void Awake()
     {
         hp = totalHP;
+        thisPosition = transform.position;
+        targetPosition = new Vector2(transform.position.x + moveDistance, transform.position.y);
     }
     void Update()
     {
         HPBar.value = hp / totalHP;
-        if (canMove)
+        if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
         {
-            Move();
+            if (canMove)
+            {
+                Move();
+            }
+            else
+            {
+                CountAnabiosis += 1;
+            }
+            Anabiosis();
+            if (isAttack)
+            {
+                attackTime += Time.deltaTime;
+                if (attackTime >= 1f)
+                {
+                    attackTime = 0;
+                    isAttack = false;
+                }
+            }
         }
-        else
-        {
-            CountAnabiosis += 1;
-        }
+    }
+    void Anabiosis()
+    {
         if (hp <= 0)
         {
             AnabiosisTime += Time.deltaTime;
@@ -45,56 +65,59 @@ public class Enemy : MonoBehaviour
                 AnabiosisTime = 0;
             }
         }
-        if(isAttack)
-        {
-            attackTime+=Time.deltaTime;
-            if(attackTime>=1f)
-            {
-                attackTime=0;
-                isAttack=false;
-            }
-        }
     }
-    void Move()
+    public virtual void Move()
     {
-        if (MoveTime <= AllMovetime)
+        if (canReturn)
         {
-            transform.Translate(speed * Time.deltaTime, 0, 0);
-            MoveTime += Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, thisPosition, speed * Time.deltaTime);
+            if (transform.position.x == thisPosition.x && transform.position.y == thisPosition.y)
+            {
+                canReturn = false;
+            }
         }
         else
         {
-            transform.Translate(-speed * Time.deltaTime, 0, 0);
-            MoveTime += Time.deltaTime;
-            if (MoveTime >= AllMovetime * 2)
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            if (transform.position.x == targetPosition.x && transform.position.y == targetPosition.y)
             {
-                MoveTime = 0;
+                canReturn = true;
             }
         }
     }
-    public void OnDamage(float damage)
+    public void OnDamage(float damage, float hurtDistance)
     {
-        hp -= damage;
-        if (hp <= 0)
+        if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
         {
-            hp = 0;
-            canMove = false;
-            if (AllCountAnabiosis < CountAnabiosis)
+            hp -= damage;
+            Hurt(hurtDistance);
+            if (hp <= 0)
             {
-                Die();
+                hp = 0;
+                canMove = false;
+                if (AllCountAnabiosis < CountAnabiosis)
+                {
+                    Die();
+                }
             }
         }
     }
-    void Die()
+    public void Die()
     {
         Destroy(this.gameObject);
     }
-    void OnCollisionStay2D(Collision2D other) 
+    void OnCollisionStay2D(Collision2D other)
     {
-        if(other.gameObject.tag=="Player"&&!isAttack)
+        if (other.gameObject.tag == "Player" && !isAttack)
         {
             other.gameObject.GetComponent<Player>().OnDamage(damage);
-            isAttack=true;
-        }       
+            isAttack = true;
+        }
+    }
+    void Hurt(float hurtDistance)
+    {
+        hurtPosition.y = transform.position.y;
+        hurtPosition.x = transform.position.x + hurtDistance * GameManager.Instance.CharatorNum;
+        transform.position = Vector3.MoveTowards(transform.position, hurtPosition, 100 * speed * Time.deltaTime);
     }
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 129726031}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BRposition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 624188888}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: KRposition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +60,83 @@ Transform:
   m_Father: {fileID: 4551585110787935290}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2016787009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2016787010}
+  - component: {fileID: 160106012398518582}
+  - component: {fileID: 6655086254382137425}
+  m_Layer: 7
+  m_Name: EnterBattleRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2016787010
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016787009}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4551585110787935290}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.614, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!61 &160106012398518582
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016787009}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.30335322, y: -0.050972134}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.53771466, y: 0.5327553}
+  m_EdgeRadius: 0
+--- !u!114 &6655086254382137425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016787009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93ead9f8c8c11c429f142a455ed74ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  enemy: {fileID: 0}
 --- !u!1 &6085653240815534844
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +152,7 @@ GameObject:
   - component: {fileID: 6085653240815534841}
   - component: {fileID: 3523120958605037155}
   - component: {fileID: 2012241845}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Charactor
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -91,10 +168,11 @@ RectTransform:
   m_GameObject: {fileID: 6085653240815534844}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 624188888}
   - {fileID: 129726031}
+  - {fileID: 2016787010}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -213,6 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b37f6347305c64f97a57d16c8e441d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleX: 1
   Bullet: {fileID: 8311964591065868140, guid: de8b2d81514f0e24fa7ed9c74ba9d8bc, type: 3}
   Knife: {fileID: 8445284207721756653, guid: e43f5577de4c7ec49af54e7c4fbe1e1d, type: 3}
   KnifePosition: {fileID: 624188888}
@@ -220,12 +299,14 @@ MonoBehaviour:
   slider:
   - {fileID: 0}
   - {fileID: 0}
+  enterBattle: {fileID: 6655086254382137425}
   isDodge: 0
   JumpSpeed: 10
   speed: 10
   totalHP: 100
   totalMP: 100
   allDodge: 1
+  hurtDistance: 5
 --- !u!70 &3523120958605037155
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

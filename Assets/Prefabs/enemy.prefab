@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 234596904}
   - component: {fileID: 234596905}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 349299749}
   - component: {fileID: 349299751}
   - component: {fileID: 349299750}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 1183688999}
   - component: {fileID: 1183689001}
   - component: {fileID: 1183689000}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1199712420}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 465964422217471598}
   - component: {fileID: 4324952840952158343}
   - component: {fileID: 472572104150815242}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,7 +388,7 @@ GameObject:
   - component: {fileID: 1992416932478775056}
   - component: {fileID: 1992416932478775057}
   - component: {fileID: 3442730918333570127}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -513,7 +513,7 @@ MonoBehaviour:
   HPBar: {fileID: 234596905}
   totalHP: 100
   speed: 10
-  AllMovetime: 0.5
+  moveDistance: 0
   AllAnabiosisTime: 0.5
   AllCountAnabiosis: 1
   damage: 5

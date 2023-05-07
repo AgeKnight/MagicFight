@@ -166,12 +166,13 @@ MonoBehaviour:
   bulletCanceled: {fileID: 951366846}
   speed: 10
   allDestroyTime: 10
-  damage: 20
+  damage: 10
   useMP: 5
-  BiggiestScale: 0.6
+  BiggiestScale: 0.3
   allFlyTime: 1
   slowSpeed: 3
-  gasScale: 0.8
+  gasScale: 0.5
+  hurtDistance: 1
 --- !u!50 &-794484796067535116
 Rigidbody2D:
   serializedVersion: 4

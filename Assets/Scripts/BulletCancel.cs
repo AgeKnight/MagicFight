@@ -9,7 +9,7 @@ public class BulletCancel : MonoBehaviour
     {
         if(other.gameObject.tag=="Enemy"&&!bullet.isGas)
         {
-            other.GetComponent<Enemy>().OnDamage(bullet.damage*3);
+            other.GetComponent<Enemy>().OnDamage(bullet.damage*3,0);
         }
         
     }

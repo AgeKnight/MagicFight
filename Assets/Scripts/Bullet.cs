@@ -35,6 +35,7 @@ public class Bullet : MonoBehaviour
     public float allFlyTime;
     public float slowSpeed;
     public float gasScale;
+    public float hurtDistance;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -45,21 +46,24 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (destoyTime >= allDestroyTime)
+        if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
         {
-            Die();
-        }
-        else if (flyTime >= allFlyTime)
-        {
-            destoyTime += Time.deltaTime;
-        }
-        if (canShoot)
-        {
-            Move();
-            flyTime += Time.deltaTime;
-            if (flyTime >= allFlyTime)
+            if (destoyTime >= allDestroyTime)
             {
-                flyTime = allFlyTime;
+                Die();
+            }
+            else if (flyTime >= allFlyTime)
+            {
+                destoyTime += Time.deltaTime;
+            }
+            if (canShoot)
+            {
+                Move();
+                flyTime += Time.deltaTime;
+                if (flyTime >= allFlyTime)
+                {
+                    flyTime = allFlyTime;
+                }
             }
         }
     }
@@ -85,12 +89,12 @@ public class Bullet : MonoBehaviour
         }
     }
     public IEnumerator BeBlow()
-    {    
-        while(true)
+    {
+        while (true)
         {
-            transform.Translate(horizontal*4f*Time.deltaTime,0,0);
-            blowTime+=Time.deltaTime;
-            if(nowCorotine==null)
+            transform.Translate(horizontal * 4f * Time.deltaTime, 0, 0);
+            blowTime += Time.deltaTime;
+            if (nowCorotine == null)
             {
                 break;
             }
@@ -113,52 +117,61 @@ public class Bullet : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.gameObject.tag!="Player")
+        if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
         {
-            flyTime = allFlyTime;
-        }       
-        if (other.gameObject.tag == "Bullet" && this.gameObject.tag == "Bullet"&&!isGas&&!other.gameObject.GetComponent<Bullet>().isGas)
-        {
-            other.gameObject.tag = "MeetBullet";
-            this.gameObject.tag = "MeetBullet";
-        }
-        else if (other.gameObject.tag == "MeetBullet" && this.gameObject.tag == "Bullet"&&!isGas&&!other.gameObject.GetComponent<Bullet>().isGas)
-        {
-            this.gameObject.tag = "CanThreeDelete";
-        }
-        else if (other.gameObject.tag == "Enemy")
-        {
-            if (isGas)
+            if (other.gameObject.tag != "Player")
             {
-                damage *= 3;
+                flyTime = allFlyTime;
             }
-            other.gameObject.GetComponent<Enemy>().OnDamage(damage);
-            Die();
+            if (other.gameObject.tag == "Bullet" && this.gameObject.tag == "Bullet" && !isGas && !other.gameObject.GetComponent<Bullet>().isGas)
+            {
+                other.gameObject.tag = "MeetBullet";
+                this.gameObject.tag = "MeetBullet";
+            }
+            else if (other.gameObject.tag == "MeetBullet" && this.gameObject.tag == "Bullet" && !isGas && !other.gameObject.GetComponent<Bullet>().isGas)
+            {
+                this.gameObject.tag = "CanThreeDelete";
+            }
+            else if (other.gameObject.tag == "Enemy")
+            {
+                if (isGas)
+                {
+                    damage *= 3;
+                }
+                other.gameObject.GetComponent<Enemy>().OnDamage(damage, hurtDistance);
+                Die();
+            }
         }
     }
     void OnCollisionStay2D(Collision2D other)
     {
-        switch (other.gameObject.tag)
+        if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
         {
-            case "CanThreeDelete":
-                {
-                    this.gameObject.tag = "CanThreeDelete";
-                    bulletCanceled.SetActive(true);
-                    GameManager.Instance.bullets.Add(this);
-                    break;
-                }
-            default:
-                {
-                    break;
-                }
+            switch (other.gameObject.tag)
+            {
+                case "CanThreeDelete":
+                    {
+                        this.gameObject.tag = "CanThreeDelete";
+                        bulletCanceled.SetActive(true);
+                        GameManager.Instance.bullets.Add(this);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
         }
     }
-    void OnCollisionExit2D(Collision2D other) 
+    void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.tag == "MeetBullet")
+        if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
         {
-            other.gameObject.tag = "Bullet";
-            this.gameObject.tag = "Bullet";
+            if (other.gameObject.tag == "MeetBullet")
+            {
+                other.gameObject.tag = "Bullet";
+                this.gameObject.tag = "Bullet";
+            }
         }
     }
     public void Die()

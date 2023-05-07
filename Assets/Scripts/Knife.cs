@@ -17,9 +17,8 @@ public class Knife : MonoBehaviour
     }
     void Attack()
     {
-        transform.Rotate(0, 0, 90 * Time.deltaTime * 4);
-        Die();
-        
+        transform.Rotate(0, 0, 90 * Time.deltaTime * 4);  
+        Die();      
     }
     void Die()
     {
