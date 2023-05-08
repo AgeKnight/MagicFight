@@ -10,9 +10,8 @@ public class Player : MonoBehaviour
     float mp;
     float BattleEnterTime;
     float PressTime = 0;
-    float bulletHorizontal = 1;
+    float bulletHorizontal = -1;
     float dodgeTime = 0;
-    int canJump = 0;
     public int scaleX = 1;
     bool isUseKnife = false;
     Rigidbody2D rigidBody;
@@ -23,6 +22,8 @@ public class Player : MonoBehaviour
     Vector3 scale;
     #endregion
     #region "Hide"
+    [HideInInspector]
+    public int canJump = 0;
     [HideInInspector]
     public GameObject Bullet;
     [HideInInspector]
@@ -168,7 +169,7 @@ public class Player : MonoBehaviour
                 }
             }
             PressTime = 0;
-            bullet.canShoot = true;
+            bullet.canShoot = true;         
         }
     }
     void EnterBattle()
@@ -221,6 +222,13 @@ public class Player : MonoBehaviour
             }
         }
     }
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.tag=="Floor")
+        {
+            canJump = 0;
+        }
+    }
     #endregion
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -234,21 +242,6 @@ public class Player : MonoBehaviour
         if (other.gameObject.GetComponent<Bullet>() == Bubbles)
         {
             Bubbles = null;
-        }
-    }
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        switch (other.gameObject.tag)
-        {
-            case "Floor":
-                {
-                    canJump = 0;
-                    break;
-                }
-            case "Enemy":
-                {
-                    break;
-                }
         }
     }
     public void OnDamage(float damage)

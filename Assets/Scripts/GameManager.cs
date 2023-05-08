@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    static GameManager instance;
+    public static GameManager Instance { get => instance; set => instance = value; }
     [HideInInspector]
     public List<Bullet> bullets = new List<Bullet>();
     [HideInInspector]
-    public Bullet bullet;
-    static GameManager instance;
-    public static GameManager Instance { get => instance; set => instance = value; }
+    public Bullet bullet;    
     [HideInInspector]
     public int CharatorNum = 1;
     [HideInInspector]
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject Pause;
     [HideInInspector]
     public bool isEsc = false;
+    [HideInInspector]
     public Text GameMessager;
     void Awake()
     {

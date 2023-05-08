@@ -28,9 +28,16 @@ public class Boss : Enemy
     }
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Floor")
+        switch (other.gameObject.tag)
         {
-            canJump = true;
+            case "Floor":
+                canJump = true;
+                break;
+            case "NotJump":
+                canJump = false;
+                break;
+            default:
+                break;
         }
     }
     void Jump()

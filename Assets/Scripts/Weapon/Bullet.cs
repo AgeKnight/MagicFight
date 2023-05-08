@@ -9,11 +9,12 @@ public class Bullet : MonoBehaviour
     float destoyTime;
     float bigTime = 0;
     float flyTime = 0;
-    Rigidbody2D newRigidbody;
     #endregion
     #region "Hide"
     [HideInInspector]
     public float Horizontal { get => horizontal; set => horizontal = value; }
+    [HideInInspector]
+    public Rigidbody2D newRigidbody;
     [HideInInspector]
     public float blowTime = 0;
     [HideInInspector]
@@ -90,27 +91,23 @@ public class Bullet : MonoBehaviour
     }
     public IEnumerator BeBlow()
     {
-        while (true)
+        while (true||nowCorotine != null)
         {
             transform.Translate(horizontal * 4f * Time.deltaTime, 0, 0);
             blowTime += Time.deltaTime;
-            if (nowCorotine == null)
-            {
-                break;
-            }
             yield return new WaitForSeconds(blowTime);
         }
     }
     public IEnumerator Bigger()
     {
-        while (bigTime <= BiggiestScale)
+        while (bigTime <= BiggiestScale||nowCorotine != null)
         {
             bigTime += Time.deltaTime;
             transform.localScale = new Vector3(bigTime, bigTime, bigTime);
-            if (bigTime > BiggiestScale)
+            if (bigTime >= BiggiestScale)
             {
                 bigTime = BiggiestScale;
-                break;
+                yield break;
             }
             yield return new WaitForSeconds(bigTime);
         }
