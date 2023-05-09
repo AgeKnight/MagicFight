@@ -9,13 +9,13 @@ public class EnterBattle : MonoBehaviour
     public Enemy enemy;
     [HideInInspector]
     public Bullet bullet;
-    void OnTriggerEnter2D(Collider2D other) 
+    void OnTriggerStay2D(Collider2D other) 
     {
         if(other.gameObject.tag == "Enemy")
         {
            enemy = other.GetComponent<Enemy>();
         }
-        if(other.gameObject.tag == "Bullet"||other.gameObject.tag == "MeetBullet")
+        if((other.gameObject.tag == "Bullet"||other.gameObject.tag == "MeetBullet" )&& bullet==null)
         {
            bullet = other.GetComponent<Bullet>();
         }       

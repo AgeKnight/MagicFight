@@ -55,22 +55,12 @@ public class Bullet : MonoBehaviour
         {
             if (destoyTime >= allDestroyTime)
             {
-                canShoot = false;
-                nowCorotine = null;
                 Die();
-            }
-            else if (flyTime >= allFlyTime)
-            {
-                destoyTime += Time.deltaTime;
             }
             if (canShoot)
             {
                 Move();
                 flyTime += Time.deltaTime;
-                if (flyTime >= allFlyTime)
-                {
-                    flyTime = allFlyTime;
-                }
             }
         }
     }
@@ -78,6 +68,7 @@ public class Bullet : MonoBehaviour
     {
         if (flyTime >= allFlyTime)
         {
+            destoyTime += Time.deltaTime;
             bigTime = BiggiestScale;
             transform.localScale = new Vector3(bigTime, bigTime, bigTime);
             transform.Translate(0, 0, 0);
@@ -101,10 +92,6 @@ public class Bullet : MonoBehaviour
         {
             transform.Translate(horizontal * 4f * Time.deltaTime, 0, 0);
             blowTime += Time.deltaTime;
-            if (!canBlow)
-            {
-                yield break;
-            }
             yield return new WaitForSeconds(blowTime);
         }
     }
@@ -185,6 +172,11 @@ public class Bullet : MonoBehaviour
     }
     public void Die()
     {
+        bigTime = BiggiestScale;
+        flyTime = allFlyTime;
+        canShoot = false;
+        canBlow = false;
+        nowCorotine = null;
         if (bubbleClose != null && bubbleClose.isEnemy && destoyTime < allDestroyTime)
         {
             bubbleClose.Item.GetComponent<Enemy>().Die();
@@ -194,7 +186,6 @@ public class Bullet : MonoBehaviour
             bubbleClose.Item.transform.position = this.transform.position;
             bubbleClose.Item.SetActive(true);
         }
-        destoyTime = allDestroyTime;
         Destroy(this.gameObject);
         GameManager.Instance.bullets.Remove(this);
     }

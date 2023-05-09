@@ -192,7 +192,7 @@ public class Player : MonoBehaviour
     void Blow()
     {
         if (Input.GetKey(KeyCode.L) && Bubbles != null)
-        {;
+        {
             Bubbles.Horizontal = bulletHorizontal;
             Bubbles.canBlow = true;
             Bubbles.nowCorotine = StartCoroutine(Bubbles.BeBlow());

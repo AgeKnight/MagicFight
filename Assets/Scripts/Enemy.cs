@@ -41,9 +41,8 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                transform.gameObject.tag = "NotEnemy";             
+                Anabiosis();
             }
-            Anabiosis();
             if (isAttack)
             {
                 attackTime += Time.deltaTime;
@@ -57,17 +56,16 @@ public class Enemy : MonoBehaviour
     }
     void Anabiosis()
     {
-        if (hp <= 0)
+        transform.gameObject.tag = "NotEnemy";
+        AnabiosisTime += Time.deltaTime;
+        if (AnabiosisTime >= AllAnabiosisTime)
         {
-            AnabiosisTime += Time.deltaTime;
-            if (AnabiosisTime >= AllAnabiosisTime)
-            {
-                CountAnabiosis += 1;
-                canMove = true;
-                hp += 10;
-                AnabiosisTime = 0;
-            }
+            CountAnabiosis += 1;         
+            hp += 10;
+            AnabiosisTime = 0;
+            canMove = true;
         }
+
     }
     public virtual void Move()
     {
