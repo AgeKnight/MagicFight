@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public List<Bullet> bullets = new List<Bullet>();
     [HideInInspector]
-    public Bullet bullet;    
+    public Bullet bullet;
     [HideInInspector]
     public int CharatorNum = 1;
     [HideInInspector]
@@ -41,26 +41,26 @@ public class GameManager : MonoBehaviour
             bullets[i].Die();
         }
     }
-    void OnTriggerEnter2D(Collider2D other) 
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<Player>().Die();
         }
-        if(other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy")
         {
             other.gameObject.GetComponent<Enemy>().Die();
         }
     }
     void EscapeTitle()
     {
-        if(Input.GetKeyDown(KeyCode.Escape)&&!isDie)
+        if (Input.GetKeyDown(KeyCode.Escape) && !isDie)
         {
             GameMessager.text = "暫停中";
             isEsc = !isEsc;
             Pause.SetActive(isEsc);
         }
-        if(isEsc)
+        if (isEsc)
         {
             Time.timeScale = 0;
         }
@@ -68,12 +68,12 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 1;
         }
-        if(isDie)
+        if (isDie)
         {
             GameMessager.text = "你輸了";
             isEsc = true;
             Pause.SetActive(true);
-        }        
+        }
     }
     public void Return()
     {

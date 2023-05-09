@@ -1465,6 +1465,10 @@ PrefabInstance:
       propertyPath: moveDistance
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3442730918333570127, guid: 5a3766a46125d6d498da994dd5fc448a, type: 3}
+      propertyPath: AllCountAnabiosis
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a3766a46125d6d498da994dd5fc448a, type: 3}
 --- !u!1 &622601979

@@ -12,6 +12,8 @@ public class Bullet : MonoBehaviour
     #endregion
     #region "Hide"
     [HideInInspector]
+    public bool canBlow = false;
+    [HideInInspector]
     public float Horizontal { get => horizontal; set => horizontal = value; }
     [HideInInspector]
     public Rigidbody2D newRigidbody;
@@ -26,6 +28,8 @@ public class Bullet : MonoBehaviour
     [HideInInspector]
     public GameObject bulletCanceled;
     public Coroutine nowCorotine;
+    [HideInInspector]
+    public BubbleClose bubbleClose;
     #endregion
     #region "public"
     public float speed;
@@ -51,6 +55,8 @@ public class Bullet : MonoBehaviour
         {
             if (destoyTime >= allDestroyTime)
             {
+                canShoot = false;
+                nowCorotine = null;
                 Die();
             }
             else if (flyTime >= allFlyTime)
@@ -91,24 +97,23 @@ public class Bullet : MonoBehaviour
     }
     public IEnumerator BeBlow()
     {
-        while (true||nowCorotine != null)
+        while (canBlow)
         {
             transform.Translate(horizontal * 4f * Time.deltaTime, 0, 0);
             blowTime += Time.deltaTime;
+            if (!canBlow)
+            {
+                yield break;
+            }
             yield return new WaitForSeconds(blowTime);
         }
     }
     public IEnumerator Bigger()
     {
-        while (bigTime <= BiggiestScale||nowCorotine != null)
+        while (bigTime <= BiggiestScale)
         {
             bigTime += Time.deltaTime;
             transform.localScale = new Vector3(bigTime, bigTime, bigTime);
-            if (bigTime >= BiggiestScale)
-            {
-                bigTime = BiggiestScale;
-                yield break;
-            }
             yield return new WaitForSeconds(bigTime);
         }
     }
@@ -137,6 +142,13 @@ public class Bullet : MonoBehaviour
                 }
                 other.gameObject.GetComponent<Enemy>().OnDamage(damage, hurtDistance);
                 Die();
+            }
+            else if (other.gameObject.tag == "NotEnemy")
+            {
+                bubbleClose.gameObject.GetComponent<SpriteRenderer>().sprite = other.gameObject.GetComponent<Enemy>().GetComponent<SpriteRenderer>().sprite;
+                bubbleClose.isEnemy = true;
+                bubbleClose.Item = other.gameObject;
+                other.gameObject.SetActive(false);
             }
         }
     }
@@ -173,11 +185,16 @@ public class Bullet : MonoBehaviour
     }
     public void Die()
     {
-        if (nowCorotine != null)
+        if (bubbleClose != null && bubbleClose.isEnemy && destoyTime < allDestroyTime)
         {
-            StopCoroutine(nowCorotine);
-            nowCorotine = null;
+            bubbleClose.Item.GetComponent<Enemy>().Die();
         }
+        if (bubbleClose.Item != null && destoyTime >= allDestroyTime)
+        {
+            bubbleClose.Item.transform.position = this.transform.position;
+            bubbleClose.Item.SetActive(true);
+        }
+        destoyTime = allDestroyTime;
         Destroy(this.gameObject);
         GameManager.Instance.bullets.Remove(this);
     }

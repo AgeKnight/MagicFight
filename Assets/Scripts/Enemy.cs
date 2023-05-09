@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     Vector2 thisPosition;
     Vector2 targetPosition;
     Vector2 hurtPosition;
+    [HideInInspector]
     public Slider HPBar;
     public float totalHP;
     public float speed;
@@ -35,11 +36,12 @@ public class Enemy : MonoBehaviour
         {
             if (canMove)
             {
+                transform.gameObject.tag = "Enemy";
                 Move();
             }
             else
             {
-                CountAnabiosis += 1;
+                transform.gameObject.tag = "NotEnemy";             
             }
             Anabiosis();
             if (isAttack)
@@ -60,6 +62,7 @@ public class Enemy : MonoBehaviour
             AnabiosisTime += Time.deltaTime;
             if (AnabiosisTime >= AllAnabiosisTime)
             {
+                CountAnabiosis += 1;
                 canMove = true;
                 hp += 10;
                 AnabiosisTime = 0;

@@ -39,12 +39,13 @@
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
+     <Compile Include="Assets\Scripts\Stand.cs" />
      <Compile Include="Assets\Scripts\Weapon\BulletCancel.cs" />
      <Compile Include="Assets\Scripts\Boss.cs" />
      <Compile Include="Assets\Scripts\Weapon\Knife.cs" />
      <Compile Include="Assets\Scripts\Weapon\EnterBattle.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
-     <Compile Include="Assets\Scripts\Stand.cs" />
+     <Compile Include="Assets\Scripts\Weapon\BubbleClose.cs" />
      <None Include="Assets\Grafics\Cainos\Pixel Art Platformer - Village Props\Changelog.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.33f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

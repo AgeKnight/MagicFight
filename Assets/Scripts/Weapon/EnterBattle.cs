@@ -5,20 +5,19 @@ using UnityEngine;
 public class EnterBattle : MonoBehaviour
 {
     public float damage;
-    //[HideInInspector]
+    [HideInInspector]
     public Enemy enemy;
+    [HideInInspector]
+    public Bullet bullet;
     void OnTriggerEnter2D(Collider2D other) 
     {
         if(other.gameObject.tag == "Enemy")
         {
            enemy = other.GetComponent<Enemy>();
-        }       
-    }
-    void OnTriggerStay2D(Collider2D other) 
-    {
-        if(other.gameObject.tag == "Enemy")
+        }
+        if(other.gameObject.tag == "Bullet"||other.gameObject.tag == "MeetBullet")
         {
-           enemy = other.GetComponent<Enemy>();
+           bullet = other.GetComponent<Bullet>();
         }       
     }
     void OnTriggerExit2D(Collider2D other) 
@@ -26,6 +25,10 @@ public class EnterBattle : MonoBehaviour
         if(other.gameObject.tag == "Enemy")
         {
            enemy = null;
-        } 
+        }
+        if(other.gameObject.tag == "Bullet"||other.gameObject.tag == "MeetBullet")
+        {
+           bullet = null;
+        }    
     }
 }

@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     float PressTime = 0;
     float bulletHorizontal = -1;
     float dodgeTime = 0;
-    public int scaleX = 1;
     bool isUseKnife = false;
     Rigidbody2D rigidBody;
     Bullet Bubbles;
@@ -22,6 +21,8 @@ public class Player : MonoBehaviour
     Vector3 scale;
     #endregion
     #region "Hide"
+    [HideInInspector]
+    public int scaleX = 1;
     [HideInInspector]
     public int canJump = 0;
     [HideInInspector]
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
     public Transform bulletPosition;
     [HideInInspector]
     public Slider[] slider;
+    [HideInInspector]
     public EnterBattle enterBattle;
     [HideInInspector]
     public bool isDodge = false;
@@ -76,7 +78,7 @@ public class Player : MonoBehaviour
             if (isUseKnife)
             {
                 BattleEnterTime += Time.deltaTime;
-                if (BattleEnterTime >= 0.4f)
+                if (BattleEnterTime >= 0.5f)
                 {
                     BattleEnterTime = 0;
                     isUseKnife = false;
@@ -155,11 +157,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.J))
         {
-            if (bullet.nowCorotine != null)
-            {
-                StopCoroutine(bullet.nowCorotine);
-                bullet.nowCorotine = null;
-            }
+            bullet.nowCorotine = null;
             if (bullet.isGas)
             {
                 mp -= bullet.useMP * 2;
@@ -176,11 +174,15 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K) && !isUseKnife)
         {
+            Instantiate(Knife,KnifePosition.position,Quaternion.identity);
             if (enterBattle.enemy != null)
             {
                 enterBattle.enemy.OnDamage(enterBattle.damage, hurtDistance);
             }
-            Instantiate(Knife, KnifePosition.position, Knife.transform.rotation);
+            if (enterBattle.bullet != null)
+            {
+                enterBattle.bullet.Die();
+            }
             isUseKnife = true;
         }
     }
@@ -190,17 +192,15 @@ public class Player : MonoBehaviour
     void Blow()
     {
         if (Input.GetKey(KeyCode.L) && Bubbles != null)
-        {
+        {;
             Bubbles.Horizontal = bulletHorizontal;
+            Bubbles.canBlow = true;
             Bubbles.nowCorotine = StartCoroutine(Bubbles.BeBlow());
         }
-        if (Input.GetKeyUp(KeyCode.L) && Bubbles != null)
+        if (Input.GetKeyUp(KeyCode.L)&& Bubbles != null)
         {
-            if (Bubbles.nowCorotine != null)
-            {
-                StopCoroutine(Bubbles.nowCorotine);
-                Bubbles.nowCorotine = null;
-            }
+            Bubbles.canBlow = false;
+            Bubbles.nowCorotine = null;
             Bubbles.blowTime = 0;
         }
     }
@@ -230,17 +230,19 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if ((other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet") && Bubbles == null)
         {
             Bubbles = other.gameObject.GetComponent<Bullet>();
+            bullet.canBlow = true;
         }
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<Bullet>() == Bubbles)
+        if (other.gameObject.GetComponent<Bullet>() == Bubbles&& Bubbles != null)
         {
+            Bubbles.canBlow = false;
             Bubbles = null;
         }
     }
