@@ -17,7 +17,6 @@ public class Stand : MonoBehaviour
         if(other.gameObject.tag=="Player")
         {
             bullet.newRigidbody.bodyType = RigidbodyType2D.Dynamic;
-        }
-        
+        }       
     }
 }

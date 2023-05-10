@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    float hp;
+    protected float hp;
     float AnabiosisTime = 0;
     int CountAnabiosis = 0;
     bool canMove = true;
@@ -86,7 +86,7 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-    public void OnDamage(float damage, float hurtDistance)
+    public virtual void OnDamage(float damage, float hurtDistance)
     {
         if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
         {
@@ -115,7 +115,7 @@ public class Enemy : MonoBehaviour
             isAttack = true;
         }
     }
-    void Hurt(float hurtDistance)
+    protected void Hurt(float hurtDistance)
     {
         hurtPosition.y = transform.position.y;
         hurtPosition.x = transform.position.x + hurtDistance * GameManager.Instance.CharatorNum;

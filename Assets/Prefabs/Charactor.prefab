@@ -110,7 +110,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.1666939, y: -0.050972134}
+  m_Offset: {x: 0.28240123, y: -0.050972134}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -121,7 +121,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8110333, y: 0.5327553}
+  m_Size: {x: 0.57961863, y: 0.5327553}
   m_EdgeRadius: 0
 --- !u!114 &6655086254382137425
 MonoBehaviour:
@@ -135,9 +135,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a93ead9f8c8c11c429f142a455ed74ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
   enemy: {fileID: 0}
   bullet: {fileID: 0}
+  damage: 20
 --- !u!1 &6085653240815534844
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,8 +322,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.9344348, y: -0.07272612}
-  m_Size: {x: 2.0933015, y: 0.42555183}
+  m_Offset: {x: -1.4402512, y: -0.072726056}
+  m_Size: {x: 3.104945, y: 0.42555952}
   m_Direction: 1
 --- !u!95 &2012241845
 Animator:

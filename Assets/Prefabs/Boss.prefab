@@ -525,8 +525,8 @@ MonoBehaviour:
   totalHP: 200
   speed: 5
   moveDistance: 5
-  AllAnabiosisTime: 0.5
-  AllCountAnabiosis: 3
+  AllAnabiosisTime: 0
+  AllCountAnabiosis: 0
   damage: 20
   rigidBody: {fileID: 1992416932478775057}
   JumpSpeed: 15

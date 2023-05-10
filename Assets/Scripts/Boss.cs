@@ -7,15 +7,18 @@ public class Boss : Enemy
     bool canJump = false;
     bool isSeePlayer = false;
     Player player;
+    [HideInInspector]
     public Rigidbody2D rigidBody;
     public float JumpSpeed;
     public override void Move()
     {
+        AllCountAnabiosis = 0;
         if (isSeePlayer && player != null)
         {
             Jump();
             Vector3 targetPosition = player.transform.position;
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+    
         }
     }
     void OnTriggerEnter2D(Collider2D other)

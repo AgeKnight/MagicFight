@@ -4,31 +4,32 @@ using UnityEngine;
 
 public class EnterBattle : MonoBehaviour
 {
-    public float damage;
+
     [HideInInspector]
     public Enemy enemy;
     [HideInInspector]
     public Bullet bullet;
-    void OnTriggerStay2D(Collider2D other) 
+    public float damage;
+    void OnTriggerStay2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy")
         {
-           enemy = other.GetComponent<Enemy>();
+            enemy = other.GetComponent<Enemy>();
         }
-        if((other.gameObject.tag == "Bullet"||other.gameObject.tag == "MeetBullet" )&& bullet==null)
+        if ((other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet") && bullet == null)
         {
-           bullet = other.GetComponent<Bullet>();
-        }       
+            bullet = other.GetComponent<Bullet>();
+        }
     }
-    void OnTriggerExit2D(Collider2D other) 
+    void OnTriggerExit2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy")
         {
-           enemy = null;
+            enemy = null;
         }
-        if(other.gameObject.tag == "Bullet"||other.gameObject.tag == "MeetBullet")
+        if (other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet")
         {
-           bullet = null;
-        }    
+            bullet = null;
+        }
     }
 }

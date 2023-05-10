@@ -153,10 +153,12 @@ public class Player : MonoBehaviour
                 bullet.isGas = true;
                 bullet.BiggiestScale = bullet.gasScale;
                 bullet.nowCorotine = StartCoroutine(bullet.Bigger());
+                bullet.flyTime = 0;
             }
         }
         if (Input.GetKeyUp(KeyCode.J))
         {
+            bullet.flyTime = 0;
             bullet.nowCorotine = null;
             if (bullet.isGas)
             {
