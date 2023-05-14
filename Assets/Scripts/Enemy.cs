@@ -103,7 +103,7 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-    public void Die()
+    public virtual void Die()
     {
         Destroy(this.gameObject);
     }

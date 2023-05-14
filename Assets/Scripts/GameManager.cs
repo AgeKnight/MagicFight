@@ -6,23 +6,30 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    /// <summary>
+    /// 需要存檔的:CharatorNum
+    /// </summary>
     static GameManager instance;
     public static GameManager Instance { get => instance; set => instance = value; }
     [HideInInspector]
     public List<Bullet> bullets = new List<Bullet>();
     [HideInInspector]
-    public Bullet bullet;
+    public int CharatorNum;
     [HideInInspector]
-    public int CharatorNum = 1;
+    public bool isDie;
     [HideInInspector]
-    public bool isDie = false;
-    public GameObject Pause;
+    public bool isWin;
+    public GameObject[] Pause;
     [HideInInspector]
-    public bool isEsc = false;
+    public bool isEsc;
     [HideInInspector]
     public Text GameMessager;
     void Awake()
     {
+        isEsc = false;
+        isDie = false;
+        isWin = false;
+        CharatorNum = 1;
         Time.timeScale = 1;
         Instance = this;
     }
@@ -42,7 +49,7 @@ public class GameManager : MonoBehaviour
         }
     }
     void OnTriggerEnter2D(Collider2D other)
-    {
+    {     
         if (other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<Player>().Die();
@@ -54,13 +61,18 @@ public class GameManager : MonoBehaviour
     }
     void EscapeTitle()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isDie)
+        if (Input.GetKeyDown(KeyCode.Escape) && !isDie && !isWin)
         {
             GameMessager.text = "暫停中";
             isEsc = !isEsc;
-            Pause.SetActive(isEsc);
+            Pause[0].SetActive(isEsc);
         }
-        if (isEsc)
+        if (isDie && !isWin)
+        {
+            GameMessager.text = "你輸了";
+            Pause[0].SetActive(true);
+        }
+        if (isEsc || isWin ||isDie)
         {
             Time.timeScale = 0;
         }
@@ -68,15 +80,17 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 1;
         }
-        if (isDie)
-        {
-            GameMessager.text = "你輸了";
-            isEsc = true;
-            Pause.SetActive(true);
-        }
     }
     public void Return()
     {
         SceneManager.LoadScene("Game");
+    }
+    public void Win()
+    {
+        Pause[1].SetActive(true);
+    }
+    public void Quit()
+    {
+        SceneManager.LoadScene("Main");
     }
 }

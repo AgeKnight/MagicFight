@@ -21,6 +21,12 @@ public class Boss : Enemy
     
         }
     }
+    public override void Die()
+    {
+        GameManager.Instance.isWin = true;
+        GameManager.Instance.Win();
+        base.Die();   
+    }
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")

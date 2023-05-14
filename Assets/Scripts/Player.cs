@@ -5,14 +5,17 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    /// <summary>
+    /// 需要存檔的:hp、mp、bulletHorizontal
+    /// </summary>
     #region "Internal"
     float hp;
     float mp;
     float BattleEnterTime;
-    float PressTime = 0;
+    float PressTime;
     float bulletHorizontal = -1;
-    float dodgeTime = 0;
-    bool isUseKnife = false;
+    float dodgeTime;
+    bool isUseKnife;
     Rigidbody2D rigidBody;
     Bullet Bubbles;
     Bullet bullet;
@@ -55,6 +58,7 @@ public class Player : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         scale = transform.localScale;
+        isUseKnife = false;
         hp = totalHP;
         mp = totalMP;
     }
@@ -215,7 +219,7 @@ public class Player : MonoBehaviour
         {
             isDodge = true;
             if (scaleX > 0)
-            {
+            {               
                 animator.SetBool("isDodgeL", isDodge);
             }
             if (scaleX < 0)
