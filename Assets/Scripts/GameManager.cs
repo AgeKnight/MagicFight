@@ -48,17 +48,6 @@ public class GameManager : MonoBehaviour
             bullets[i].Die();
         }
     }
-    void OnTriggerEnter2D(Collider2D other)
-    {     
-        if (other.gameObject.tag == "Player")
-        {
-            other.gameObject.GetComponent<Player>().Die();
-        }
-        if (other.gameObject.tag == "Enemy")
-        {
-            other.gameObject.GetComponent<Enemy>().Die();
-        }
-    }
     void EscapeTitle()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !isDie && !isWin)
@@ -72,7 +61,7 @@ public class GameManager : MonoBehaviour
             GameMessager.text = "你輸了";
             Pause[0].SetActive(true);
         }
-        if (isEsc || isWin ||isDie)
+        if (isEsc || isWin || isDie)
         {
             Time.timeScale = 0;
         }
@@ -92,5 +81,16 @@ public class GameManager : MonoBehaviour
     public void Quit()
     {
         SceneManager.LoadScene("Main");
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            other.gameObject.GetComponent<Player>().Die();
+        }
+        if (other.gameObject.tag == "Enemy")
+        {
+            other.gameObject.GetComponent<Enemy>().Die();
+        }
     }
 }

@@ -15,14 +15,22 @@ public class Enemy : MonoBehaviour
     Vector2 thisPosition;
     Vector2 targetPosition;
     Vector2 hurtPosition;
-    [HideInInspector]
+    public enum EnemyType
+    {
+        poland,
+        chasingMonster,
+        spider,
+        Boss
+    }
     public Slider HPBar;
+    public EnemyType enemyType;
     public float totalHP;
     public float speed;
+    public int damage;
+    public int allAtackTime;
     public float moveDistance;
     public float AllAnabiosisTime;
     public int AllCountAnabiosis;
-    public int damage;
     void Awake()
     {
         hp = totalHP;
@@ -46,7 +54,7 @@ public class Enemy : MonoBehaviour
             if (isAttack)
             {
                 attackTime += Time.deltaTime;
-                if (attackTime >= 1f)
+                if (attackTime >= allAtackTime)
                 {
                     attackTime = 0;
                     isAttack = false;
@@ -60,33 +68,54 @@ public class Enemy : MonoBehaviour
         AnabiosisTime += Time.deltaTime;
         if (AnabiosisTime >= AllAnabiosisTime)
         {
-            CountAnabiosis += 1;         
+            CountAnabiosis += 1;
             hp += 10;
             AnabiosisTime = 0;
             canMove = true;
         }
 
     }
-    public virtual void Move()
+    public void Move()
     {
-        if (canReturn)
+        switch (enemyType)
         {
-            transform.position = Vector2.MoveTowards(transform.position, thisPosition, speed * Time.deltaTime);
-            if (transform.position.x == thisPosition.x && transform.position.y == thisPosition.y)
-            {
-                canReturn = false;
-            }
+            case EnemyType.poland:
+                if (canReturn)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, thisPosition, speed * Time.deltaTime);
+                    if (transform.position.x == thisPosition.x && transform.position.y == thisPosition.y)
+                    {
+                        canReturn = false;
+                    }
+                }
+                else
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+                    if (transform.position.x == targetPosition.x && transform.position.y == targetPosition.y)
+                    {
+                        canReturn = true;
+                    }
+                }
+                break;
+            default:
+                break;
         }
-        else
-        {
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-            if (transform.position.x == targetPosition.x && transform.position.y == targetPosition.y)
-            {
-                canReturn = true;
-            }
-        }
+
     }
-    public virtual void OnDamage(float damage, float hurtDistance)
+    public void Die()
+    {
+        switch (enemyType)
+        {
+            case EnemyType.Boss:
+                GameManager.Instance.isWin = true;
+                GameManager.Instance.Win();
+                break;
+            default:
+                break;
+        }
+        Destroy(this.gameObject);
+    }
+    public void OnDamage(float damage, float hurtDistance)
     {
         if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
         {
@@ -103,10 +132,6 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-    public virtual void Die()
-    {
-        Destroy(this.gameObject);
-    }
     void OnCollisionStay2D(Collision2D other)
     {
         if (other.gameObject.tag == "Player" && !isAttack)
@@ -115,7 +140,7 @@ public class Enemy : MonoBehaviour
             isAttack = true;
         }
     }
-    protected void Hurt(float hurtDistance)
+    void Hurt(float hurtDistance)
     {
         hurtPosition.y = transform.position.y;
         hurtPosition.x = transform.position.x + hurtDistance * GameManager.Instance.CharatorNum;

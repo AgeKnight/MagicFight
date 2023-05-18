@@ -37,6 +37,8 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public Transform bulletPosition;
     [HideInInspector]
+    public CapsuleCollider2D BlowCollider;
+    [HideInInspector]
     public Slider[] slider;
     [HideInInspector]
     public EnterBattle enterBattle;
@@ -54,6 +56,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         bullet = GetComponent<Bullet>();
+        BlowCollider = gameObject.GetComponent<CapsuleCollider2D>();
         rigidBody = GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
@@ -77,6 +80,7 @@ public class Player : MonoBehaviour
                     isDodge = false;
                     animator.SetBool("isDodgeL", false);
                     animator.SetBool("isDodgeR", false);
+                    BlowCollider.enabled = true;;
                 }
             }
             if (isUseKnife)
@@ -218,6 +222,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S) && !isDodge)
         {
             isDodge = true;
+            BlowCollider.enabled = false;
             if (scaleX > 0)
             {               
                 animator.SetBool("isDodgeL", isDodge);

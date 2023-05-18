@@ -3180,6 +3180,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 1992416932478775070, guid: a6e8a05212e758440a087024083c0a8a, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8217973267401095912, guid: a6e8a05212e758440a087024083c0a8a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6e8a05212e758440a087024083c0a8a, type: 3}
 --- !u!4 &1478796561 stripped
@@ -4008,7 +4016,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895309833}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -22.49, z: 0}
+  m_LocalPosition: {x: 8.9, y: -12.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4027,7 +4035,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 27.21038, y: 0}
+  m_Offset: {x: 13.391944, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4038,7 +4046,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 100.35713, y: 1}
+  m_Size: {x: 85.31378, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &1955252502
 GameObject:

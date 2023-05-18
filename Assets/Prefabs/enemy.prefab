@@ -510,11 +510,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b93a9d523d4a1f747a70720f8b32c4ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
   HPBar: {fileID: 234596905}
+  enemyType: 0
   totalHP: 100
   speed: 10
   moveDistance: 0
   AllAnabiosisTime: 2
   AllCountAnabiosis: 1
   damage: 5
+  allAtackTime: 1
