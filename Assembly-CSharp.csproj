@@ -37,16 +37,16 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\TitleManager.cs" />
-     <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
-     <Compile Include="Assets\Scripts\Weapon\BubbleClose.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
-     <Compile Include="Assets\Scripts\Stand.cs" />
-     <Compile Include="Assets\Scripts\Weapon\BulletCancel.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Knife.cs" />
-     <Compile Include="Assets\Scripts\Weapon\EnterBattle.cs" />
+     <Compile Include="Assets\Scripts\Bubble\BubbleClose.cs" />
+     <Compile Include="Assets\Scripts\Bubble\Bullet.cs" />
+     <Compile Include="Assets\Scripts\Bubble\Stand.cs" />
+     <Compile Include="Assets\Scripts\Player\BlowBubble.cs" />
+     <Compile Include="Assets\Scripts\Bubble\BulletCancel.cs" />
+     <Compile Include="Assets\Scripts\Player\Knife.cs" />
+     <Compile Include="Assets\Scripts\Player\EnterBattle.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
-     <Compile Include="Assets\Scripts\Weapon\BlowBubble.cs" />
      <None Include="Assets\Grafics\Cainos\Pixel Art Platformer - Village Props\Changelog.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.33f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

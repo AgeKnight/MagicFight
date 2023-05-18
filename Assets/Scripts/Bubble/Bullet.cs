@@ -98,7 +98,7 @@ public class Bullet : MonoBehaviour
                 {
                     damage *= 3;
                 }
-                other.gameObject.GetComponent<Enemy>().OnDamage(damage, hurtDistance);
+                other.gameObject.GetComponent<Enemy>().OnDamage(damage, hurtDistance,true);
                 Die();
             }
             if (other.gameObject.tag == "NotEnemy")

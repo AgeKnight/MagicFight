@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
     float BattleEnterTime;
     float PressTime;
     float dodgeTime;
-    bool isUseKnife;
     Rigidbody2D rigidBody;
     Bullet bullet;
     SpriteRenderer sprite;
@@ -28,6 +27,8 @@ public class Player : MonoBehaviour
     public float bulletHorizontal = -1;
     [HideInInspector]
     public int canJump = 0;
+    [HideInInspector]
+    public bool isUseKnife;
     [HideInInspector]
     public GameObject Bullet;
     [HideInInspector]
@@ -182,7 +183,7 @@ public class Player : MonoBehaviour
             Instantiate(Knife,KnifePosition.position,Quaternion.identity);
             if (enterBattle.enemy != null)
             {
-                enterBattle.enemy.OnDamage(enterBattle.damage, hurtDistance);
+                enterBattle.enemy.OnDamage(enterBattle.damage, hurtDistance,isUseKnife);
             }
             if (enterBattle.bullet != null)
             {
@@ -217,8 +218,6 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
-    
-    
     public void OnDamage(float damage)
     {
         if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
@@ -228,7 +227,7 @@ public class Player : MonoBehaviour
                 damage = 0;
             }
             hp -= damage;
-            if (hp < 0)
+            if (hp <= 0)
             {
                 hp = 0;
                 slider[0].value = hp / totalHP;

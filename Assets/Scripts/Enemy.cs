@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    protected float hp;
-    float AnabiosisTime = 0;
-    int CountAnabiosis = 0;
+    float hp;
+    bool isDied = false;
     bool canMove = true;
     bool isAttack = false;
     bool canReturn = false;
     float attackTime = 0;
+    float AnabiosisTime = 0;
     Vector2 thisPosition;
     Vector2 targetPosition;
     Vector2 hurtPosition;
@@ -30,7 +30,6 @@ public class Enemy : MonoBehaviour
     public int allAtackTime;
     public float moveDistance;
     public float AllAnabiosisTime;
-    public int AllCountAnabiosis;
     void Awake()
     {
         hp = totalHP;
@@ -66,14 +65,12 @@ public class Enemy : MonoBehaviour
     {
         transform.gameObject.tag = "NotEnemy";
         AnabiosisTime += Time.deltaTime;
-        if (AnabiosisTime >= AllAnabiosisTime)
+        if (AnabiosisTime > AllAnabiosisTime)
         {
-            CountAnabiosis += 1;
             hp += 10;
-            AnabiosisTime = 0;
             canMove = true;
+            isDied = true;
         }
-
     }
     public void Move()
     {
@@ -115,7 +112,7 @@ public class Enemy : MonoBehaviour
         }
         Destroy(this.gameObject);
     }
-    public void OnDamage(float damage, float hurtDistance)
+    public void OnDamage(float damage, float hurtDistance,bool isUseKnife)
     {
         if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
         {
@@ -123,12 +120,12 @@ public class Enemy : MonoBehaviour
             Hurt(hurtDistance);
             if (hp <= 0)
             {
-                hp = 0;
-                canMove = false;
-                if (AllCountAnabiosis < CountAnabiosis)
+                if (isDied||enemyType==EnemyType.Boss||!isUseKnife)
                 {
                     Die();
                 }
+                hp = 0;
+                canMove = false;
             }
         }
     }

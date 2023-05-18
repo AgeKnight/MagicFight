@@ -295,11 +295,11 @@ MonoBehaviour:
   scaleX: 1
   bulletHorizontal: -1
   canJump: 0
+  isUseKnife: 0
   Bullet: {fileID: 8311964591065868140, guid: de8b2d81514f0e24fa7ed9c74ba9d8bc, type: 3}
   Knife: {fileID: 8445284207721756653, guid: e43f5577de4c7ec49af54e7c4fbe1e1d, type: 3}
   KnifePosition: {fileID: 624188888}
   bulletPosition: {fileID: 129726031}
-  BlowCollider: {fileID: 0}
   slider:
   - {fileID: 0}
   - {fileID: 0}
