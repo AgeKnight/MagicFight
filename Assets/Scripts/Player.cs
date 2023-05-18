@@ -13,11 +13,9 @@ public class Player : MonoBehaviour
     float mp;
     float BattleEnterTime;
     float PressTime;
-    float bulletHorizontal = -1;
     float dodgeTime;
     bool isUseKnife;
     Rigidbody2D rigidBody;
-    Bullet Bubbles;
     Bullet bullet;
     SpriteRenderer sprite;
     Animator animator;
@@ -26,6 +24,8 @@ public class Player : MonoBehaviour
     #region "Hide"
     [HideInInspector]
     public int scaleX = 1;
+    [HideInInspector]
+    public float bulletHorizontal = -1;
     [HideInInspector]
     public int canJump = 0;
     [HideInInspector]
@@ -36,8 +36,6 @@ public class Player : MonoBehaviour
     public Transform KnifePosition;
     [HideInInspector]
     public Transform bulletPosition;
-    [HideInInspector]
-    public CapsuleCollider2D BlowCollider;
     [HideInInspector]
     public Slider[] slider;
     [HideInInspector]
@@ -56,7 +54,6 @@ public class Player : MonoBehaviour
     void Awake()
     {
         bullet = GetComponent<Bullet>();
-        BlowCollider = gameObject.GetComponent<CapsuleCollider2D>();
         rigidBody = GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
@@ -80,7 +77,6 @@ public class Player : MonoBehaviour
                     isDodge = false;
                     animator.SetBool("isDodgeL", false);
                     animator.SetBool("isDodgeR", false);
-                    BlowCollider.enabled = true;;
                 }
             }
             if (isUseKnife)
@@ -96,7 +92,6 @@ public class Player : MonoBehaviour
             Shoot();
             EnterBattle();
             Jump();
-            Blow();
             Dodge();
         }
     }
@@ -197,24 +192,6 @@ public class Player : MonoBehaviour
         }
     }
     /// <summary>
-    /// 按L吹氣 當泡泡離開trigger範圍後無法吹動
-    /// </summary>
-    void Blow()
-    {
-        if (Input.GetKey(KeyCode.L) && Bubbles != null)
-        {
-            Bubbles.Horizontal = bulletHorizontal;
-            Bubbles.canBlow = true;
-            Bubbles.nowCorotine = StartCoroutine(Bubbles.BeBlow());
-        }
-        if (Input.GetKeyUp(KeyCode.L)&& Bubbles != null)
-        {
-            Bubbles.canBlow = false;
-            Bubbles.nowCorotine = null;
-            Bubbles.blowTime = 0;
-        }
-    }
-    /// <summary>
     /// 閃避
     /// </summary>
     void Dodge()
@@ -222,7 +199,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S) && !isDodge)
         {
             isDodge = true;
-            BlowCollider.enabled = false;
             if (scaleX > 0)
             {               
                 animator.SetBool("isDodgeL", isDodge);
@@ -241,22 +217,8 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if ((other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet") && Bubbles == null)
-        {
-            Bubbles = other.gameObject.GetComponent<Bullet>();
-            bullet.canBlow = true;
-        }
-    }
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.GetComponent<Bullet>() == Bubbles&& Bubbles != null)
-        {
-            Bubbles.canBlow = false;
-            Bubbles = null;
-        }
-    }
+    
+    
     public void OnDamage(float damage)
     {
         if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)

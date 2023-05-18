@@ -2616,14 +2616,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1506105440, guid: 38254955390832b49824d880c59a6173, type: 3}
-      propertyPath: m_Mass
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 1506105440, guid: 38254955390832b49824d880c59a6173, type: 3}
-      propertyPath: m_GravityScale
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4551585110787935290, guid: 38254955390832b49824d880c59a6173, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4016,7 +4008,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895309833}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.9, y: -12.92, z: 0}
+  m_LocalPosition: {x: 8.9, y: -9.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
