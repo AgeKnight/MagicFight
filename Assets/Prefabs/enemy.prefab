@@ -385,9 +385,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1992416932478775058}
   - component: {fileID: 1992416932478775059}
-  - component: {fileID: 1992416932478775056}
   - component: {fileID: 1992416932478775057}
   - component: {fileID: 3442730918333570127}
+  - component: {fileID: 2369051958119050158}
   m_Layer: 7
   m_Name: enemy
   m_TagString: Enemy
@@ -461,22 +461,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1992416932478775056
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1992416932478775070}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.19400956, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.5415084
 --- !u!50 &1992416932478775057
 Rigidbody2D:
   serializedVersion: 4
@@ -510,12 +494,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b93a9d523d4a1f747a70720f8b32c4ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidBody: {fileID: 0}
+  player: {fileID: 0}
   HPBar: {fileID: 234596905}
   enemyType: 0
   totalHP: 100
   speed: 10
-  moveDistance: 0
-  AllAnabiosisTime: 2
-  AllCountAnabiosis: 1
   damage: 5
   allAtackTime: 1
+  moveDistance: 3
+  AllAnabiosisTime: 2
+  hurtDistance: 1
+--- !u!61 &2369051958119050158
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992416932478775070}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.1678642, y: 0.016786397}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4.78, y: 4.32}
+    newSize: {x: 4.78, y: 4.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.2356484, y: 3.1785226}
+  m_EdgeRadius: 0

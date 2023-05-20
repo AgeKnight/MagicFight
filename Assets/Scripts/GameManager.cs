@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public bool isEsc;
     [HideInInspector]
     public Text GameMessager;
+    public Player player;
     void Awake()
     {
         isEsc = false;

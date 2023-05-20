@@ -14,13 +14,14 @@ public class Player : MonoBehaviour
     float BattleEnterTime;
     float PressTime;
     float dodgeTime;
-    Rigidbody2D rigidBody;
     Bullet bullet;
     SpriteRenderer sprite;
     Animator animator;
     Vector3 scale;
     #endregion
     #region "Hide"
+    [HideInInspector]
+    public Rigidbody2D rigidBody;
     [HideInInspector]
     public int scaleX = 1;
     [HideInInspector]
@@ -43,6 +44,8 @@ public class Player : MonoBehaviour
     public EnterBattle enterBattle;
     [HideInInspector]
     public bool isDodge = false;
+    [HideInInspector]
+    public int EnemyDirection = 0;
     #endregion
     #region  "Public"
     public float JumpSpeed;
@@ -51,6 +54,8 @@ public class Player : MonoBehaviour
     public float totalMP;
     public float allDodge;
     public float hurtDistance;
+    public GameObject Head;
+    public GameObject Shoose;
     #endregion
     void Awake()
     {
@@ -218,7 +223,7 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
-    public void OnDamage(float damage)
+    public void OnDamage(float damage,float enemyHurtDistance,Enemy enemy)
     {
         if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
         {
@@ -227,6 +232,7 @@ public class Player : MonoBehaviour
                 damage = 0;
             }
             hp -= damage;
+            Hurt(enemyHurtDistance,enemy);
             if (hp <= 0)
             {
                 hp = 0;
@@ -235,9 +241,31 @@ public class Player : MonoBehaviour
             }
         }
     }
+    void Hurt(float enemyHurtDistance,Enemy enemy)
+    {
+        Vector2 hurtPosition;
+        if(transform.position.x-enemy.transform.position.x<0)
+        {
+            EnemyDirection=-1;
+        }
+        else if(transform.position.x-enemy.transform.position.x>0)
+        {
+            EnemyDirection=1;
+        }
+        hurtPosition.y = transform.position.y;
+        hurtPosition.x = transform.position.x + enemyHurtDistance * EnemyDirection;
+        transform.position = Vector3.MoveTowards(transform.position, hurtPosition, 100 * speed * Time.deltaTime);
+    }
     public void Die()
     {
         GameManager.Instance.isDie = true;
         Destroy(this.gameObject);
+    }
+    void OnTriggerExit2D(Collider2D other) 
+    {      
+        if (other.gameObject.tag == "Enemy" )
+        {
+            other.gameObject.GetComponent<Enemy>().ColliderTrigger();
+        }
     }
 }
