@@ -152,11 +152,12 @@ public class Enemy : MonoBehaviour
             isAttack = true;
             if(enemyType == EnemyType.chasingMonster)
             {
+                rigidBody.gravityScale = 0;
                 EnemyCollider.isTrigger = true;
-                rigidBody.MovePosition(player.Shoose.transform.position);
+                transform.position = Vector3.MoveTowards(transform.position, player.Shoose.transform.position, 30*speed * Time.deltaTime);
             }
         }
-        else if (other.gameObject.tag == "Floor")
+        if (other.gameObject.tag == "Floor")
         {
             if(enemyType == EnemyType.chasingMonster&&player!=null)
             {
@@ -182,6 +183,7 @@ public class Enemy : MonoBehaviour
     }
     public void ColliderTrigger()
     {
+        rigidBody.gravityScale = 1;
         EnemyCollider.isTrigger = false;
     }
     void OnTriggerEnter2D(Collider2D other)

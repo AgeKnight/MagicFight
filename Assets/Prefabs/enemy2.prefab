@@ -475,7 +475,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.09585172, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -486,7 +486,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 2.08}
+  m_Size: {x: 2.3082967, y: 2.08}
   m_EdgeRadius: 0
 --- !u!50 &7247351733673497828
 Rigidbody2D:
@@ -526,7 +526,7 @@ MonoBehaviour:
   HPBar: {fileID: 234596905}
   enemyType: 1
   totalHP: 100
-  speed: 3
+  speed: 1
   damage: 5
   allAtackTime: 0
   moveDistance: 1.5
@@ -545,6 +545,6 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.029242417, y: 0.178144}
-  m_Size: {x: 13.19774, y: 2.43633}
+  m_Offset: {x: 0.015951797, y: 0.019183556}
+  m_Size: {x: 13.345209, y: 1.6733632}
   m_Direction: 1
