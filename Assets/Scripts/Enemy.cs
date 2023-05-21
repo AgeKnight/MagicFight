@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
-       // HPBar.value = hp / totalHP;
+        HPBar.value = hp / totalHP;
         if (enemyType != EnemyType.Boss)
         {
             if (canMove)
