@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
             ThreeDie();
         }
         EscapeTitle();
+        EscapeAll();
     }
     void ThreeDie()
     {
@@ -71,12 +72,24 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1;
         }
     }
+    public void EscapeAll()
+    {
+        if (isEsc || isDie)
+        {
+            player.enabled = false;
+        }
+        else
+        {
+            player.enabled = true;
+        }
+    }
     public void Return()
     {
         SceneManager.LoadScene("Game");
     }
     public void Win()
     {
+        isWin = true;
         Pause[1].SetActive(true);
     }
     public void Quit()

@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     float BattleEnterTime;
     float PressTime;
     float dodgeTime;
+    bool isDodge = false;
     Bullet bullet;
     SpriteRenderer sprite;
     Animator animator;
@@ -43,8 +44,6 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public EnterBattle enterBattle;
     [HideInInspector]
-    public bool isDodge = false;
-    [HideInInspector]
     public int EnemyDirection = 0;
     #endregion
     #region  "Public"
@@ -54,8 +53,6 @@ public class Player : MonoBehaviour
     public float totalMP;
     public float allDodge;
     public float hurtDistance;
-    public GameObject Head;
-    public GameObject Shoose;
     #endregion
     void Awake()
     {
@@ -72,34 +69,32 @@ public class Player : MonoBehaviour
     {
         slider[0].value = hp / totalHP;
         slider[1].value = mp / totalMP;
-        if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
+        if (isDodge)
         {
-            if (isDodge)
+            dodgeTime += Time.deltaTime;
+            if (dodgeTime >= allDodge)
             {
-                dodgeTime += Time.deltaTime;
-                if (dodgeTime >= allDodge)
-                {
-                    dodgeTime = 0;
-                    isDodge = false;
-                    animator.SetBool("isDodgeL", false);
-                    animator.SetBool("isDodgeR", false);
-                }
+                dodgeTime = 0;
+                isDodge = false;
+                animator.SetBool("isDodgeL", false);
+                animator.SetBool("isDodgeR", false);
             }
-            if (isUseKnife)
-            {
-                BattleEnterTime += Time.deltaTime;
-                if (BattleEnterTime >= 0.5f)
-                {
-                    BattleEnterTime = 0;
-                    isUseKnife = false;
-                }
-            }
-            Move();
-            Shoot();
-            EnterBattle();
-            Jump();
-            Dodge();
         }
+        if (isUseKnife)
+        {
+            BattleEnterTime += Time.deltaTime;
+            if (BattleEnterTime >= 0.5f)
+            {
+                BattleEnterTime = 0;
+                isUseKnife = false;
+            }
+        }
+        Move();
+        Shoot();
+        EnterBattle();
+        Jump();
+        Dodge();
+
     }
     #region "角色移動與跳躍"
     /// <summary>
@@ -178,17 +173,17 @@ public class Player : MonoBehaviour
                 }
             }
             PressTime = 0;
-            bullet.canShoot = true;         
+            bullet.canShoot = true;
         }
     }
     void EnterBattle()
     {
         if (Input.GetKeyDown(KeyCode.K) && !isUseKnife)
         {
-            Instantiate(Knife,KnifePosition.position,Quaternion.identity);
+            Instantiate(Knife, KnifePosition.position, Quaternion.identity);
             if (enterBattle.enemy != null)
             {
-                enterBattle.enemy.OnDamage(enterBattle.damage, hurtDistance,isUseKnife);
+                enterBattle.enemy.OnDamage(enterBattle.damage, hurtDistance, isUseKnife);
             }
             if (enterBattle.bullet != null)
             {
@@ -206,7 +201,7 @@ public class Player : MonoBehaviour
         {
             isDodge = true;
             if (scaleX > 0)
-            {               
+            {
                 animator.SetBool("isDodgeL", isDodge);
             }
             if (scaleX < 0)
@@ -217,40 +212,39 @@ public class Player : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.gameObject.tag=="Floor")
+        if (other.gameObject.tag == "Floor")
         {
             canJump = 0;
         }
     }
     #endregion
-    public void OnDamage(float damage,float enemyHurtDistance,Enemy enemy)
+    public void OnDamage(float damage, float enemyHurtDistance, Enemy enemy)
     {
-        if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
+
+        if (!isDodge)
         {
-            if (isDodge)
-            {
-                damage = 0;
-            }
             hp -= damage;
-            Hurt(enemyHurtDistance,enemy);
-            if (hp <= 0)
-            {
-                hp = 0;
-                slider[0].value = hp / totalHP;
-                Die();
-            }
+            isDodge = true;
         }
+        Hurt(enemyHurtDistance, enemy);
+        if (hp <= 0)
+        {
+            hp = 0;
+            slider[0].value = hp / totalHP;
+            Die();
+        }
+
     }
-    void Hurt(float enemyHurtDistance,Enemy enemy)
+    void Hurt(float enemyHurtDistance, Enemy enemy)
     {
         Vector2 hurtPosition;
-        if(transform.position.x-enemy.transform.position.x<0)
+        if (transform.position.x - enemy.transform.position.x < 0)
         {
-            EnemyDirection=-1;
+            EnemyDirection = -1;
         }
-        else if(transform.position.x-enemy.transform.position.x>0)
+        if (transform.position.x - enemy.transform.position.x > 0)
         {
-            EnemyDirection=1;
+            EnemyDirection = 1;
         }
         hurtPosition.y = transform.position.y;
         hurtPosition.x = transform.position.x + enemyHurtDistance * EnemyDirection;
@@ -260,12 +254,5 @@ public class Player : MonoBehaviour
     {
         GameManager.Instance.isDie = true;
         Destroy(this.gameObject);
-    }
-    void OnTriggerExit2D(Collider2D other) 
-    {      
-        if (other.gameObject.tag == "Enemy" )
-        {
-            other.gameObject.GetComponent<Enemy>().ColliderTrigger();
-        }
     }
 }

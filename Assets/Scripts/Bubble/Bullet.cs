@@ -49,16 +49,13 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
+        if (destoyTime >= allDestroyTime)
         {
-            if (destoyTime >= allDestroyTime)
-            {
-                Die();
-            }
-            if (canShoot)
-            {
-                Move();          
-            }
+            Die();
+        }
+        if (canShoot)
+        {
+            Move();
         }
     }
     void Move()
@@ -86,60 +83,51 @@ public class Bullet : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
+        if (other.gameObject.tag != "Player")
         {
-            if (other.gameObject.tag != "Player")
+            flyTime = allFlyTime;
+        }
+        if (other.gameObject.tag == "Enemy")
+        {
+            if (isGas)
             {
-                flyTime = allFlyTime;
+                damage *= 3;
             }
-            if (other.gameObject.tag == "Enemy")
-            {
-                if (isGas)
-                {
-                    damage *= 3;
-                }
-                other.gameObject.GetComponent<Enemy>().OnDamage(damage, hurtDistance,true);
-                Die();
-            }
-            if (other.gameObject.tag == "NotEnemy")
-            {
-                bubbleClose.isEnemy = true;
-                bubbleClose.gameObject.GetComponent<SpriteRenderer>().sprite = other.gameObject.GetComponent<SpriteRenderer>().sprite;
-                bubbleClose.Item = other.gameObject;
-                other.gameObject.SetActive(false);
-            }
+            other.gameObject.GetComponent<Enemy>().OnDamage(damage, hurtDistance, true);
+            Die();
+        }
+        if (other.gameObject.tag == "NotEnemy")
+        {
+            bubbleClose.isEnemy = true;
+            bubbleClose.gameObject.GetComponent<SpriteRenderer>().sprite = other.gameObject.GetComponent<SpriteRenderer>().sprite;
+            bubbleClose.Item = other.gameObject;
+            other.gameObject.SetActive(false);
         }
     }
     void OnCollisionStay2D(Collision2D other)
     {
-        if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
+        if (other.gameObject.tag == "Bullet" && this.gameObject.tag == "Bullet" && !isGas && !other.gameObject.GetComponent<Bullet>().isGas)
         {
-            if (other.gameObject.tag == "Bullet" && this.gameObject.tag == "Bullet" && !isGas && !other.gameObject.GetComponent<Bullet>().isGas)
-            {
-                other.gameObject.tag = "MeetBullet";
-                this.gameObject.tag = "MeetBullet";
-            }
-            if (other.gameObject.tag == "MeetBullet" && this.gameObject.tag == "Bullet" && !isGas && !other.gameObject.GetComponent<Bullet>().isGas)
-            {
-                this.gameObject.tag = "CanThreeDelete";
-            }
-            if (other.gameObject.tag == "CanThreeDelete")
-            {
-                this.gameObject.tag = "CanThreeDelete";
-                bulletCanceled.SetActive(true);
-                GameManager.Instance.bullets.Add(this);
-            }
+            other.gameObject.tag = "MeetBullet";
+            this.gameObject.tag = "MeetBullet";
+        }
+        if (other.gameObject.tag == "MeetBullet" && this.gameObject.tag == "Bullet" && !isGas && !other.gameObject.GetComponent<Bullet>().isGas)
+        {
+            this.gameObject.tag = "CanThreeDelete";
+        }
+        if (other.gameObject.tag == "CanThreeDelete")
+        {
+            this.gameObject.tag = "CanThreeDelete";
+            bulletCanceled.SetActive(true);
+            GameManager.Instance.bullets.Add(this);
         }
     }
     void OnCollisionExit2D(Collision2D other)
     {
-        if (!GameManager.Instance.isEsc || !GameManager.Instance.isDie)
+        if (other.gameObject.tag == "MeetBullet")
         {
-            if (other.gameObject.tag == "MeetBullet")
-            {
-                other.gameObject.tag = "Bullet";
-                this.gameObject.tag = "Bullet";
-            }
+            other.gameObject.tag = "Bullet";
+            this.gameObject.tag = "Bullet";
         }
     }
     public void Die()
