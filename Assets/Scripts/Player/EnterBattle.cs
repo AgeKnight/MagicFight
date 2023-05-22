@@ -9,16 +9,22 @@ public class EnterBattle : MonoBehaviour
     public Enemy enemy;
     [HideInInspector]
     public Bullet bullet;
+    [HideInInspector]
+    public Boss boss;
     public float damage;
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy"&& enemy == null)
         {
             enemy = other.GetComponent<Enemy>();
         }
         if ((other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet") && bullet == null)
         {
             bullet = other.GetComponent<Bullet>();
+        }
+        if (other.gameObject.tag == "Boss" )
+        {
+            boss = other.GetComponent<Boss>();
         }
     }
     void OnTriggerExit2D(Collider2D other)
@@ -30,6 +36,10 @@ public class EnterBattle : MonoBehaviour
         if (other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet")
         {
             bullet = null;
+        }
+        if (other.gameObject.tag == "Boss" )
+        {
+            boss = null;
         }
     }
 }

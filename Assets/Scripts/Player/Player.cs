@@ -9,44 +9,37 @@ public class Player : MonoBehaviour
     /// 需要存檔的:hp、mp、bulletHorizontal
     /// </summary>
     #region "Internal"
+    int scaleX = 1;
+    int canJump = 0;
     float hp;
     float mp;
     float BattleEnterTime;
     float PressTime;
     float dodgeTime;
     bool isDodge = false;
+    bool isUseKnife = false;
     Bullet bullet;
     SpriteRenderer sprite;
     Animator animator;
     Vector3 scale;
+    Rigidbody2D rigidBody;
     #endregion
     #region "Hide"
     [HideInInspector]
-    public Rigidbody2D rigidBody;
-    [HideInInspector]
-    public int scaleX = 1;
-    [HideInInspector]
     public float bulletHorizontal = -1;
-    [HideInInspector]
-    public int canJump = 0;
-    [HideInInspector]
-    public bool isUseKnife;
-    [HideInInspector]
-    public GameObject Bullet;
-    [HideInInspector]
-    public GameObject Knife;
-    [HideInInspector]
-    public Transform KnifePosition;
-    [HideInInspector]
-    public Transform bulletPosition;
-    [HideInInspector]
-    public Slider[] slider;
-    [HideInInspector]
-    public EnterBattle enterBattle;
-    [HideInInspector]
-    public int EnemyDirection = 0;
     #endregion
+    [System.Serializable]
+    public struct Weapon
+    {
+        public GameObject Bullet;
+        public GameObject Knife;
+        public Transform KnifePosition;
+        public Transform bulletPosition;
+        public EnterBattle enterBattle;
+    }
     #region  "Public"
+    public Slider[] slider;
+    public Weapon weapon;
     public float JumpSpeed;
     public float speed;
     public float totalHP;
@@ -61,23 +54,21 @@ public class Player : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         scale = transform.localScale;
-        isUseKnife = false;
         hp = totalHP;
         mp = totalMP;
     }
     void Update()
     {
-        slider[0].value = hp / totalHP;
         slider[1].value = mp / totalMP;
         if (isDodge)
         {
             dodgeTime += Time.deltaTime;
+            animator.SetBool("isDodge", true);
             if (dodgeTime >= allDodge)
             {
                 dodgeTime = 0;
                 isDodge = false;
-                animator.SetBool("isDodgeL", false);
-                animator.SetBool("isDodgeR", false);
+                animator.SetBool("isDodge", false);
             }
         }
         if (isUseKnife)
@@ -141,7 +132,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.J) && mp > 0)
         {
-            bullet = Instantiate(Bullet, bulletPosition.position, Quaternion.identity).GetComponent<Bullet>();
+            bullet = Instantiate(weapon.Bullet, weapon.bulletPosition.position, Quaternion.identity).GetComponent<Bullet>();
             bullet.Horizontal = bulletHorizontal;
             mp -= bullet.useMP;
             if (mp < 0)
@@ -155,7 +146,7 @@ public class Player : MonoBehaviour
             if (PressTime > 0.3f)
             {
                 bullet.isGas = true;
-                bullet.BiggiestScale = bullet.gasScale;
+                bullet.gas.BiggiestScale = bullet.gas.gasScale;
                 bullet.nowCorotine = StartCoroutine(bullet.Bigger());
                 bullet.flyTime = 0;
             }
@@ -180,14 +171,18 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K) && !isUseKnife)
         {
-            Instantiate(Knife, KnifePosition.position, Quaternion.identity);
-            if (enterBattle.enemy != null)
+            Instantiate(weapon.Knife, weapon.KnifePosition.position, Quaternion.identity);
+            if (weapon.enterBattle.enemy != null)
             {
-                enterBattle.enemy.OnDamage(enterBattle.damage, hurtDistance, isUseKnife);
+                weapon.enterBattle.enemy.OnDamage(weapon.enterBattle.damage, hurtDistance, isUseKnife);
             }
-            if (enterBattle.bullet != null)
+            if (weapon.enterBattle.bullet != null)
             {
-                enterBattle.bullet.Die();
+                weapon.enterBattle.bullet.Die();
+            }
+            if (weapon.enterBattle.boss != null)
+            {
+                weapon.enterBattle.boss.OnDamage(weapon.enterBattle.damage);
             }
             isUseKnife = true;
         }
@@ -200,14 +195,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S) && !isDodge)
         {
             isDodge = true;
-            if (scaleX > 0)
-            {
-                animator.SetBool("isDodgeL", isDodge);
-            }
-            if (scaleX < 0)
-            {
-                animator.SetBool("isDodgeR", isDodge);
-            }
         }
     }
     void OnCollisionEnter2D(Collision2D other)
@@ -218,15 +205,14 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
-    public void OnDamage(float damage, float enemyHurtDistance, Enemy enemy)
+    public void OnDamage(float damage)
     {
-
         if (!isDodge)
         {
             hp -= damage;
             isDodge = true;
+            slider[0].value = hp / totalHP;
         }
-        Hurt(enemyHurtDistance, enemy);
         if (hp <= 0)
         {
             hp = 0;
@@ -234,21 +220,6 @@ public class Player : MonoBehaviour
             Die();
         }
 
-    }
-    void Hurt(float enemyHurtDistance, Enemy enemy)
-    {
-        Vector2 hurtPosition;
-        if (transform.position.x - enemy.transform.position.x < 0)
-        {
-            EnemyDirection = -1;
-        }
-        if (transform.position.x - enemy.transform.position.x > 0)
-        {
-            EnemyDirection = 1;
-        }
-        hurtPosition.y = transform.position.y;
-        hurtPosition.x = transform.position.x + enemyHurtDistance * EnemyDirection;
-        transform.position = Vector3.MoveTowards(transform.position, hurtPosition, 100 * speed * Time.deltaTime);
     }
     public void Die()
     {

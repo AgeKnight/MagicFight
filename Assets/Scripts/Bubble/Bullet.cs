@@ -24,22 +24,30 @@ public class Bullet : MonoBehaviour
     public bool canShoot = false;
     [HideInInspector]
     public bool isGas = false;
-    [HideInInspector]
-    public GameObject bulletCanceled;
     public Coroutine nowCorotine;
-    [HideInInspector]
-    public BubbleClose bubbleClose;
     #endregion
     #region "public"
-    public float speed;
-    public float allDestroyTime;
+    [System.Serializable]
+    public struct Gas
+    {
+        public float speed;
+        public float slowSpeed;
+        public float BiggiestScale;
+        public float gasScale;
+    }
+    [System.Serializable]
+    public struct AllTime
+    {
+        public float allDestroyTime;
+        public float allFlyTime;
+    }
+    public Gas gas;
+    public AllTime allTime;
     public float damage;
     public float useMP;
-    public float BiggiestScale;
-    public float allFlyTime;
-    public float slowSpeed;
-    public float gasScale;
     public float hurtDistance;
+    public GameObject bulletCanceled;
+    public BubbleClose bubbleClose;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -49,7 +57,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (destoyTime >= allDestroyTime)
+        if (destoyTime >= allTime.allDestroyTime)
         {
             Die();
         }
@@ -60,10 +68,10 @@ public class Bullet : MonoBehaviour
     }
     void Move()
     {
-        if (flyTime >= allFlyTime)
+        if (flyTime >= allTime.allFlyTime)
         {
             destoyTime += Time.deltaTime;
-            bigTime = BiggiestScale;
+            bigTime = gas.BiggiestScale;
             transform.localScale = new Vector3(bigTime, bigTime, bigTime);
             transform.Translate(0, 0, 0);
         }
@@ -73,11 +81,11 @@ public class Bullet : MonoBehaviour
             flyTime += Time.deltaTime;
             if (isGas)
             {
-                transform.Translate(horizontal * slowSpeed * Time.deltaTime, 0, 0);
+                transform.Translate(horizontal * gas.slowSpeed * Time.deltaTime, 0, 0);
             }
             else
             {
-                transform.Translate(horizontal * speed * Time.deltaTime, 0, 0);
+                transform.Translate(horizontal * gas.speed * Time.deltaTime, 0, 0);
             }
         }
     }
@@ -85,7 +93,7 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.tag != "Player")
         {
-            flyTime = allFlyTime;
+            flyTime = allTime.allFlyTime;
         }
         if (other.gameObject.tag == "Enemy")
         {
@@ -94,6 +102,11 @@ public class Bullet : MonoBehaviour
                 damage *= 3;
             }
             other.gameObject.GetComponent<Enemy>().OnDamage(damage, hurtDistance, true);
+            Die();
+        }
+        if (other.gameObject.tag == "Boss")
+        {
+            other.gameObject.GetComponent<Boss>().OnDamage(damage);
             Die();
         }
         if (other.gameObject.tag == "NotEnemy")
@@ -133,15 +146,15 @@ public class Bullet : MonoBehaviour
     public void Die()
     {
         nowCorotine = null;
-        bigTime = BiggiestScale;
-        flyTime = allFlyTime;
+        bigTime = gas.BiggiestScale;
+        flyTime = allTime.allFlyTime;
         canShoot = false;
         canBlow = false;
-        if (bubbleClose != null && bubbleClose.isEnemy && destoyTime < allDestroyTime)
+        if (bubbleClose != null && bubbleClose.isEnemy && destoyTime < allTime.allDestroyTime)
         {
             bubbleClose.Item.GetComponent<Enemy>().Die();
         }
-        if (bubbleClose.Item != null && (destoyTime >= allDestroyTime || !bubbleClose.isEnemy))
+        if (bubbleClose.Item != null && (destoyTime >= allTime.allDestroyTime || !bubbleClose.isEnemy))
         {
             bubbleClose.Item.transform.position = this.transform.position;
             bubbleClose.Item.SetActive(true);
@@ -160,7 +173,7 @@ public class Bullet : MonoBehaviour
     }
     public IEnumerator Bigger()
     {
-        while (bigTime < BiggiestScale)
+        while (bigTime < gas.BiggiestScale)
         {
             bigTime += Time.deltaTime;
             transform.localScale = new Vector3(bigTime, bigTime, bigTime);

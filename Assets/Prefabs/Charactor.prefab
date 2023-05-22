@@ -137,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
   bullet: {fileID: 0}
+  boss: {fileID: 0}
   damage: 20
 --- !u!1 &6085653240815534844
 GameObject:
@@ -292,29 +293,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b37f6347305c64f97a57d16c8e441d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 0}
-  scaleX: 1
   bulletHorizontal: -1
-  canJump: 0
-  isUseKnife: 0
-  Bullet: {fileID: 8311964591065868140, guid: de8b2d81514f0e24fa7ed9c74ba9d8bc, type: 3}
-  Knife: {fileID: 8445284207721756653, guid: e43f5577de4c7ec49af54e7c4fbe1e1d, type: 3}
-  KnifePosition: {fileID: 624188888}
-  bulletPosition: {fileID: 129726031}
   slider:
   - {fileID: 0}
   - {fileID: 0}
-  enterBattle: {fileID: 6655086254382137425}
-  isDodge: 0
-  EnemyDirection: 0
+  weapon:
+    Bullet: {fileID: 8311964591065868140, guid: de8b2d81514f0e24fa7ed9c74ba9d8bc, type: 3}
+    Knife: {fileID: 8445284207721756653, guid: e43f5577de4c7ec49af54e7c4fbe1e1d, type: 3}
+    KnifePosition: {fileID: 624188888}
+    bulletPosition: {fileID: 129726031}
+    enterBattle: {fileID: 6655086254382137425}
   JumpSpeed: 10
   speed: 10
   totalHP: 100
   totalMP: 300
   allDodge: 1
   hurtDistance: 5
-  Head: {fileID: 0}
-  Shoose: {fileID: 0}
 --- !u!95 &2012241845
 Animator:
   serializedVersion: 3

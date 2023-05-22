@@ -74,13 +74,16 @@ public class GameManager : MonoBehaviour
     }
     public void EscapeAll()
     {
-        if (isEsc || isDie)
+        if (!isDie)
         {
-            player.enabled = false;
-        }
-        else
-        {
-            player.enabled = true;
+            if (isEsc || isWin)
+            {
+                player.enabled = false;
+            }
+            else
+            {
+                player.enabled = true;
+            }
         }
     }
     public void Return()
