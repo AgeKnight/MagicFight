@@ -157,6 +157,10 @@ public class Bullet : MonoBehaviour
         if (bubbleClose.Item != null && (destoyTime >= allTime.allDestroyTime || !bubbleClose.isEnemy))
         {
             bubbleClose.Item.transform.position = this.transform.position;
+            if(bubbleClose.isEnemy)
+            {
+                bubbleClose.Item.GetComponent<Enemy>().AnabiosisTime  =  bubbleClose.Item.GetComponent<Enemy>().damage.AllAnabiosisTime;
+            }
             bubbleClose.Item.SetActive(true);
         }
         Destroy(this.gameObject);

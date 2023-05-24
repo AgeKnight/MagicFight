@@ -9,9 +9,10 @@ public class Enemy : MonoBehaviour
     bool isDied = false;
     bool canMove = true;
     bool canReturn = false;
-    float AnabiosisTime = 0;
     Vector3 thisPosition;
     Vector3 targetPosition;
+    [HideInInspector]
+    public float AnabiosisTime = 0;
     public enum EnemyType
     {
         poland,
@@ -44,8 +45,8 @@ public class Enemy : MonoBehaviour
         HPBar.value = hp / totalHP;
         if (canMove)
         {
-            transform.gameObject.tag = "Enemy";
             Move();
+            transform.gameObject.tag = "Enemy";
         }
         else
         {
@@ -58,6 +59,7 @@ public class Enemy : MonoBehaviour
         AnabiosisTime += Time.deltaTime;
         if (AnabiosisTime > damage.AllAnabiosisTime)
         {
+            HPBar.gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
             hp += 10;
             canMove = true;
             isDied = true;
@@ -113,6 +115,7 @@ public class Enemy : MonoBehaviour
                 Die();
             }
             hp = 0;
+            HPBar.gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
             canMove = false;
         }       
     }

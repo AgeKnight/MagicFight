@@ -876,6 +876,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barrier
       objectReference: {fileID: 0}
+    - target: {fileID: 8004379805605022369, guid: 7e9ba3f45ce7d39409a3a098b1ab9e7a, type: 3}
+      propertyPath: m_TagString
+      value: Barrier
+      objectReference: {fileID: 0}
     - target: {fileID: 8004379805605022374, guid: 7e9ba3f45ce7d39409a3a098b1ab9e7a, type: 3}
       propertyPath: m_SortingOrder
       value: -1
@@ -2855,6 +2859,10 @@ PrefabInstance:
     - target: {fileID: 8004379805605022369, guid: 7e9ba3f45ce7d39409a3a098b1ab9e7a, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004379805605022369, guid: 7e9ba3f45ce7d39409a3a098b1ab9e7a, type: 3}
+      propertyPath: m_TagString
+      value: Barrier
       objectReference: {fileID: 0}
     - target: {fileID: 8004379805605022374, guid: 7e9ba3f45ce7d39409a3a098b1ab9e7a, type: 3}
       propertyPath: m_SortingOrder

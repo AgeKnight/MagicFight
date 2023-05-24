@@ -13,7 +13,10 @@ public class BulletCancel : MonoBehaviour
         } 
         if(other.gameObject.tag=="Boss")
         {
-            other.GetComponent<Boss>().OnDamage(bullet.damage*3);
+            if(other.GetComponent<Boss>()!=null)
+            {
+                other.GetComponent<Boss>().OnDamage(bullet.damage*3);
+            }         
         }       
     }
 }

@@ -53,8 +53,12 @@ public class Boss : MonoBehaviour
             CreateFire();
         }
         else
-        {
-            Instantiate(allAttack[0], FirePos, Quaternion.identity);
+        {          
+            BossAttack temp = Instantiate(allAttack[0], FirePos, Quaternion.identity).gameObject.GetComponent<BossAttack>();
+            if(FirePos.x-player.transform.position.x>0)
+            {
+                temp.Direction = -1;
+            }
             canAttack = false;
         }
     }
@@ -69,6 +73,7 @@ public class Boss : MonoBehaviour
         hp -= damage;
         if (hp <= 0)
         {
+            HPBar.gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
             Die();
         }
     }

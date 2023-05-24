@@ -19,19 +19,32 @@ public class BossAttack : MonoBehaviour
     public Boss boss;
     public float speed;
     public float damage;
-    void Update() 
+    public int Direction = 1;
+    void Update()
     {
-        
+        Move();
     }
     void Move()
     {
-
+        transform.Translate(Direction * speed * Time.deltaTime, 0, 0);
     }
-    void OnTriggerEnter2D(Collider2D other) 
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag=="Player")
+        if (other.gameObject.tag == "Player")
         {
             other.GetComponent<Player>().OnDamage(damage);
+            if (attack.attackType == AttackType.Fire)
+            {
+                Die();
+            }
         }
+        else if ((other.gameObject.tag == "Barrier" && attack.attackType == AttackType.Fire) || ((other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet" )&& attack.canAttack))
+        {
+            Die();
+        }
+    }
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }

@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     float dodgeTime;
     bool isDodge = false;
     bool isUseKnife = false;
+    bool isInvincible = false;
     Bullet bullet;
     SpriteRenderer sprite;
     Animator animator;
@@ -60,17 +61,18 @@ public class Player : MonoBehaviour
     void Update()
     {
         slider[1].value = mp / totalMP;
-        if (isDodge)
+        if (isDodge||isInvincible)
         {
             dodgeTime += Time.deltaTime;
-            animator.SetBool("isDodge", true);
             if (dodgeTime >= allDodge)
             {
                 dodgeTime = 0;
                 isDodge = false;
-                animator.SetBool("isDodge", false);
+                isInvincible = false;
             }
         }
+        animator.SetBool("isInvincible", isInvincible);
+        animator.SetBool("isDodge", isDodge);
         if (isUseKnife)
         {
             BattleEnterTime += Time.deltaTime;
@@ -84,7 +86,7 @@ public class Player : MonoBehaviour
         Shoot();
         EnterBattle();
         Jump();
-        Dodge();
+        IsInvincible();
 
     }
     #region "角色移動與跳躍"
@@ -190,11 +192,11 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 閃避
     /// </summary>
-    void Dodge()
+    void IsInvincible()
     {
-        if (Input.GetKeyDown(KeyCode.S) && !isDodge)
+        if (Input.GetKeyDown(KeyCode.S) && !isInvincible)
         {
-            isDodge = true;
+            isInvincible = true;
         }
     }
     void OnCollisionEnter2D(Collision2D other)
@@ -207,7 +209,7 @@ public class Player : MonoBehaviour
     #endregion
     public void OnDamage(float damage)
     {
-        if (!isDodge)
+        if (!isDodge&&!isInvincible)
         {
             hp -= damage;
             isDodge = true;
@@ -217,6 +219,7 @@ public class Player : MonoBehaviour
         {
             hp = 0;
             slider[0].value = hp / totalHP;
+            slider[0].gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
             Die();
         }
 
