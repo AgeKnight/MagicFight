@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class BossHouse : MonoBehaviour
 {
-    public GameObject Ground;
-    public GameObject Main;
-    public GameObject CameraPos;
-    public GameObject[] BossThings;
+    GameObject CameraPos;
+    GameObject Ground;
+    GameObject Main;
+    [HideInInspector]
+    public GameObject[] AttackRange;
+    public GameObject[] BossThings; 
     public Material BackGround;
+    static BossHouse instance;
+    public static BossHouse Instance { get => instance; set => instance = value; }
+    void Awake() 
+    {
+        instance = this;
+        CameraPos = this.gameObject.transform.GetChild(0).gameObject;
+        Ground = this.gameObject.transform.GetChild(1).gameObject;
+        Main = this.gameObject.transform.GetChild(2).gameObject;
+        AttackRange[0] = this.gameObject.transform.GetChild(3).gameObject;
+        AttackRange[1] = this.gameObject.transform.GetChild(4).gameObject;
+    }
     void OnTriggerExit2D(Collider2D other) 
     {
         if (other.gameObject.tag == "Player")

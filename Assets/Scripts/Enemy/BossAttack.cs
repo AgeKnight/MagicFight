@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BossAttack : MonoBehaviour
 {
+    float attackTime = 0;
+    float allAttackTime = 0.5f;
+    [HideInInspector]
+    public int Direction = 1;
     public enum AttackType
     {
         Fire,
@@ -19,14 +23,25 @@ public class BossAttack : MonoBehaviour
     public Boss boss;
     public float speed;
     public float damage;
-    public int Direction = 1;
     void Update()
     {
         Move();
     }
     void Move()
     {
-        transform.Translate(Direction * speed * Time.deltaTime, 0, 0);
+        switch (attack.attackType)
+        {
+            case AttackType.Fire:
+                transform.Translate(Direction * speed * Time.deltaTime, 0, 0);
+                break;
+            case AttackType.Light:
+                attackTime+=Time.deltaTime;
+                if(attackTime>=allAttackTime)
+                {
+                    Die();
+                }
+                break;
+        }
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -38,7 +53,7 @@ public class BossAttack : MonoBehaviour
                 Die();
             }
         }
-        else if ((other.gameObject.tag == "Barrier" && attack.attackType == AttackType.Fire) || ((other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet" )&& attack.canAttack))
+        else if ((other.gameObject.tag == "Barrier" && attack.attackType == AttackType.Fire) || ((other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet") && attack.canAttack))
         {
             Die();
         }
