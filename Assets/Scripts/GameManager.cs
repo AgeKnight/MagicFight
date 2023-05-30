@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public List<Bullet> bullets = new List<Bullet>();
     [HideInInspector]
-    public int CharatorNum;
-    [HideInInspector]
     public bool isDie;
     [HideInInspector]
     public bool isWin;
@@ -31,7 +29,6 @@ public class GameManager : MonoBehaviour
         isEsc = false;
         isDie = false;
         isWin = false;
-        CharatorNum = 1;
         Time.timeScale = 1;
         Instance = this;
     }

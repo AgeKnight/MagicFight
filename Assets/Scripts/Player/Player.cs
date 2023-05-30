@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         slider[1].value = mp / totalMP;
-        if (isDodge||isInvincible)
+        if (isDodge || isInvincible)
         {
             dodgeTime += Time.deltaTime;
             if (dodgeTime >= allDodge)
@@ -82,12 +82,16 @@ public class Player : MonoBehaviour
                 isUseKnife = false;
             }
         }
-        Move();
+        
         Shoot();
         EnterBattle();
         Jump();
         IsInvincible();
 
+    }
+    void FixedUpdate() 
+    {
+        Move();
     }
     #region "角色移動與跳躍"
     /// <summary>
@@ -101,16 +105,15 @@ public class Player : MonoBehaviour
             horizontal = -1;
             bulletHorizontal = -1;
             scaleX = 1;
-            GameManager.Instance.CharatorNum = -1;
         }
         if (Input.GetKey(KeyCode.D))
         {
             horizontal = 1;
             bulletHorizontal = 1;
             scaleX = -1;
-            GameManager.Instance.CharatorNum = 1;
         }
-        transform.Translate(new Vector2(horizontal * speed * Time.deltaTime, 0), Space.World);
+        Vector3 v3Dis = new Vector3(horizontal * speed * Time.deltaTime, 0, 0);
+        transform.Translate(v3Dis, Space.Self);
         transform.localScale = new Vector3(scale.x * scaleX, scale.y, scale.z);
     }
     /// <summary>
@@ -209,7 +212,7 @@ public class Player : MonoBehaviour
     #endregion
     public void OnDamage(float damage)
     {
-        if (!isDodge&&!isInvincible)
+        if (!isDodge && !isInvincible)
         {
             hp -= damage;
             isDodge = true;

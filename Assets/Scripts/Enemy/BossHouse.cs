@@ -4,41 +4,30 @@ using UnityEngine;
 
 public class BossHouse : MonoBehaviour
 {
-    GameObject CameraPos;
-    GameObject Ground;
     GameObject Main;
+    GameObject PlayerTransform;
     [HideInInspector]
     public GameObject[] AttackRange;
-    public GameObject[] BossThings; 
-    public Material BackGround;
+    public GameObject[] BossThings;
+    public GameObject NowCamera;
     static BossHouse instance;
     public static BossHouse Instance { get => instance; set => instance = value; }
-    void Awake() 
+    void Awake()
     {
         instance = this;
-        CameraPos = this.gameObject.transform.GetChild(0).gameObject;
-        Ground = this.gameObject.transform.GetChild(1).gameObject;
-        Main = this.gameObject.transform.GetChild(2).gameObject;
-        AttackRange[0] = this.gameObject.transform.GetChild(3).gameObject;
-        AttackRange[1] = this.gameObject.transform.GetChild(4).gameObject;
+        Main = this.gameObject.transform.GetChild(0).gameObject;
+        AttackRange[0] = this.gameObject.transform.GetChild(1).gameObject;
+        AttackRange[1] = this.gameObject.transform.GetChild(2).gameObject;
+        PlayerTransform = this.gameObject.transform.GetChild(3).gameObject;
     }
-    void OnTriggerExit2D(Collider2D other) 
+    public void EnterBossHouse(Player player)
     {
-        if (other.gameObject.tag == "Player")
+        player.transform.position = PlayerTransform.transform.position;
+        NowCamera.SetActive(false);
+        Main.SetActive(true);
+        for (int i = 0; i < BossThings.Length; i++)
         {
-            Main.GetComponent<Cinemachine.CinemachineBrain>().enabled = false; 
-            Camera.main. orthographicSize = 6;
-            Main.transform.position = CameraPos.transform.position;
-            Main.GetComponent<Skybox>().material = BackGround;
-            for (int i = 0; i < 2; i++)
-            {
-                BossThings[i].SetActive(true);
-            }       
-            GroundAnime();
+            BossThings[i].SetActive(true);
         }
-    }
-    void GroundAnime()
-    {
-        Ground.SetActive(true);
     }
 }
