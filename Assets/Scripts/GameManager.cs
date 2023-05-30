@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 需要存檔的:CharatorNum
     /// </summary>
+    bool isOpen = false;
     static GameManager instance;
     public static GameManager Instance { get => instance; set => instance = value; }
     [HideInInspector]
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
     }
     void EscapeTitle()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isDie && !isWin)
+        if (Input.GetKeyDown(KeyCode.Escape) && !isDie && !isWin && !isOpen)
         {
             GameMessager.text = "暫停中";
             isEsc = !isEsc;
@@ -70,6 +71,11 @@ public class GameManager : MonoBehaviour
         else
         {
             Time.timeScale = 1;
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                isOpen = !isOpen;
+                Pause[2].SetActive(isOpen);
+            }
         }
     }
     public void EscapeAll()
