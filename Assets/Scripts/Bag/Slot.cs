@@ -15,7 +15,7 @@ public class Slot : MonoBehaviour
     public Text slotNum;
     [HideInInspector]
     public string SlotInfo;
-    public void SetSlot(Item item)
+    public void SetSlot(Item item,int num)
     { 
         if(item==null)
         {
@@ -23,7 +23,7 @@ public class Slot : MonoBehaviour
             return;
         }
         slotItem = item;
-        slotNum.text = item.ItemNum.ToString();
+        slotNum.text = num.ToString();
         slotImage.sprite = item.ItemImg;
         SlotInfo = item.ItemInfo;
     }

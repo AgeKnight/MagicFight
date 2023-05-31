@@ -6,11 +6,10 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     float hp;
+    float MoveTime = 0;
+    float AllMovetime = 1;
     bool isDied = false;
     bool canMove = true;
-    bool canReturn = false;
-    Vector3 thisPosition;
-    Vector3 targetPosition;
     [HideInInspector]
     public float AnabiosisTime = 0;
     public enum EnemyType
@@ -34,11 +33,6 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         hp = totalHP;
-        if (enemyType == EnemyType.poland)
-        {
-            thisPosition = transform.position;
-            targetPosition = new Vector2(transform.position.x + moveDistance, transform.position.y);
-        }
     }
     void Update()
     {
@@ -70,20 +64,18 @@ public class Enemy : MonoBehaviour
         switch (enemyType)
         {
             case EnemyType.poland:
-                if (canReturn)
+                if (MoveTime < AllMovetime)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, thisPosition, speed * Time.deltaTime);
-                    if (transform.position.x == thisPosition.x)
-                    {
-                        canReturn = false;
-                    }
+                    transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0), Space.Self);
+                    MoveTime += Time.deltaTime;
                 }
                 else
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-                    if (transform.position.x == targetPosition.x)
+                    transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0), Space.Self);
+                    MoveTime += Time.deltaTime;
+                    if (MoveTime >= AllMovetime * 2)
                     {
-                        canReturn = true;
+                        MoveTime = 0;
                     }
                 }
                 break;
@@ -117,7 +109,7 @@ public class Enemy : MonoBehaviour
             hp = 0;
             HPBar.gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
             canMove = false;
-        }       
+        }
     }
     void OnCollisionStay2D(Collision2D other)
     {
@@ -130,11 +122,11 @@ public class Enemy : MonoBehaviour
     {
         Vector3 hurtPosition = new Vector3();
         int EnemyDirection = 0;
-        if (GameManager.Instance.player.transform.position.x - transform.position.x < 0)
+        if (Player.Instance.transform.position.x - transform.position.x < 0)
         {
             EnemyDirection = 1;
         }
-        else if (GameManager.Instance.player.transform.position.x - transform.position.x > 0)
+        else if (Player.Instance.transform.position.x - transform.position.x > 0)
         {
             EnemyDirection = -1;
         }

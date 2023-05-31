@@ -10,7 +10,6 @@ public class Boss : MonoBehaviour
     float attackTime = 0;
     bool isDied = false;
     public Slider HPBar;
-    public Player player;
     public GameObject[] allAttack;
     public float totalHP;
     public float allAttackTime;
@@ -37,32 +36,29 @@ public class Boss : MonoBehaviour
     }
     void Attack()
     {
-        if (player != null)
+        if (HPBar.value * 100 >= 50)
         {
-            if (HPBar.value * 100 >= 50)
-            {
-                CreateFire();
-            }
-            else
-            {
-                CreateLight();
-                CreateFire();
-            }
+            CreateFire();
+        }
+        else
+        {
+            CreateLight();
+            CreateFire();
         }
     }
     void CreateFire()
     {
         float x = Random.Range(BossHouse.Instance.AttackRange[0].transform.position.x, BossHouse.Instance.AttackRange[1].transform.position.x);
-        float y = player.transform.position.y;
+        float y = Player.Instance.transform.position.y;
         Vector3 FirePos = new Vector3(x, y, 0);
-        if (Vector3.Distance(FirePos, player.transform.position) < 7)
+        if (Vector3.Distance(FirePos, Player.Instance.transform.position) < 7)
         {
             CreateFire();
         }
         else
         {
             BossAttack temp = Instantiate(allAttack[0], FirePos, Quaternion.identity).gameObject.GetComponent<BossAttack>();
-            if (FirePos.x - player.transform.position.x > 0)
+            if (FirePos.x - Player.Instance.transform.position.x > 0)
             {
                 temp.Direction = -1;
             }
@@ -99,7 +95,7 @@ public class Boss : MonoBehaviour
             y = Random.Range(BossHouse.Instance.AttackRange[0].transform.position.y, BossHouse.Instance.AttackRange[1].transform.position.y);
         }
         Vector3 LightPos = new Vector3(x, y, 0);
-        Instantiate(allAttack[1], LightPos, Quaternion.Euler(0,0,z));
+        Instantiate(allAttack[1], LightPos, Quaternion.Euler(0, 0, z));
         canAttack = false;
     }
     void Die()

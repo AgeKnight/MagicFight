@@ -266,13 +266,13 @@ MonoBehaviour:
   canShoot: 0
   isGas: 0
   gas:
-    speed: 10
+    speed: 20
     slowSpeed: 3
-    BiggiestScale: 0.3
-    gasScale: 0.8
+    BiggiestScale: 0.1
+    gasScale: 0.2
   allTime:
-    allDestroyTime: 10
-    allFlyTime: 2
+    allDestroyTime: 15
+    allFlyTime: 3
   damage: 30
   useMP: 5
   hurtDistance: 1

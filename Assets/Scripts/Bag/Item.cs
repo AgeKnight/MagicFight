@@ -8,7 +8,6 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     public string Itemname;
-    public int ItemNum;
     [TextArea]
     public string ItemInfo;
     public Sprite ItemImg;
@@ -18,4 +17,5 @@ public class Item : ScriptableObject
         mp
     }
     public ItemType itemType;
+    public int itemEffect;
 }

@@ -48,12 +48,14 @@
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\InvokeEventFromInspector.cs" />
      <Compile Include="Assets\Scripts\Enemy\BossAttack.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\MixingCameraBlend.cs" />
+     <Compile Include="Assets\Scripts\Enemy\BossGate.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\CameraMagnets\CameraMagnetProperty.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\SpawnInCircle.cs" />
      <Compile Include="Assets\Scripts\Bubble\Bullet.cs" />
      <Compile Include="Assets\Scripts\Bubble\Stand.cs" />
      <Compile Include="Assets\Scripts\Player\BlowBubble.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\PlayerMoveOnSphere.cs" />
+     <Compile Include="Assets\Scripts\Floor\MoveFloor.cs" />
      <Compile Include="Assets\Scripts\Bag\InventoryManager.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\CameraMagnets\CameraMagnetTargetController.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Trigger volumes\GenericTrigger.cs" />
@@ -62,6 +64,7 @@
      <Compile Include="Assets\Scripts\Bag\Item.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Models\UnityCharacter\Scripts\CharacterMovementNoCamera.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ActivateCamOnPlay.cs" />
+     <Compile Include="Assets\Scripts\Player\Foot.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\DualTarget\PointAtAimTarget.cs" />
      <Compile Include="Assets\Scripts\Enemy\Boss.cs" />
      <Compile Include="Assets\Scripts\Enemy\BossHouse.cs" />
@@ -76,7 +79,7 @@
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ExampleHelpWindow.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ActivateCameraWithDistance.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\TagChanger.cs" />
-     <Compile Include="Assets\Scripts\Enemy\BossGate.cs" />
+     <Compile Include="Assets\Scripts\Bag\ItemOnWorld.cs" />
      <None Include="Assets\Grafics\Cainos\Pixel Art Platformer - Village Props\Changelog.txt" />
      <None Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\ScreenCutoutShader.shader" />
     <Reference Include="UnityEngine">
@@ -646,14 +649,17 @@
     <Reference Include="System.Xml.Serialization">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.33f1\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="Cinemachine">
-        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    <Reference Include="Unity.InternalAPIEngineBridge.001">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
         <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="com.unity.cinemachine.editor">
-        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+    <Reference Include="Unity.2D.PixelPerfect">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
         <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
@@ -661,14 +667,20 @@
     <Reference Include="Unity.VisualStudio.Editor">
         <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Timeline.Editor">
-        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Timeline">
         <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
         <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEditorBridge.001">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Path.Editor">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.2D.Path.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
         <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
@@ -681,6 +693,36 @@
     </Reference>
     <Reference Include="UnityEngine.UI">
         <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.PixelPerfect.Editor">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.2D.PixelPerfect.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline.Editor">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Common.Runtime">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.2D.Common.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.SpriteShape.Editor">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Common.Editor">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.SpriteShape.Runtime">
+        <HintPath>C:\Users\owenb\Documents\MagicFight\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
     /// </summary>
     #region "Internal"
     int scaleX = 1;
-    int canJump = 0;
     float hp;
     float mp;
     float BattleEnterTime;
@@ -26,8 +25,10 @@ public class Player : MonoBehaviour
     Rigidbody2D rigidBody;
     #endregion
     #region "Hide"
-    [HideInInspector]
+    [HideInInspector]   
     public float bulletHorizontal = -1;
+    [HideInInspector]
+    public bool canJump = true;
     #endregion
     [System.Serializable]
     public struct Weapon
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour
         public EnterBattle enterBattle;
     }
     #region  "Public"
+    static Player instance;
+    public static Player Instance { get => instance; set => instance = value; }
     public Slider[] slider;
     public Weapon weapon;
     public float JumpSpeed;
@@ -50,6 +53,7 @@ public class Player : MonoBehaviour
     #endregion
     void Awake()
     {
+        instance = this;
         bullet = GetComponent<Bullet>();
         rigidBody = GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
@@ -121,9 +125,9 @@ public class Player : MonoBehaviour
     /// </summary>
     void Jump()
     {
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump < 2)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump)
         {
-            canJump += 1;
+            canJump = false;
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, JumpSpeed);
         }
     }
@@ -202,13 +206,6 @@ public class Player : MonoBehaviour
             isInvincible = true;
         }
     }
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "Floor")
-        {
-            canJump = 0;
-        }
-    }
     #endregion
     public void OnDamage(float damage)
     {
@@ -231,5 +228,16 @@ public class Player : MonoBehaviour
     {
         GameManager.Instance.isDie = true;
         Destroy(this.gameObject);
+    }
+    public void UseItem(Item item)
+    {
+        if(item.itemType == Item.ItemType.hp)
+        {
+            hp += item.itemEffect; 
+        }
+        if(item.itemType == Item.ItemType.mp)
+        {
+            mp += item.itemEffect; 
+        }
     }
 }

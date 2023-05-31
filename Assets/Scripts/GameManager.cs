@@ -23,9 +23,10 @@ public class GameManager : MonoBehaviour
     public bool isEsc;
     [HideInInspector]
     public Text GameMessager;
-    public Player player;
     void Awake()
     {
+        Pause[2].SetActive(true);
+        Pause[2].SetActive(false);
         isEsc = false;
         isDie = false;
         isWin = false;
@@ -70,6 +71,8 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1;
             if (Input.GetKeyDown(KeyCode.C))
             {
+                InventoryManager.Instance.thisItem = null;
+                InventoryManager.Instance.text.text  = "";
                 isOpen = !isOpen;
                 Pause[2].SetActive(isOpen);
             }
@@ -81,11 +84,11 @@ public class GameManager : MonoBehaviour
         {
             if (isEsc || isWin)
             {
-                player.enabled = false;
+                Player.Instance.enabled = false;
             }
             else
             {
-                player.enabled = true;
+                Player.Instance.enabled = true;
             }
         }
     }

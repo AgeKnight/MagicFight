@@ -79,6 +79,7 @@ public class Bullet : MonoBehaviour
         {
             nowCorotine = StartCoroutine(Bigger());
             flyTime += Time.deltaTime;
+            Debug.Log(flyTime);
             if (isGas)
             {
                 transform.Translate(horizontal * gas.slowSpeed * Time.deltaTime, 0, 0);

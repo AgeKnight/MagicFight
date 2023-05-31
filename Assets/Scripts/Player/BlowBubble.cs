@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BlowBubble : MonoBehaviour
 {
-    public Player player;
     Bullet Bubbles;
     void Update() 
     {
@@ -14,7 +13,7 @@ public class BlowBubble : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.L) && Bubbles != null)
         {
-            Bubbles.Horizontal = player.bulletHorizontal;
+            Bubbles.Horizontal = Player.Instance.bulletHorizontal;
             Bubbles.canBlow = true;
             Bubbles.nowCorotine = StartCoroutine(Bubbles.BeBlow());
         }

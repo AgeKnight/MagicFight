@@ -7,5 +7,12 @@ using UnityEngine;
 [Serializable]
 public class Inventor : ScriptableObject
 {
-    public List<Item> itemList = new List<Item>();
+    public List<InventoryItem> itemList = new List<InventoryItem>();
+}
+
+[System.Serializable]
+public class InventoryItem
+{
+    public Item item;
+    public int nums;
 }
