@@ -8,7 +8,7 @@ public class BossGate : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            BossHouse.Instance.EnterBossHouse(other.gameObject.GetComponent<Player>());
+            BossHouse.Instance.EnterBossHouse();
         }
     }
 }

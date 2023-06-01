@@ -22,9 +22,10 @@ public class Player : MonoBehaviour
     SpriteRenderer sprite;
     Animator animator;
     Vector3 scale;
-    Rigidbody2D rigidBody;
     #endregion
     #region "Hide"
+    [HideInInspector]
+    public Rigidbody2D rigidBody;
     [HideInInspector]   
     public float bulletHorizontal = -1;
     [HideInInspector]
@@ -127,6 +128,7 @@ public class Player : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump)
         {
+            float temp = transform.position.y;
             canJump = false;
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, JumpSpeed);
         }
@@ -226,8 +228,7 @@ public class Player : MonoBehaviour
     }
     public void Die()
     {
-        GameManager.Instance.isDie = true;
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
     public void UseItem(Item item)
     {

@@ -105,15 +105,4 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Main");
     }
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            other.gameObject.GetComponent<Player>().Die();
-        }
-        if (other.gameObject.tag == "Enemy")
-        {
-            other.gameObject.GetComponent<Enemy>().Die();
-        }
-    }
 }

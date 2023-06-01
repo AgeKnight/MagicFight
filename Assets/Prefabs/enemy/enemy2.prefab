@@ -459,7 +459,7 @@ SpriteRenderer:
   m_Size: {x: 4.78, y: 4.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &559871806910791161
@@ -507,7 +507,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &6356770818712082643
 MonoBehaviour:
@@ -521,17 +521,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b93a9d523d4a1f747a70720f8b32c4ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 0}
-  player: {fileID: 0}
+  AnabiosisTime: 0
   HPBar: {fileID: 234596905}
   enemyType: 1
   totalHP: 100
+  damage:
+    damage: 0
+    AllAnabiosisTime: 0
   speed: 1
-  damage: 5
-  allAtackTime: 0
   moveDistance: 1.5
-  AllAnabiosisTime: 2
-  hurtDistance: 3
 --- !u!70 &4181938449445818281
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

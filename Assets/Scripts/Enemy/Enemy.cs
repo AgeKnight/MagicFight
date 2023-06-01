@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     float hp;
-    float MoveTime = 0;
-    float AllMovetime = 1;
     bool isDied = false;
     bool canMove = true;
+    bool canReturn = true;
+    int OneTurn = 1;
     [HideInInspector]
     public float AnabiosisTime = 0;
     public enum EnemyType
@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour
         if (canMove)
         {
             Move();
+            ReturnIf();
             transform.gameObject.tag = "Enemy";
         }
         else
@@ -59,24 +60,35 @@ public class Enemy : MonoBehaviour
             isDied = true;
         }
     }
-    public void Move()
+    void ReturnIf()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(1, -1),1f,LayerMask.GetMask("Floor"));
+        RaycastHit2D hit2 = Physics2D.Raycast(transform.position, new Vector2(-1, -1),1f,LayerMask.GetMask("Floor"));
+        RaycastHit2D hit3 = Physics2D.Raycast(transform.position, new Vector2(1, 0),1f,LayerMask.GetMask("Floor"));
+        RaycastHit2D hit4 = Physics2D.Raycast(transform.position, new Vector2(-1, 0),1f,LayerMask.GetMask("Floor"));
+        if (!hit.collider||!hit2.collider||hit3.collider||hit4.collider)
+        {           
+            canReturn = !canReturn;
+        }
+    }
+    IEnumerator turnDir()
+    {
+        yield return new WaitForSeconds(1f);
+        OneTurn = 1;
+    }
+
+    void Move()
     {
         switch (enemyType)
         {
             case EnemyType.poland:
-                if (MoveTime < AllMovetime)
+                if (canReturn)
                 {
-                    transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0), Space.Self);
-                    MoveTime += Time.deltaTime;
+                    transform.Translate(speed * Time.deltaTime, 0, 0);
                 }
                 else
                 {
-                    transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0), Space.Self);
-                    MoveTime += Time.deltaTime;
-                    if (MoveTime >= AllMovetime * 2)
-                    {
-                        MoveTime = 0;
-                    }
+                    transform.Translate(-1 * speed * Time.deltaTime, 0, 0);
                 }
                 break;
             case EnemyType.chasingMonster:

@@ -20,9 +20,9 @@ public class BossHouse : MonoBehaviour
         AttackRange[1] = this.gameObject.transform.GetChild(2).gameObject;
         PlayerTransform = this.gameObject.transform.GetChild(3).gameObject;
     }
-    public void EnterBossHouse(Player player)
+    public void EnterBossHouse()
     {
-        player.transform.position = PlayerTransform.transform.position;
+        Player.Instance.transform.position = PlayerTransform.transform.position;
         NowCamera.SetActive(false);
         Main.SetActive(true);
         for (int i = 0; i < BossThings.Length; i++)

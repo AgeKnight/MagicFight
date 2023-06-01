@@ -32,9 +32,10 @@ public class MoveFloor : MonoBehaviour
                 if(Vector3.Distance(transform.position ,nowPos)  >= moveDistance && !isCreate)
                 {
                     isCreate = true;
-                    Instantiate(this.gameObject,nowPos,Quaternion.identity).GetComponent<MoveFloor>().Awake();
+                    GameObject temp = Instantiate(this.gameObject,nowPos,Quaternion.identity);
+                    temp.transform.SetParent(this.gameObject.transform.parent);
                 }
-                if(Vector3.Distance(transform.position ,nowPos) >= moveDistance*2)
+                if(Vector3.Distance(transform.position ,nowPos) >= moveDistance*5)
                 {
                     Destroy(gameObject);
                 }
