@@ -22,6 +22,7 @@ public class BossHouse : MonoBehaviour
     }
     public void EnterBossHouse()
     {
+        GameManager.Instance.isInBoss = true;
         Player.Instance.transform.position = PlayerTransform.transform.position;
         NowCamera.SetActive(false);
         Main.SetActive(true);

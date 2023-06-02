@@ -501,6 +501,9 @@ MonoBehaviour:
   damage:
     damage: 10
     AllAnabiosisTime: 5
+    items:
+    - {fileID: 5751207951723175096, guid: 7d47d85073581d34b9ec3ebaa039b62b, type: 3}
+    - {fileID: 1951066832835675159, guid: d9433f891c25f464eb906715ea3c0009, type: 3}
   speed: 5
   moveDistance: 3
 --- !u!61 &2369051958119050158

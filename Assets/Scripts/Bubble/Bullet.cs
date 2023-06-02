@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     #region "Internal"
     float horizontal = 0;
-    float destoyTime;
+    float destoyTime = 0;
     float bigTime = 0;
     #endregion
     #region "Hide"
@@ -79,7 +79,6 @@ public class Bullet : MonoBehaviour
         {
             nowCorotine = StartCoroutine(Bigger());
             flyTime += Time.deltaTime;
-            Debug.Log(flyTime);
             if (isGas)
             {
                 transform.Translate(horizontal * gas.slowSpeed * Time.deltaTime, 0, 0);
@@ -151,7 +150,7 @@ public class Bullet : MonoBehaviour
         flyTime = allTime.allFlyTime;
         canShoot = false;
         canBlow = false;
-        if (bubbleClose != null && bubbleClose.isEnemy && destoyTime < allTime.allDestroyTime)
+        if (bubbleClose.Item != null && bubbleClose.isEnemy && destoyTime < allTime.allDestroyTime)
         {
             bubbleClose.Item.GetComponent<Enemy>().Die();
         }

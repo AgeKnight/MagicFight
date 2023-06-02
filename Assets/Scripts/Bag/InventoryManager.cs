@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
+    bool isClear = false;
     static InventoryManager instance;
     public static InventoryManager Instance { get => instance; set => instance = value; }
     public Inventor bag;
@@ -15,7 +16,23 @@ public class InventoryManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        if(!isClear)
+        {
+            ClearBag();
+            isClear = true;
+        }
         Refresh();
+    }
+    void ClearBag()
+    {
+        for(int i = 0; i < bag.itemList.Count; i++) 
+        {
+            if(bag.itemList[i].item!=null)
+            {
+                bag.itemList[i].item=null;
+                bag.itemList[i].nums = 0;
+            }
+        }
     }
     public void Refresh()
     {

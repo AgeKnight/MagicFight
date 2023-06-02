@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     [HideInInspector]   
     public float bulletHorizontal = -1;
     [HideInInspector]
-    public bool canJump = true;
+    public int canJump = 0;
     #endregion
     [System.Serializable]
     public struct Weapon
@@ -126,10 +126,9 @@ public class Player : MonoBehaviour
     /// </summary>
     void Jump()
     {
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump<2)
         {
-            float temp = transform.position.y;
-            canJump = false;
+            canJump+=1;
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, JumpSpeed);
         }
     }
@@ -228,7 +227,7 @@ public class Player : MonoBehaviour
     }
     public void Die()
     {
-        Destroy(gameObject);
+        this.gameObject.SetActive(false);
     }
     public void UseItem(Item item)
     {

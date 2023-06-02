@@ -6,10 +6,10 @@ public class MapDie : MonoBehaviour
 {
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && !GameManager.Instance.isInBoss)
         {
             GameManager.Instance.isDie = true;
-            other.gameObject.GetComponent<Player>().Die();
+            Player.Instance.Die();
         }
         if (other.gameObject.tag == "Enemy")
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossAttack : MonoBehaviour
 {
     float attackTime = 0;
-    float allAttackTime = 0.5f;
+    public float allAttackTime = 0.5f;
     [HideInInspector]
     public int Direction = 1;
     public enum AttackType
@@ -33,6 +33,11 @@ public class BossAttack : MonoBehaviour
         {
             case AttackType.Fire:
                 transform.Translate(Direction * speed * Time.deltaTime, 0, 0);
+                attackTime+=Time.deltaTime;
+                if(attackTime>=allAttackTime)
+                {
+                    Die();
+                }             
                 break;
             case AttackType.Light:
                 attackTime+=Time.deltaTime;
@@ -45,15 +50,16 @@ public class BossAttack : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag == "Player")
         {
-            other.GetComponent<Player>().OnDamage(damage);
+            Player.Instance.OnDamage(damage);
             if (attack.attackType == AttackType.Fire)
             {
                 Die();
             }
         }
-        else if ((other.gameObject.tag == "Barrier" && attack.attackType == AttackType.Fire) || ((other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet") && attack.canAttack))
+        if ((other.gameObject.tag == "Floor" && attack.attackType == AttackType.Fire) || ((other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet") && attack.canAttack))
         {
             Die();
         }

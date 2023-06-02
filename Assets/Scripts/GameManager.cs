@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     public bool isEsc;
     [HideInInspector]
     public Text GameMessager;
+    [HideInInspector]
+    public bool isInBoss = false;
     void Awake()
     {
         Pause[2].SetActive(true);
@@ -32,6 +34,7 @@ public class GameManager : MonoBehaviour
         isWin = false;
         Time.timeScale = 1;
         Instance = this;
+        
     }
     void Update()
     {

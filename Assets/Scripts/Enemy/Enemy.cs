@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     {
         public int damage;
         public float AllAnabiosisTime;
+        public GameObject[] items;
     }
     public Slider HPBar;
     public EnemyType enemyType;
@@ -62,12 +63,12 @@ public class Enemy : MonoBehaviour
     }
     void ReturnIf()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(1, -1),1f,LayerMask.GetMask("Floor"));
-        RaycastHit2D hit2 = Physics2D.Raycast(transform.position, new Vector2(-1, -1),1f,LayerMask.GetMask("Floor"));
-        RaycastHit2D hit3 = Physics2D.Raycast(transform.position, new Vector2(1, 0),1f,LayerMask.GetMask("Floor"));
-        RaycastHit2D hit4 = Physics2D.Raycast(transform.position, new Vector2(-1, 0),1f,LayerMask.GetMask("Floor"));
-        if (!hit.collider||!hit2.collider||hit3.collider||hit4.collider)
-        {           
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(1, -1), 1f, LayerMask.GetMask("Floor"));
+        RaycastHit2D hit2 = Physics2D.Raycast(transform.position, new Vector2(-1, -1), 1f, LayerMask.GetMask("Floor"));
+        RaycastHit2D hit3 = Physics2D.Raycast(transform.position, new Vector2(1, 0), 1f, LayerMask.GetMask("Floor"));
+        RaycastHit2D hit4 = Physics2D.Raycast(transform.position, new Vector2(-1, 0), 1f, LayerMask.GetMask("Floor"));
+        if (!hit.collider || !hit2.collider || hit3.collider || hit4.collider)
+        {
             canReturn = !canReturn;
         }
     }
@@ -106,6 +107,7 @@ public class Enemy : MonoBehaviour
     }
     public void Die()
     {
+        DrogItem();
         Destroy(this.gameObject);
     }
     public void OnDamage(float damage, float hurtDistance, bool isUseKnife)
@@ -145,5 +147,10 @@ public class Enemy : MonoBehaviour
         hurtPosition.y = transform.position.y;
         hurtPosition.x = transform.position.x + hurtDistance * EnemyDirection;
         transform.position = Vector3.MoveTowards(transform.position, hurtPosition, 100 * speed * Time.deltaTime);
+    }
+    void DrogItem()
+    {
+        int i = Random.Range(0, damage.items.Length);
+        Instantiate(damage.items[i], transform.position, Quaternion.identity);
     }
 }
