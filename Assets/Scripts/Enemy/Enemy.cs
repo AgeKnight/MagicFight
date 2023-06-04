@@ -16,7 +16,6 @@ public class Enemy : MonoBehaviour
     {
         poland,
         chasingMonster,
-        spider,
     }
     [System.Serializable]
     public struct onDamage
@@ -35,7 +34,7 @@ public class Enemy : MonoBehaviour
     {
         hp = totalHP;
     }
-    void Update()
+     void Update()
     {
         HPBar.value = hp / totalHP;
         if (canMove)
@@ -71,11 +70,6 @@ public class Enemy : MonoBehaviour
         {
             canReturn = !canReturn;
         }
-    }
-    IEnumerator turnDir()
-    {
-        yield return new WaitForSeconds(1f);
-        OneTurn = 1;
     }
 
     void Move()

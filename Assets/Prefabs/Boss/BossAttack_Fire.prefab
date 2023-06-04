@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7862315509849402816}
   - component: {fileID: 7862315509849402823}
   - component: {fileID: 1874961259084066567}
+  - component: {fileID: -8944683983103567389}
   m_Layer: 0
   m_Name: BossAttack_Fire
   m_TagString: Boss
@@ -130,3 +131,24 @@ MonoBehaviour:
   boss: {fileID: 196455168, guid: d135ce364ac5dc04ba2ca910aa05c4a0, type: 3}
   speed: 5
   damage: 5
+--- !u!50 &-8944683983103567389
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7862315509849402822}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

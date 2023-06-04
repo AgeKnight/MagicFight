@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Boss : MonoBehaviour
 {
     bool canAttack = true;
-    float hp;
+    protected float hp;
     float attackTime = 0;
     bool isDied = false;
     public Slider HPBar;
@@ -17,7 +17,7 @@ public class Boss : MonoBehaviour
     {
         hp = totalHP;
     }
-    void Update()
+    protected virtual void Update()
     {
         HPBar.value = hp / totalHP;
         if (!canAttack)
@@ -98,7 +98,7 @@ public class Boss : MonoBehaviour
         Instantiate(allAttack[1], LightPos, Quaternion.Euler(0, 0, z));
         canAttack = false;
     }
-    void Die()
+    protected virtual void Die()
     {
         isDied = true;
         GameManager.Instance.Win();

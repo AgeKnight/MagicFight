@@ -14,7 +14,7 @@ public class EnterBattle : MonoBehaviour
     public float damage;
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Enemy"&& enemy == null)
+        if (other.gameObject.tag == "Enemy"||other.gameObject.tag == "NotEnemy"&& enemy == null)
         {
             enemy = other.GetComponent<Enemy>();
         }

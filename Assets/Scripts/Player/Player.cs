@@ -65,6 +65,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        slider[0].value = hp / totalHP;
         slider[1].value = mp / totalMP;
         if (isDodge || isInvincible)
         {
@@ -126,7 +127,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void Jump()
     {
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump<2)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump<1)
         {
             canJump+=1;
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, JumpSpeed);
@@ -227,6 +228,7 @@ public class Player : MonoBehaviour
     }
     public void Die()
     {
+        GameManager.Instance.isDie = true;
         this.gameObject.SetActive(false);
     }
     public void UseItem(Item item)

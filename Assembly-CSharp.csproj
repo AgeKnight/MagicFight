@@ -76,11 +76,12 @@
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\3rdPersonWithAimMode\ActivateOnKeypress.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\DualTarget\MoveAimTarget.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\PlayerLookAt.cs" />
+     <Compile Include="Assets\Scripts\MapDie.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ExampleHelpWindow.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ActivateCameraWithDistance.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\TagChanger.cs" />
-     <Compile Include="Assets\Scripts\MapDie.cs" />
+     <Compile Include="Assets\Scripts\Enemy\BossHand.cs" />
      <None Include="Assets\Grafics\Cainos\Pixel Art Platformer - Village Props\Changelog.txt" />
      <None Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\ScreenCutoutShader.shader" />
     <Reference Include="UnityEngine">

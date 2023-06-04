@@ -20,7 +20,6 @@ public class BossAttack : MonoBehaviour
         public bool canAttack;
     }
     public allAttack attack;
-    public Boss boss;
     public float speed;
     public float damage;
     void Update()
@@ -32,12 +31,7 @@ public class BossAttack : MonoBehaviour
         switch (attack.attackType)
         {
             case AttackType.Fire:
-                transform.Translate(Direction * speed * Time.deltaTime, 0, 0);
-                attackTime+=Time.deltaTime;
-                if(attackTime>=allAttackTime)
-                {
-                    Die();
-                }             
+                transform.Translate(Direction * speed * Time.deltaTime, 0, 0);            
                 break;
             case AttackType.Light:
                 attackTime+=Time.deltaTime;

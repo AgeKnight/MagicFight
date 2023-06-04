@@ -8,7 +8,6 @@ public class MapDie : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && !GameManager.Instance.isInBoss)
         {
-            GameManager.Instance.isDie = true;
             Player.Instance.Die();
         }
         if (other.gameObject.tag == "Enemy")

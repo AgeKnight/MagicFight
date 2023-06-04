@@ -8,7 +8,6 @@ public class BossHouse : MonoBehaviour
     GameObject PlayerTransform;
     [HideInInspector]
     public GameObject[] AttackRange;
-    public GameObject[] BossThings;
     public GameObject NowCamera;
     static BossHouse instance;
     public static BossHouse Instance { get => instance; set => instance = value; }
@@ -26,9 +25,5 @@ public class BossHouse : MonoBehaviour
         Player.Instance.transform.position = PlayerTransform.transform.position;
         NowCamera.SetActive(false);
         Main.SetActive(true);
-        for (int i = 0; i < BossThings.Length; i++)
-        {
-            BossThings[i].SetActive(true);
-        }
     }
 }

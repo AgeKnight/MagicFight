@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2920338735706769208
 Transform:
   m_ObjectHideFlags: 0
@@ -113,12 +113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HPBar: {fileID: 0}
-  player: {fileID: 6085653240815534841, guid: 38254955390832b49824d880c59a6173, type: 3}
   allAttack:
   - {fileID: 7862315509849402822, guid: 81fc35fc9c288ad4bb6b73be68b6f108, type: 3}
   - {fileID: 1799221021972772559, guid: a52db882af17252459eb8755e23ccc62, type: 3}
-  AttackRange:
-  - {fileID: 0}
-  - {fileID: 0}
   totalHP: 1000
   allAttackTime: 1
