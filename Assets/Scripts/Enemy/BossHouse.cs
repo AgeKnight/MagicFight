@@ -7,8 +7,9 @@ public class BossHouse : MonoBehaviour
     GameObject Main;
     GameObject PlayerTransform;
     [HideInInspector]
-    public GameObject[] AttackRange;
+    public  GameObject[] AttackRange;
     public GameObject NowCamera;
+    public GameObject thisBoss;
     static BossHouse instance;
     public static BossHouse Instance { get => instance; set => instance = value; }
     void Awake()
@@ -21,8 +22,11 @@ public class BossHouse : MonoBehaviour
     }
     public void EnterBossHouse()
     {
+        UsageCase.progress = 1;
+        UsageCase.isLocked = false;
         GameManager.Instance.isInBoss = true;
         Player.Instance.transform.position = PlayerTransform.transform.position;
+        thisBoss.SetActive(true);
         NowCamera.SetActive(false);
         Main.SetActive(true);
     }

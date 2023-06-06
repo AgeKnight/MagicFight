@@ -1,0 +1,8 @@
+[show]
+<color=#4fe866ff><b>[#AllName1]</b></color>[r]
+你是誰[w]
+<color=#4fe866ff><b>[#AllName0]</b></color>[r]
+你不要管我是誰，我要打倒你[w]
+<color=#4fe866ff><b>[#AllName1]</b></color>[r]
+去死吧[w]
+[hide] 

@@ -19,6 +19,10 @@ public class Boss : MonoBehaviour
     }
     protected virtual void Update()
     {
+        if (!UsageCase.isLocked)
+        {
+            return;
+        }
         HPBar.value = hp / totalHP;
         if (!canAttack)
         {
@@ -101,7 +105,9 @@ public class Boss : MonoBehaviour
     protected virtual void Die()
     {
         isDied = true;
-        GameManager.Instance.Win();
+        UsageCase.progress=2;
+        UsageCase.isLocked = false;
+        GameManager.Instance.isWin = true;
         Destroy(this.gameObject);
     }
     public void OnDamage(float damage)

@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public bool isInBoss = false;
     void Awake()
     {
+        UsageCase.isLocked = false;
+        UsageCase.progress = 0;
         Pause[2].SetActive(true);
         Pause[2].SetActive(false);
         isEsc = false;
@@ -34,10 +36,14 @@ public class GameManager : MonoBehaviour
         isWin = false;
         Time.timeScale = 1;
         Instance = this;
-        
+
     }
     void Update()
     {
+        if (!UsageCase.isLocked)
+        {
+            return;
+        }
         if (bullets.Count >= 3)
         {
             ThreeDie();
@@ -60,12 +66,16 @@ public class GameManager : MonoBehaviour
             isEsc = !isEsc;
             Pause[0].SetActive(isEsc);
         }
-        if (isDie && !isWin)
+        if (isDie)
         {
             GameMessager.text = "你輸了";
             Pause[0].SetActive(true);
         }
-        if (isEsc || isWin || isDie)
+        if (isWin)
+        {
+            GameMessager.text = "你贏了";
+        }
+        if (isEsc || isDie )
         {
             Time.timeScale = 0;
         }
@@ -75,7 +85,7 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.C))
             {
                 InventoryManager.Instance.thisItem = null;
-                InventoryManager.Instance.text.text  = "";
+                InventoryManager.Instance.text.text = "";
                 isOpen = !isOpen;
                 Pause[2].SetActive(isOpen);
             }
@@ -101,11 +111,19 @@ public class GameManager : MonoBehaviour
     }
     public void Win()
     {
-        isWin = true;
-        Pause[1].SetActive(true);
+        Pause[0].SetActive(true);
     }
     public void Quit()
     {
         SceneManager.LoadScene("Main");
+    }
+    public void TextUre()
+    {
+        Pause[1].SetActive(false);
+    }
+    public void HideTextUre()
+    {
+        Pause[1].SetActive(true);
+        UsageCase.progress=-1;
     }
 }

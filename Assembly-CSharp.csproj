@@ -70,6 +70,7 @@
      <Compile Include="Assets\Scripts\Enemy\Boss.cs" />
      <Compile Include="Assets\Scripts\Enemy\BossHouse.cs" />
      <Compile Include="Assets\Scripts\Bag\Slot.cs" />
+     <Compile Include="Assets\Scripts\Enemy\BossHand.cs" />
      <Compile Include="Assets\Scripts\Player\Knife.cs" />
      <Compile Include="Assets\Scripts\Player\EnterBattle.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\PlayerMovement.cs" />
@@ -81,9 +82,19 @@
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ExampleHelpWindow.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ActivateCameraWithDistance.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\TagChanger.cs" />
-     <Compile Include="Assets\Scripts\Enemy\BossHand.cs" />
+     <Compile Include="Assets\Flower\Scripts\FlowerSystem.cs" />
+     <Compile Include="Assets\Flower\Scripts\FlowerManager.cs" />
+     <Compile Include="Assets\Flower\Scripts\UsageCase.cs" />
+     <None Include="Assets\Flower\Resources\Scripts\FightBoss.txt" />
+     <None Include="Assets\Flower\Resources\Scripts\start.txt" />
+     <None Include="Assets\Flower\Resources\demo_start.txt" />
      <None Include="Assets\Grafics\Cainos\Pixel Art Platformer - Village Props\Changelog.txt" />
+     <None Include="Assets\Flower\Resources\Scripts\Win.txt" />
+     <None Include="Assets\Flower\Resources\demo_key.txt" />
      <None Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\ScreenCutoutShader.shader" />
+     <None Include="Assets\Flower\Resources\demo_locked_door.txt" />
+     <None Include="Assets\Flower\Resources\nstart.txt" />
+     <None Include="Assets\Flower\Resources\demo_door.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.33f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

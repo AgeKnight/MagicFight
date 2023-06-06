@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
     {
         hp = totalHP;
     }
-     void Update()
+    void Update()
     {
         HPBar.value = hp / totalHP;
         if (canMove)

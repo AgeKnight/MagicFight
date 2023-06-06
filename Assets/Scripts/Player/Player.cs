@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     #region "Hide"
     [HideInInspector]
     public Rigidbody2D rigidBody;
-    [HideInInspector]   
+    [HideInInspector]
     public float bulletHorizontal = -1;
     [HideInInspector]
     public int canJump = 0;
@@ -65,6 +65,10 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        if (!UsageCase.isLocked)
+        {
+            return;
+        }
         slider[0].value = hp / totalHP;
         slider[1].value = mp / totalMP;
         if (isDodge || isInvincible)
@@ -88,15 +92,10 @@ public class Player : MonoBehaviour
                 isUseKnife = false;
             }
         }
-        
         Shoot();
         EnterBattle();
         Jump();
         IsInvincible();
-
-    }
-    void FixedUpdate() 
-    {
         Move();
     }
     #region "角色移動與跳躍"
@@ -127,9 +126,9 @@ public class Player : MonoBehaviour
     /// </summary>
     void Jump()
     {
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump<1)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump < 1)
         {
-            canJump+=1;
+            canJump += 1;
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, JumpSpeed);
         }
     }
@@ -233,13 +232,13 @@ public class Player : MonoBehaviour
     }
     public void UseItem(Item item)
     {
-        if(item.itemType == Item.ItemType.hp)
+        if (item.itemType == Item.ItemType.hp)
         {
-            hp += item.itemEffect; 
+            hp += item.itemEffect;
         }
-        if(item.itemType == Item.ItemType.mp)
+        if (item.itemType == Item.ItemType.mp)
         {
-            mp += item.itemEffect; 
+            mp += item.itemEffect;
         }
     }
 }
