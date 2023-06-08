@@ -57,6 +57,10 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!UsageCase.isLocked||GameManager.Instance.isDie||GameManager.Instance.isEsc||GameManager.Instance.isWin)
+        {
+            return;
+        }
         if (destoyTime >= allTime.allDestroyTime)
         {
             Die();
@@ -101,12 +105,12 @@ public class Bullet : MonoBehaviour
             {
                 damage *= 3;
             }
-            other.gameObject.GetComponent<Enemy>().OnDamage(damage, hurtDistance, true);
+            other.gameObject.GetComponent<HpController>().OnDamage(damage,transform.position,hurtDistance);
             Die();
         }
         if (other.gameObject.tag == "Boss")
         {
-            other.gameObject.GetComponent<Boss>().OnDamage(damage);
+            other.gameObject.GetComponent<HpController>().OnDamage(damage);
             Die();
         }
         if (other.gameObject.tag == "NotEnemy")
@@ -114,6 +118,8 @@ public class Bullet : MonoBehaviour
             bubbleClose.isEnemy = true;
             bubbleClose.gameObject.GetComponent<SpriteRenderer>().sprite = other.gameObject.GetComponent<SpriteRenderer>().sprite;
             bubbleClose.Item = other.gameObject;
+            bubbleClose.Item.transform.position = this.transform.position;
+            bubbleClose.Item.GetComponent<Rigidbody2D>().gravityScale = 0;
             other.gameObject.SetActive(false);
         }
     }
@@ -152,11 +158,11 @@ public class Bullet : MonoBehaviour
         canBlow = false;
         if (bubbleClose.Item != null && bubbleClose.isEnemy && destoyTime < allTime.allDestroyTime)
         {
-            bubbleClose.Item.GetComponent<Enemy>().Die();
+            bubbleClose.Item.GetComponent<HpController>().Die();
         }
         if (bubbleClose.Item != null && (destoyTime >= allTime.allDestroyTime || !bubbleClose.isEnemy))
         {
-            bubbleClose.Item.transform.position = this.transform.position;
+            bubbleClose.Item.GetComponent<Rigidbody2D>().gravityScale = 1;
             if(bubbleClose.isEnemy)
             {
                 bubbleClose.Item.GetComponent<Enemy>().AnabiosisTime  =  bubbleClose.Item.GetComponent<Enemy>().damage.AllAnabiosisTime;

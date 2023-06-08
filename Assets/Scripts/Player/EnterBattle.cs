@@ -4,42 +4,20 @@ using UnityEngine;
 
 public class EnterBattle : MonoBehaviour
 {
-
-    [HideInInspector]
-    public Enemy enemy;
-    [HideInInspector]
-    public Bullet bullet;
-    [HideInInspector]
-    public Boss boss;
+    public GameObject BattleEmpty;
     public float damage;
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Enemy"||other.gameObject.tag == "NotEnemy"&& enemy == null)
+        if ((other.gameObject.tag == "Enemy"||other.gameObject.tag == "NotEnemy"|| other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet"||other.gameObject.tag == "Boss" )&&BattleEmpty==null)
         {
-            enemy = other.GetComponent<Enemy>();
-        }
-        if ((other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet") && bullet == null)
-        {
-            bullet = other.GetComponent<Bullet>();
-        }
-        if (other.gameObject.tag == "Boss" )
-        {
-            boss = other.GetComponent<Boss>();
+            BattleEmpty = other.gameObject;
         }
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy"||other.gameObject.tag == "NotEnemy"|| other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet"||other.gameObject.tag == "Boss" )
         {
-            enemy = null;
-        }
-        if (other.gameObject.tag == "Bullet" || other.gameObject.tag == "MeetBullet")
-        {
-            bullet = null;
-        }
-        if (other.gameObject.tag == "Boss" )
-        {
-            boss = null;
+            BattleEmpty = null;
         }
     }
 }

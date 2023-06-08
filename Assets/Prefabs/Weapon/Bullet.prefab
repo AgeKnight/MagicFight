@@ -273,7 +273,7 @@ MonoBehaviour:
   allTime:
     allDestroyTime: 15
     allFlyTime: 3
-  damage: 300
+  damage: 10
   useMP: 5
   hurtDistance: 1
   bulletCanceled: {fileID: 951366846}

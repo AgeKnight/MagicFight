@@ -388,6 +388,7 @@ GameObject:
   - component: {fileID: 1992416932478775057}
   - component: {fileID: 3442730918333570127}
   - component: {fileID: 2369051958119050158}
+  - component: {fileID: -2767975078055095457}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Enemy
@@ -473,7 +474,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -495,9 +496,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnabiosisTime: 0
-  HPBar: {fileID: 234596905}
+  canMove: 1
+  isDied: 0
   enemyType: 0
-  totalHP: 100
   damage:
     damage: 10
     AllAnabiosisTime: 5
@@ -532,3 +533,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.2356484, y: 3.1785226}
   m_EdgeRadius: 0
+--- !u!114 &-2767975078055095457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992416932478775070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7f26feada2e99499c23c7b0f00b8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  totalHP: 30
+  hpBar: {fileID: 234596905}

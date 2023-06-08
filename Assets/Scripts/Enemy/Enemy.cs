@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    float hp;
-    bool isDied = false;
-    bool canMove = true;
     bool canReturn = true;
-    int OneTurn = 1;
     [HideInInspector]
     public float AnabiosisTime = 0;
+    [HideInInspector]
+    public bool canMove = true;
+    [HideInInspector]
+    public bool isDied = false;
     public enum EnemyType
     {
         poland,
@@ -24,19 +24,16 @@ public class Enemy : MonoBehaviour
         public float AllAnabiosisTime;
         public GameObject[] items;
     }
-    public Slider HPBar;
     public EnemyType enemyType;
-    public float totalHP;
     public onDamage damage;
     public float speed;
     public float moveDistance;
-    void Awake()
-    {
-        hp = totalHP;
-    }
     void Update()
     {
-        HPBar.value = hp / totalHP;
+        if (!UsageCase.isLocked||GameManager.Instance.isDie||GameManager.Instance.isEsc||GameManager.Instance.isWin)
+        {
+            return;
+        }
         if (canMove)
         {
             Move();
@@ -54,8 +51,8 @@ public class Enemy : MonoBehaviour
         AnabiosisTime += Time.deltaTime;
         if (AnabiosisTime > damage.AllAnabiosisTime)
         {
-            HPBar.gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
-            hp += 10;
+            this.gameObject.GetComponent<HpController>().hpBar.gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+            this.gameObject.GetComponent<HpController>().hp += 10;
             canMove = true;
             isDied = true;
         }
@@ -99,50 +96,14 @@ public class Enemy : MonoBehaviour
         }
 
     }
-    public void Die()
-    {
-        DrogItem();
-        Destroy(this.gameObject);
-    }
-    public void OnDamage(float damage, float hurtDistance, bool isUseKnife)
-    {
-        hp -= damage;
-        Hurt(hurtDistance);
-        if (hp <= 0)
-        {
-            if (isDied || !isUseKnife)
-            {
-                Die();
-            }
-            hp = 0;
-            HPBar.gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
-            canMove = false;
-        }
-    }
     void OnCollisionStay2D(Collision2D other)
     {
         if (other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponent<Player>().OnDamage(damage.damage);
+            other.gameObject.GetComponent<HpController>().OnDamage(damage.damage);
         }
     }
-    void Hurt(float hurtDistance)
-    {
-        Vector3 hurtPosition = new Vector3();
-        int EnemyDirection = 0;
-        if (Player.Instance.transform.position.x - transform.position.x < 0)
-        {
-            EnemyDirection = 1;
-        }
-        else if (Player.Instance.transform.position.x - transform.position.x > 0)
-        {
-            EnemyDirection = -1;
-        }
-        hurtPosition.y = transform.position.y;
-        hurtPosition.x = transform.position.x + hurtDistance * EnemyDirection;
-        transform.position = Vector3.MoveTowards(transform.position, hurtPosition, 100 * speed * Time.deltaTime);
-    }
-    void DrogItem()
+    public void DrogItem()
     {
         int i = Random.Range(0, damage.items.Length);
         Instantiate(damage.items[i], transform.position, Quaternion.identity);

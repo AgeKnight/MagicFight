@@ -10,14 +10,9 @@ public class Player : MonoBehaviour
     /// </summary>
     #region "Internal"
     int scaleX = 1;
-    float hp;
     float mp;
-    float BattleEnterTime;
     float PressTime;
     float dodgeTime;
-    bool isDodge = false;
-    bool isUseKnife = false;
-    bool isInvincible = false;
     Bullet bullet;
     SpriteRenderer sprite;
     Animator animator;
@@ -25,9 +20,13 @@ public class Player : MonoBehaviour
     #endregion
     #region "Hide"
     [HideInInspector]
+    public bool isDodge = false;
+    [HideInInspector]
+    public bool isInvincible = false;
+    [HideInInspector]
     public Rigidbody2D rigidBody;
     [HideInInspector]
-    public float bulletHorizontal = -1;
+    public float bulletHorizontal;
     [HideInInspector]
     public int canJump = 0;
     #endregion
@@ -43,11 +42,10 @@ public class Player : MonoBehaviour
     #region  "Public"
     static Player instance;
     public static Player Instance { get => instance; set => instance = value; }
-    public Slider[] slider;
+    public Slider slider;
     public Weapon weapon;
     public float JumpSpeed;
     public float speed;
-    public float totalHP;
     public float totalMP;
     public float allDodge;
     public float hurtDistance;
@@ -60,17 +58,16 @@ public class Player : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         scale = transform.localScale;
-        hp = totalHP;
+        bulletHorizontal = 1;
         mp = totalMP;
     }
     void Update()
     {
-        if (!UsageCase.isLocked)
+        if (!UsageCase.isLocked||GameManager.Instance.isDie||GameManager.Instance.isEsc||GameManager.Instance.isWin)
         {
             return;
         }
-        slider[0].value = hp / totalHP;
-        slider[1].value = mp / totalMP;
+        slider.value = mp / totalMP;
         if (isDodge || isInvincible)
         {
             dodgeTime += Time.deltaTime;
@@ -83,19 +80,18 @@ public class Player : MonoBehaviour
         }
         animator.SetBool("isInvincible", isInvincible);
         animator.SetBool("isDodge", isDodge);
-        if (isUseKnife)
-        {
-            BattleEnterTime += Time.deltaTime;
-            if (BattleEnterTime >= 0.5f)
-            {
-                BattleEnterTime = 0;
-                isUseKnife = false;
-            }
-        }
         Shoot();
         EnterBattle();
         Jump();
         IsInvincible();
+        
+    }
+    void FixedUpdate() 
+    {
+        if (!UsageCase.isLocked)
+        {
+            return;
+        }
         Move();
     }
     #region "角色移動與跳躍"
@@ -105,17 +101,25 @@ public class Player : MonoBehaviour
     void Move()
     {
         float horizontal = 0;
-        if (Input.GetKey(KeyCode.A))
-        {
-            horizontal = -1;
-            bulletHorizontal = -1;
-            scaleX = 1;
-        }
         if (Input.GetKey(KeyCode.D))
         {
             horizontal = 1;
             bulletHorizontal = 1;
-            scaleX = -1;
+            scaleX = 1;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            horizontal = -1;
+            bulletHorizontal = -1;
+            scaleX = -1; 
+        }
+        if(horizontal==0)
+        {
+            animator.SetBool("isWalk", false);
+        }
+        else
+        {
+            animator.SetBool("isWalk", true);
         }
         Vector3 v3Dis = new Vector3(horizontal * speed * Time.deltaTime, 0, 0);
         transform.Translate(v3Dis, Space.Self);
@@ -144,6 +148,7 @@ public class Player : MonoBehaviour
         {
             bullet = Instantiate(weapon.Bullet, weapon.bulletPosition.position, Quaternion.identity).GetComponent<Bullet>();
             bullet.Horizontal = bulletHorizontal;
+            Debug.Log(bullet.Horizontal );
             mp -= bullet.useMP;
             if (mp < 0)
             {
@@ -179,22 +184,24 @@ public class Player : MonoBehaviour
     }
     void EnterBattle()
     {
-        if (Input.GetKeyDown(KeyCode.K) && !isUseKnife)
+        if (Input.GetKeyDown(KeyCode.K))
         {
             Instantiate(weapon.Knife, weapon.KnifePosition.position, Quaternion.identity);
-            if (weapon.enterBattle.enemy != null)
+            if (weapon.enterBattle.BattleEmpty != null)
             {
-                weapon.enterBattle.enemy.OnDamage(weapon.enterBattle.damage, hurtDistance, isUseKnife);
+                if(weapon.enterBattle.BattleEmpty.tag=="Bullet"||weapon.enterBattle.BattleEmpty.tag=="MeetBullet")
+                {
+                    weapon.enterBattle.BattleEmpty.GetComponent<Bullet>().Die();
+                }
+                else if(weapon.enterBattle.BattleEmpty.tag=="Boss")
+                {
+                    weapon.enterBattle.BattleEmpty.GetComponent<HpController>().OnDamage(weapon.enterBattle.damage);
+                }
+                else
+                {
+                    weapon.enterBattle.BattleEmpty.GetComponent<HpController>().OnDamage(weapon.enterBattle.damage,transform.position,hurtDistance,true);
+                }
             }
-            if (weapon.enterBattle.bullet != null)
-            {
-                weapon.enterBattle.bullet.Die();
-            }
-            if (weapon.enterBattle.boss != null)
-            {
-                weapon.enterBattle.boss.OnDamage(weapon.enterBattle.damage);
-            }
-            isUseKnife = true;
         }
     }
     /// <summary>
@@ -208,33 +215,11 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
-    public void OnDamage(float damage)
-    {
-        if (!isDodge && !isInvincible)
-        {
-            hp -= damage;
-            isDodge = true;
-            slider[0].value = hp / totalHP;
-        }
-        if (hp <= 0)
-        {
-            hp = 0;
-            slider[0].value = hp / totalHP;
-            slider[0].gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
-            Die();
-        }
-
-    }
-    public void Die()
-    {
-        GameManager.Instance.isDie = true;
-        this.gameObject.SetActive(false);
-    }
     public void UseItem(Item item)
     {
         if (item.itemType == Item.ItemType.hp)
         {
-            hp += item.itemEffect;
+            this.gameObject.GetComponent<HpController>().hp += item.itemEffect;
         }
         if (item.itemType == Item.ItemType.mp)
         {

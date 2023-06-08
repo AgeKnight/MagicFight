@@ -50,8 +50,10 @@
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\MixingCameraBlend.cs" />
      <Compile Include="Assets\Scripts\Enemy\BossGate.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\CameraMagnets\CameraMagnetProperty.cs" />
+     <Compile Include="Assets\Flower\Scripts\FlowerSystem.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\SpawnInCircle.cs" />
      <Compile Include="Assets\Scripts\Bubble\Bullet.cs" />
+     <Compile Include="Assets\Flower\Scripts\FlowerManager.cs" />
      <Compile Include="Assets\Scripts\Bubble\Stand.cs" />
      <Compile Include="Assets\Scripts\Player\BlowBubble.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\PlayerMoveOnSphere.cs" />
@@ -59,6 +61,7 @@
      <Compile Include="Assets\Scripts\Bag\ItemOnWorld.cs" />
      <Compile Include="Assets\Scripts\Bag\InventoryManager.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\CameraMagnets\CameraMagnetTargetController.cs" />
+     <Compile Include="Assets\Flower\Scripts\UsageCase.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Trigger volumes\GenericTrigger.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Models\UnityCharacter\Scripts\CharacterMovement.cs" />
      <Compile Include="Assets\Scripts\Bubble\BulletCancel.cs" />
@@ -82,13 +85,10 @@
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ExampleHelpWindow.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ActivateCameraWithDistance.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\TagChanger.cs" />
-     <Compile Include="Assets\Flower\Scripts\FlowerSystem.cs" />
-     <Compile Include="Assets\Flower\Scripts\FlowerManager.cs" />
-     <Compile Include="Assets\Flower\Scripts\UsageCase.cs" />
+     <Compile Include="Assets\Scripts\Player\HpController.cs" />
      <None Include="Assets\Flower\Resources\Scripts\FightBoss.txt" />
      <None Include="Assets\Flower\Resources\Scripts\start.txt" />
      <None Include="Assets\Flower\Resources\demo_start.txt" />
-     <None Include="Assets\Grafics\Cainos\Pixel Art Platformer - Village Props\Changelog.txt" />
      <None Include="Assets\Flower\Resources\Scripts\Win.txt" />
      <None Include="Assets\Flower\Resources\demo_key.txt" />
      <None Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\ScreenCutoutShader.shader" />

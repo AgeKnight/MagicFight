@@ -46,7 +46,7 @@ public class BossAttack : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Player.Instance.OnDamage(damage);
+            other.gameObject.GetComponent<HpController>().OnDamage(damage);
             if (attack.attackType == AttackType.Fire)
             {
                 Die();

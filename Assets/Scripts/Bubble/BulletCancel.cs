@@ -7,16 +7,9 @@ public class BulletCancel : MonoBehaviour
     public Bullet bullet;
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if(other.gameObject.tag=="Enemy")
+        if(other.gameObject.tag=="Enemy"||other.gameObject.tag=="Boss")
         {
-            other.GetComponent<Enemy>().OnDamage(bullet.damage*3,0,true);
-        } 
-        if(other.gameObject.tag=="Boss")
-        {
-            if(other.GetComponent<Boss>()!=null)
-            {
-                other.GetComponent<Boss>().OnDamage(bullet.damage*3);
-            }         
-        }       
+            other.gameObject.GetComponent<HpController>().OnDamage(bullet.damage*3);
+        }     
     }
 }

@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
         isWin = false;
         Time.timeScale = 1;
         Instance = this;
-
     }
     void Update()
     {
@@ -49,7 +48,6 @@ public class GameManager : MonoBehaviour
             ThreeDie();
         }
         EscapeTitle();
-        EscapeAll();
     }
     void ThreeDie()
     {
@@ -88,20 +86,6 @@ public class GameManager : MonoBehaviour
                 InventoryManager.Instance.text.text = "";
                 isOpen = !isOpen;
                 Pause[2].SetActive(isOpen);
-            }
-        }
-    }
-    public void EscapeAll()
-    {
-        if (!isDie)
-        {
-            if (isEsc || isWin)
-            {
-                Player.Instance.enabled = false;
-            }
-            else
-            {
-                Player.Instance.enabled = true;
             }
         }
     }

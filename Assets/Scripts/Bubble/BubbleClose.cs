@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BubbleClose : MonoBehaviour
 {
-    [HideInInspector]
+    //[HideInInspector]
     public bool isEnemy = false;
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject Item;
 }

@@ -8,11 +8,11 @@ public class MapDie : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && !GameManager.Instance.isInBoss)
         {
-            Player.Instance.Die();
+            other.gameObject.GetComponent<HpController>().Die();
         }
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy"||other.gameObject.tag == "NotEnemy")
         {
-            other.gameObject.GetComponent<Enemy>().Die();
+            other.gameObject.GetComponent<HpController>().Die();
         }
     }
 }

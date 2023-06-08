@@ -6,24 +6,15 @@ using UnityEngine.UI;
 public class Boss : MonoBehaviour
 {
     bool canAttack = true;
-    protected float hp;
     float attackTime = 0;
-    bool isDied = false;
-    public Slider HPBar;
     public GameObject[] allAttack;
-    public float totalHP;
     public float allAttackTime;
-    void Awake()
-    {
-        hp = totalHP;
-    }
     protected virtual void Update()
     {
-        if (!UsageCase.isLocked)
+        if (!UsageCase.isLocked||GameManager.Instance.isDie||GameManager.Instance.isEsc||GameManager.Instance.isWin)
         {
             return;
         }
-        HPBar.value = hp / totalHP;
         if (!canAttack)
         {
             attackTime += Time.deltaTime;
@@ -40,7 +31,7 @@ public class Boss : MonoBehaviour
     }
     void Attack()
     {
-        if (HPBar.value * 100 >= 50)
+        if (this.gameObject.GetComponent<HpController>().hpBar.value * 100 >= 50)
         {
             CreateFire();
         }
@@ -101,22 +92,5 @@ public class Boss : MonoBehaviour
         Vector3 LightPos = new Vector3(x, y, 0);
         Instantiate(allAttack[1], LightPos, Quaternion.Euler(0, 0, z));
         canAttack = false;
-    }
-    protected virtual void Die()
-    {
-        isDied = true;
-        UsageCase.progress=2;
-        UsageCase.isLocked = false;
-        GameManager.Instance.isWin = true;
-        Destroy(this.gameObject);
-    }
-    public void OnDamage(float damage)
-    {
-        hp -= damage;
-        if (hp <= 0)
-        {
-            HPBar.gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
-            Die();
-        }
     }
 }

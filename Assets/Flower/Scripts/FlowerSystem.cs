@@ -785,9 +785,6 @@ namespace Flower{
                 throw new Exception($"Spawn scene object failed. key - {key} already exists.");
             }
             var sceneObj = Instantiate(prefab, position, Quaternion.identity);
-            if(!elementsDestroyOnLoad){
-                //DontDestroyOnLoad(sceneObj);
-            }
             RegisterToSceneObject(key, sceneObj);
             return sceneObj;
         }
