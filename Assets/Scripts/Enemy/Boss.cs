@@ -11,7 +11,7 @@ public class Boss : MonoBehaviour
     public float allAttackTime;
     protected virtual void Update()
     {
-        if (!UsageCase.isLocked||GameManager.Instance.isDie||GameManager.Instance.isEsc||GameManager.Instance.isWin)
+        if (!UsageCase.isLocked||GameManager.Instance.isEsc)
         {
             return;
         }

@@ -11,17 +11,10 @@ public class UsageCase : MonoBehaviour
     GameObject DIAOLOG;
     public static bool isLocked = false;
     public static int progress = 0;
-    private bool pickedUpTheKey = false;
     private bool isGameEnd = false;
     public string[] AllName;
     void Start()
     {
-        var audioDemoFile = Resources.Load<AudioClip>("bgm") as AudioClip;
-        if (!audioDemoFile)
-        {
-            Debug.LogWarning("The audio file : 'bgm' is necessary for the demonstration. Please add to the Resources folder.");
-        }
-
         flowerSys = FlowerManager.Instance.CreateFlowerSystem("FlowerSample", false);
         flowerSys.SetupDialog();
         DIAOLOG = GameObject.Find("DefaultDialogPrefab(Clone)");
@@ -97,11 +90,11 @@ public class UsageCase : MonoBehaviour
                 // Continue the messages, stoping by [w] or [lr] keywords.
                 flowerSys.Next();
             }
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                // Resume the system that stopped by [stop] or Stop().
-                flowerSys.Resume();
-            }
+            // if (Input.GetKeyDown(KeyCode.R))
+            // {
+            //     // Resume the system that stopped by [stop] or Stop().
+            //     flowerSys.Resume();
+            // }
         }
         if (isLocked)
         {

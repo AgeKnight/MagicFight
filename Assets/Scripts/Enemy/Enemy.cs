@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     public float moveDistance;
     void Update()
     {
-        if (!UsageCase.isLocked||GameManager.Instance.isDie||GameManager.Instance.isEsc||GameManager.Instance.isWin)
+        if (!UsageCase.isLocked||GameManager.Instance.isEsc)
         {
             return;
         }

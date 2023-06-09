@@ -67,23 +67,19 @@ public class HpController : MonoBehaviour
         {
             case "Player":
                 GameManager.Instance.isDie = true;
-                this.gameObject.SetActive(false);
                 break;
             case "Enemy":
                 this.gameObject.GetComponent<Enemy>().DrogItem();
-                Destroy(this.gameObject);
                 break;
             case "NotEnemy":
                 this.gameObject.GetComponent<Enemy>().DrogItem();
-                Destroy(this.gameObject);
                 break;
             case "Boss":
                 UsageCase.progress = 2;
                 UsageCase.isLocked = false;
                 GameManager.Instance.isWin = true;
-                Destroy(this.gameObject);
                 break;
-
         }
+        Destroy(this.gameObject);
     }
 }

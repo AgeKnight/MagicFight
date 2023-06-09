@@ -107,7 +107,8 @@ public class GameManager : MonoBehaviour
     }
     public void HideTextUre()
     {
-        Pause[1].SetActive(true);
+        if(Pause[1]!=null)
+            Pause[1].SetActive(true);
         UsageCase.progress=-1;
     }
 }

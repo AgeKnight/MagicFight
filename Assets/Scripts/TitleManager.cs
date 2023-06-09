@@ -9,14 +9,6 @@ public class TitleManager : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
     }
-    public void ContinueGame()
-    {
-        
-    }
-    public void ConfigGame()
-    {
-        
-    }
     public void QuitGame()
     {
         Application.Quit();

@@ -6,7 +6,7 @@ public class MapDie : MonoBehaviour
 {
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player" && !GameManager.Instance.isInBoss)
+        if (other.gameObject.GetComponent<Player>() && !GameManager.Instance.isInBoss)
         {
             other.gameObject.GetComponent<HpController>().Die();
         }

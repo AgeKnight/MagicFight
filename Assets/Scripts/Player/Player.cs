@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        if (!UsageCase.isLocked||GameManager.Instance.isDie||GameManager.Instance.isEsc||GameManager.Instance.isWin)
+        if (!UsageCase.isLocked||GameManager.Instance.isEsc)
         {
             return;
         }
@@ -148,7 +148,6 @@ public class Player : MonoBehaviour
         {
             bullet = Instantiate(weapon.Bullet, weapon.bulletPosition.position, Quaternion.identity).GetComponent<Bullet>();
             bullet.Horizontal = bulletHorizontal;
-            Debug.Log(bullet.Horizontal );
             mp -= bullet.useMP;
             if (mp < 0)
             {

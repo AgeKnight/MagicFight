@@ -57,7 +57,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!UsageCase.isLocked||GameManager.Instance.isDie||GameManager.Instance.isEsc||GameManager.Instance.isWin)
+        if (!UsageCase.isLocked||GameManager.Instance.isEsc)
         {
             return;
         }
