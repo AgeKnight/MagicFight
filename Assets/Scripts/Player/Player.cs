@@ -53,7 +53,6 @@ public class Player : MonoBehaviour
     void Awake()
     {
         instance = this;
-        bullet = GetComponent<Bullet>();
         rigidBody = GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
@@ -74,8 +73,8 @@ public class Player : MonoBehaviour
             if (dodgeTime >= allDodge)
             {
                 dodgeTime = 0;
+                isInvincible=false;
                 isDodge = false;
-                isInvincible = false;
             }
         }
         animator.SetBool("isInvincible", isInvincible);
@@ -130,7 +129,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void Jump()
     {
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump < 1)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump < 2)
         {
             canJump += 1;
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, JumpSpeed);
@@ -179,11 +178,12 @@ public class Player : MonoBehaviour
             }
             PressTime = 0;
             bullet.canShoot = true;
+            bullet = null;
         }
     }
     void EnterBattle()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K)&&bullet == null)
         {
             Instantiate(weapon.Knife, weapon.KnifePosition.position, Quaternion.identity);
             if (weapon.enterBattle.BattleEmpty != null)
@@ -224,5 +224,9 @@ public class Player : MonoBehaviour
         {
             mp += item.itemEffect;
         }
+    }
+    void AnimePlay(string animeName)
+    {
+        animator.Play(animeName,0);
     }
 }

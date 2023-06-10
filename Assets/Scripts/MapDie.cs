@@ -10,7 +10,7 @@ public class MapDie : MonoBehaviour
         {
             other.gameObject.GetComponent<HpController>().Die();
         }
-        if (other.gameObject.tag == "Enemy"||other.gameObject.tag == "NotEnemy")
+        if (other.gameObject.GetComponent<Enemy>()&&!other.gameObject.GetComponent<Enemy>().isInBubble)
         {
             other.gameObject.GetComponent<HpController>().Die();
         }

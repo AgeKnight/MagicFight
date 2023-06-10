@@ -118,7 +118,7 @@ public class Bullet : MonoBehaviour
             bubbleClose.isEnemy = true;
             bubbleClose.gameObject.GetComponent<SpriteRenderer>().sprite = other.gameObject.GetComponent<SpriteRenderer>().sprite;
             bubbleClose.Item = other.gameObject;
-            bubbleClose.Item.transform.position = this.transform.position;
+            bubbleClose.Item.GetComponent<Enemy>().isInBubble = true;
             bubbleClose.Item.GetComponent<Rigidbody2D>().gravityScale = 0;
             other.gameObject.SetActive(false);
         }
@@ -162,12 +162,14 @@ public class Bullet : MonoBehaviour
         }
         if (bubbleClose.Item != null && (destoyTime >= allTime.allDestroyTime || !bubbleClose.isEnemy))
         {
+            bubbleClose.Item.transform.position = this.transform.position;
             bubbleClose.Item.GetComponent<Rigidbody2D>().gravityScale = 1;
             if(bubbleClose.isEnemy)
             {
                 bubbleClose.Item.GetComponent<Enemy>().AnabiosisTime  =  bubbleClose.Item.GetComponent<Enemy>().damage.AllAnabiosisTime;
             }
             bubbleClose.Item.SetActive(true);
+            bubbleClose.Item.GetComponent<Enemy>().isInBubble = false;
         }
         Destroy(this.gameObject);
         GameManager.Instance.bullets.Remove(this);

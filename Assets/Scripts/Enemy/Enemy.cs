@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public float AnabiosisTime = 0;
     [HideInInspector]
+    public bool isInBubble = false;
+    [HideInInspector]
     public bool canMove = true;
     [HideInInspector]
     public bool isDied = false;
@@ -98,7 +100,7 @@ public class Enemy : MonoBehaviour
     }
     void OnCollisionStay2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player"&&canMove)
         {
             other.gameObject.GetComponent<HpController>().OnDamage(damage.damage);
         }
