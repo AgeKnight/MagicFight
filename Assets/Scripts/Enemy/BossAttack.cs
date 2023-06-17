@@ -5,7 +5,8 @@ using UnityEngine;
 public class BossAttack : MonoBehaviour
 {
     float attackTime = 0;
-    public float allAttackTime = 0.5f;
+    public float allAttackTime = 1f;
+    public GameObject Laser;
     [HideInInspector]
     public int Direction = 1;
     public enum AttackType
@@ -59,6 +60,6 @@ public class BossAttack : MonoBehaviour
     }
     void Die()
     {
-        Destroy(gameObject);
+        Destroy(gameObject.transform.parent.gameObject);      
     }
 }

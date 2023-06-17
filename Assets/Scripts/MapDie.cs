@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MapDie : MonoBehaviour
 {
+    Animator aniAim;
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.GetComponent<Player>() && !GameManager.Instance.isInBoss)

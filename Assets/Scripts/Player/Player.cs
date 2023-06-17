@@ -145,6 +145,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.J) && mp > 0)
         {
+            animator.SetInteger("Attack",1);
             bullet = Instantiate(weapon.Bullet, weapon.bulletPosition.position, Quaternion.identity).GetComponent<Bullet>();
             bullet.Horizontal = bulletHorizontal;
             mp -= bullet.useMP;
@@ -179,12 +180,14 @@ public class Player : MonoBehaviour
             PressTime = 0;
             bullet.canShoot = true;
             bullet = null;
+            animator.SetInteger("Attack",0);
         }
     }
     void EnterBattle()
     {
         if (Input.GetKeyDown(KeyCode.K)&&bullet == null)
         {
+            animator.SetInteger("Attack",2);
             Instantiate(weapon.Knife, weapon.KnifePosition.position, Quaternion.identity);
             if (weapon.enterBattle.BattleEmpty != null)
             {
@@ -208,7 +211,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void IsInvincible()
     {
-        if (Input.GetKeyDown(KeyCode.S) && !isInvincible)
+        if (Input.GetKeyDown(KeyCode.S) && !isInvincible && !isDodge)
         {
             isInvincible = true;
         }
@@ -225,8 +228,8 @@ public class Player : MonoBehaviour
             mp += item.itemEffect;
         }
     }
-    void AnimePlay(string animeName)
+    public void AnimePlay(string animeName,int animeNum = 0)
     {
-        animator.Play(animeName,0);
+        animator.SetInteger(animeName,0);
     }
 }

@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Enemy\BossAttack.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\MixingCameraBlend.cs" />
      <Compile Include="Assets\Scripts\Enemy\BossGate.cs" />
+     <Compile Include="Assets\Scripts\Player\HpController.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\CameraMagnets\CameraMagnetProperty.cs" />
      <Compile Include="Assets\Flower\Scripts\FlowerSystem.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\SpawnInCircle.cs" />
@@ -85,7 +86,8 @@
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ExampleHelpWindow.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ActivateCameraWithDistance.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\TagChanger.cs" />
-     <Compile Include="Assets\Scripts\Player\HpController.cs" />
+     <Compile Include="Assets\Scripts\Enemy\LaserUse.cs" />
+     <Compile Include="Assets\Scripts\Enemy\BossFire.cs" />
      <None Include="Assets\Flower\Resources\Scripts\FightBoss.txt" />
      <None Include="Assets\Flower\Resources\Scripts\start.txt" />
      <None Include="Assets\Flower\Resources\demo_start.txt" />

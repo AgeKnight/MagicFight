@@ -8,8 +8,8 @@ public class Boss : MonoBehaviour
     bool canAttack = true;
     float attackTime = 0;
     public GameObject[] allAttack;
-    public float allAttackTime;
-    protected virtual void Update()
+    public float allAttackTime = 1f;
+    void Update()
     {
         if (!UsageCase.isLocked||GameManager.Instance.isEsc)
         {
@@ -31,8 +31,10 @@ public class Boss : MonoBehaviour
     }
     void Attack()
     {
+        canAttack = false;
         if (this.gameObject.GetComponent<HpController>().hpBar.value * 100 >= 50)
         {
+            //CreateLight();
             CreateFire();
         }
         else
@@ -52,12 +54,16 @@ public class Boss : MonoBehaviour
         }
         else
         {
-            BossAttack temp = Instantiate(allAttack[0], FirePos, Quaternion.identity).gameObject.GetComponent<BossAttack>();
+            GameObject temp = Instantiate(allAttack[0], FirePos, Quaternion.identity);
             if (FirePos.x - Player.Instance.transform.position.x > 0)
             {
-                temp.Direction = -1;
+                temp.transform.GetChild(0).GetComponent<BossAttack>().Direction = -1;
+                temp.transform.GetChild(1).transform.rotation = Quaternion.Euler(0,0,90);
             }
-            canAttack = false;
+            else
+            {
+                temp.transform.GetChild(1).transform.rotation = Quaternion.Euler(0,0,-90);
+            }
         }
     }
     void CreateLight()
@@ -69,28 +75,27 @@ public class Boss : MonoBehaviour
         {
             z = 0;
             x = Random.Range(BossHouse.Instance.AttackRange[0].transform.position.x, BossHouse.Instance.AttackRange[1].transform.position.x);
-            y = BossHouse.Instance.AttackRange[1].transform.position.y + 3;
+            y = BossHouse.Instance.AttackRange[1].transform.position.y;
         }
         if (z >= 90 && z < 180)
         {
             z = 90;
-            x = BossHouse.Instance.AttackRange[1].transform.position.x - 3;
+            x = BossHouse.Instance.AttackRange[1].transform.position.x;
             y = Random.Range(BossHouse.Instance.AttackRange[0].transform.position.y, BossHouse.Instance.AttackRange[1].transform.position.y);
         }
         if (z >= 180 && z < 270)
         {
             z = 180;
             x = Random.Range(BossHouse.Instance.AttackRange[0].transform.position.x, BossHouse.Instance.AttackRange[1].transform.position.x);
-            y = BossHouse.Instance.AttackRange[0].transform.position.y - 3;
+            y = BossHouse.Instance.AttackRange[0].transform.position.y;
         }
         if (z >= 270 && z < 360)
         {
             z = 270;
-            x = BossHouse.Instance.AttackRange[0].transform.position.x + 3;
+            x = BossHouse.Instance.AttackRange[0].transform.position.x;
             y = Random.Range(BossHouse.Instance.AttackRange[0].transform.position.y, BossHouse.Instance.AttackRange[1].transform.position.y);
         }
         Vector3 LightPos = new Vector3(x, y, 0);
         Instantiate(allAttack[1], LightPos, Quaternion.Euler(0, 0, z));
-        canAttack = false;
     }
 }
