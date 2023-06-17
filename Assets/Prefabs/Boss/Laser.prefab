@@ -47,8 +47,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allAttackTime: 0.5
-  Laser: {fileID: 0}
-  Direction: 1
   attack:
     attackType: 1
     canAttack: 0

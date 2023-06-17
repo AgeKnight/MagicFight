@@ -9,7 +9,7 @@ public class BossFire : MonoBehaviour
     void Update()
     {
         FireTime+=Time.deltaTime;
-        if(FireTime>=0.3f)
+        if(FireTime>=0.5f)
         {
             Fire.SetActive(true);
             gameObject.SetActive(false);

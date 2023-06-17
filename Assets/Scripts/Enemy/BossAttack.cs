@@ -6,9 +6,6 @@ public class BossAttack : MonoBehaviour
 {
     float attackTime = 0;
     public float allAttackTime = 1f;
-    public GameObject Laser;
-    [HideInInspector]
-    public int Direction = 1;
     public enum AttackType
     {
         Fire,
@@ -32,7 +29,7 @@ public class BossAttack : MonoBehaviour
         switch (attack.attackType)
         {
             case AttackType.Fire:
-                transform.Translate(Direction * speed * Time.deltaTime, 0, 0);            
+                transform.Translate(0,speed * Time.deltaTime, 0);            
                 break;
             case AttackType.Light:
                 attackTime+=Time.deltaTime;

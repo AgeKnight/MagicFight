@@ -48,21 +48,16 @@ public class Boss : MonoBehaviour
         float x = Random.Range(BossHouse.Instance.AttackRange[0].transform.position.x, BossHouse.Instance.AttackRange[1].transform.position.x);
         float y = Player.Instance.transform.position.y;
         Vector3 FirePos = new Vector3(x, y, 0);
-        if (Vector3.Distance(FirePos, Player.Instance.transform.position) < 7)
+        if (Vector3.Distance(FirePos, Player.Instance.transform.position) < 15)
         {
             CreateFire();
         }
         else
         {
-            GameObject temp = Instantiate(allAttack[0], FirePos, Quaternion.identity);
-            if (FirePos.x - Player.Instance.transform.position.x > 0)
+            GameObject temp = Instantiate(allAttack[0], FirePos, Quaternion.Euler(0,0,90));
+            if (FirePos.x - Player.Instance.transform.position.x < 0)
             {
-                temp.transform.GetChild(0).GetComponent<BossAttack>().Direction = -1;
-                temp.transform.GetChild(1).transform.rotation = Quaternion.Euler(0,0,90);
-            }
-            else
-            {
-                temp.transform.GetChild(1).transform.rotation = Quaternion.Euler(0,0,-90);
+                temp.transform.rotation = Quaternion.Euler(0,0,-90);
             }
         }
     }
