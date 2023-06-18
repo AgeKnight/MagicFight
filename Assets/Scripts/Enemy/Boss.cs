@@ -48,7 +48,7 @@ public class Boss : MonoBehaviour
         float x = Random.Range(BossHouse.Instance.AttackRange[0].transform.position.x, BossHouse.Instance.AttackRange[1].transform.position.x);
         float y = Player.Instance.transform.position.y;
         Vector3 FirePos = new Vector3(x, y, 0);
-        if (Vector3.Distance(FirePos, Player.Instance.transform.position) < 15)
+        if (Vector3.Distance(FirePos, Player.Instance.transform.position) < 7)
         {
             CreateFire();
         }

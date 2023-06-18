@@ -42,6 +42,7 @@
      <Compile Include="Assets\Scripts\Bag\Inventor.cs" />
      <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
      <Compile Include="Assets\Scripts\Bubble\BubbleClose.cs" />
+     <Compile Include="Assets\Scripts\Enemy\BossFire.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\PlayerMove.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Scripting\ScriptingExample.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Models\UnityCharacter\Scripts\CharacterMovement2D.cs" />
@@ -51,6 +52,7 @@
      <Compile Include="Assets\Scripts\Enemy\BossGate.cs" />
      <Compile Include="Assets\Scripts\Player\HpController.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\CameraMagnets\CameraMagnetProperty.cs" />
+     <Compile Include="Assets\Scripts\Enemy\LaserUse.cs" />
      <Compile Include="Assets\Flower\Scripts\FlowerSystem.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\SpawnInCircle.cs" />
      <Compile Include="Assets\Scripts\Bubble\Bullet.cs" />
@@ -75,7 +77,6 @@
      <Compile Include="Assets\Scripts\Enemy\BossHouse.cs" />
      <Compile Include="Assets\Scripts\Bag\Slot.cs" />
      <Compile Include="Assets\Scripts\Enemy\BossHand.cs" />
-     <Compile Include="Assets\Scripts\Player\Knife.cs" />
      <Compile Include="Assets\Scripts\Player\EnterBattle.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\PlayerMovement.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\3rdPersonWithAimMode\ActivateOnKeypress.cs" />
@@ -86,8 +87,6 @@
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ExampleHelpWindow.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Shared\Scripts\ActivateCameraWithDistance.cs" />
      <Compile Include="Assets\Samples\Cinemachine\2.6.17\Cinemachine Example Scenes\Scenes\Anywhere Door\TagChanger.cs" />
-     <Compile Include="Assets\Scripts\Enemy\LaserUse.cs" />
-     <Compile Include="Assets\Scripts\Enemy\BossFire.cs" />
      <None Include="Assets\Flower\Resources\Scripts\FightBoss.txt" />
      <None Include="Assets\Flower\Resources\Scripts\start.txt" />
      <None Include="Assets\Flower\Resources\demo_start.txt" />

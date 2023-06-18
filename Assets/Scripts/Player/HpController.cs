@@ -21,15 +21,19 @@ public class HpController : MonoBehaviour
     }
     public void OnDamage(float damage, Vector3 hisTransform = new Vector3(), float hurtDistance = 0, bool isUseKnife = false)
     {
-        if (this.gameObject.tag=="Player"&& !this.gameObject.GetComponent<Player>().isDodge&& !this.gameObject.GetComponent<Player>().isInvincible)
+        if (this.gameObject.tag == "Player" && !this.gameObject.GetComponent<Player>().isDodge && !this.gameObject.GetComponent<Player>().isInvincible)
         {
             hp -= damage;
             this.gameObject.GetComponent<Player>().isDodge = true;
         }
-        if (this.gameObject.tag=="Enemy"|| this.gameObject.tag=="Boss")
+        if (this.gameObject.tag == "Enemy" || this.gameObject.tag == "Boss")
         {
             hp -= damage;
-        }       
+            if (this.gameObject.GetComponent<Enemy>())
+            {
+                this.gameObject.GetComponent<Enemy>().sprite.sprite = this.gameObject.GetComponent<Enemy>().damage.sprite[2];
+            }
+        }
         Hurt(hurtDistance, hisTransform);
         if (hp <= 0)
         {

@@ -8,7 +8,10 @@ public class ItemOnWorld : MonoBehaviour
     bool isCollider = false;
     void Update() 
     {
-        transform.position = Vector3.MoveTowards(transform.position,Player.Instance.transform.position,10*Time.deltaTime);                     
+        if(Player.Instance!=null)
+        {
+            transform.position = Vector3.MoveTowards(transform.position,Player.Instance.transform.position,10*Time.deltaTime);                     
+        }
     }
     void OnTriggerEnter2D(Collider2D other)
     {

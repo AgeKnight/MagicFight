@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,15 +9,17 @@ public class Player : MonoBehaviour
     /// </summary>
     #region "Internal"
     int scaleX = 1;
+    float point1 = 0;
     float mp;
     float PressTime;
     float dodgeTime;
     Bullet bullet;
     SpriteRenderer sprite;
-    Animator animator;
     Vector3 scale;
     #endregion
     #region "Hide"
+    [HideInInspector]
+    public Animator animator;
     [HideInInspector]
     public bool isDodge = false;
     [HideInInspector]
@@ -34,8 +35,6 @@ public class Player : MonoBehaviour
     public struct Weapon
     {
         public GameObject Bullet;
-        public GameObject Knife;
-        public Transform KnifePosition;
         public Transform bulletPosition;
         public EnterBattle enterBattle;
     }
@@ -44,28 +43,31 @@ public class Player : MonoBehaviour
     public static Player Instance { get => instance; set => instance = value; }
     public Slider slider;
     public Weapon weapon;
+    public Sprite[] JumpImages;
     public float JumpSpeed;
     public float speed;
     public float totalMP;
     public float allDodge;
     public float hurtDistance;
+    float time = 0;
     #endregion
     void Awake()
     {
         instance = this;
         rigidBody = GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
-        sprite = GetComponent<SpriteRenderer>();
+        sprite = gameObject.GetComponent<SpriteRenderer>();
         scale = transform.localScale;
         bulletHorizontal = 1;
         mp = totalMP;
     }
     void Update()
     {
-        if (!UsageCase.isLocked||GameManager.Instance.isEsc)
+        if (!UsageCase.isLocked || GameManager.Instance.isEsc)
         {
             return;
         }
+        time += Time.deltaTime;
         slider.value = mp / totalMP;
         if (isDodge || isInvincible)
         {
@@ -73,7 +75,7 @@ public class Player : MonoBehaviour
             if (dodgeTime >= allDodge)
             {
                 dodgeTime = 0;
-                isInvincible=false;
+                isInvincible = false;
                 isDodge = false;
             }
         }
@@ -81,11 +83,23 @@ public class Player : MonoBehaviour
         animator.SetBool("isDodge", isDodge);
         Shoot();
         EnterBattle();
-        Jump();
         IsInvincible();
-        
+        Jump();
+        point1 = transform.position.y;
+        Invoke("JumpFall", 0.02f);
+
     }
-    void FixedUpdate() 
+    void JumpFall()
+    {
+        if (!animator.enabled)
+        {
+            if (point1 - transform.position.y > 0)
+            {
+                sprite.sprite = JumpImages[2];
+            }
+        }
+    }
+    void FixedUpdate()
     {
         if (!UsageCase.isLocked)
         {
@@ -110,9 +124,9 @@ public class Player : MonoBehaviour
         {
             horizontal = -1;
             bulletHorizontal = -1;
-            scaleX = -1; 
+            scaleX = -1;
         }
-        if(horizontal==0)
+        if (horizontal == 0)
         {
             animator.SetBool("isWalk", false);
         }
@@ -131,6 +145,8 @@ public class Player : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && canJump < 2)
         {
+            animator.enabled = false;
+            sprite.sprite = JumpImages[0];
             canJump += 1;
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, JumpSpeed);
         }
@@ -145,7 +161,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.J) && mp > 0)
         {
-            animator.SetInteger("Attack",1);
+            animator.SetInteger("Attack", 1);
             bullet = Instantiate(weapon.Bullet, weapon.bulletPosition.position, Quaternion.identity).GetComponent<Bullet>();
             bullet.Horizontal = bulletHorizontal;
             mp -= bullet.useMP;
@@ -180,28 +196,27 @@ public class Player : MonoBehaviour
             PressTime = 0;
             bullet.canShoot = true;
             bullet = null;
-            animator.SetInteger("Attack",0);
+            animator.SetInteger("Attack", 0);
         }
     }
     void EnterBattle()
     {
-        if (Input.GetKeyDown(KeyCode.K)&&bullet == null)
+        if (Input.GetKeyDown(KeyCode.K) && bullet == null)
         {
-            animator.SetInteger("Attack",2);
-            Instantiate(weapon.Knife, weapon.KnifePosition.position, Quaternion.identity);
+            animator.SetInteger("Attack", 2);
             if (weapon.enterBattle.BattleEmpty != null)
             {
-                if(weapon.enterBattle.BattleEmpty.tag=="Bullet"||weapon.enterBattle.BattleEmpty.tag=="MeetBullet")
+                if (weapon.enterBattle.BattleEmpty.tag == "Bullet" || weapon.enterBattle.BattleEmpty.tag == "MeetBullet")
                 {
                     weapon.enterBattle.BattleEmpty.GetComponent<Bullet>().Die();
                 }
-                else if(weapon.enterBattle.BattleEmpty.tag=="Boss")
+                else if (weapon.enterBattle.BattleEmpty.tag == "Boss")
                 {
                     weapon.enterBattle.BattleEmpty.GetComponent<HpController>().OnDamage(weapon.enterBattle.damage);
                 }
                 else
                 {
-                    weapon.enterBattle.BattleEmpty.GetComponent<HpController>().OnDamage(weapon.enterBattle.damage,transform.position,hurtDistance,true);
+                    weapon.enterBattle.BattleEmpty.GetComponent<HpController>().OnDamage(weapon.enterBattle.damage, transform.position, hurtDistance, true);
                 }
             }
         }
@@ -228,8 +243,8 @@ public class Player : MonoBehaviour
             mp += item.itemEffect;
         }
     }
-    public void AnimePlay(string animeName,int animeNum = 0)
+    public void AnimePlay()
     {
-        animator.SetInteger(animeName,0);
+        animator.SetInteger("Attack", 0);
     }
 }

@@ -387,8 +387,8 @@ GameObject:
   - component: {fileID: 1992416932478775059}
   - component: {fileID: 1992416932478775057}
   - component: {fileID: 3442730918333570127}
-  - component: {fileID: 2369051958119050158}
   - component: {fileID: -2767975078055095457}
+  - component: {fileID: 2369051958119050158}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Enemy
@@ -495,7 +495,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b93a9d523d4a1f747a70720f8b32c4ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
   AnabiosisTime: 0
+  isInBubble: 0
   canMove: 1
   isDied: 0
   enemyType: 0
@@ -505,8 +507,26 @@ MonoBehaviour:
     items:
     - {fileID: 5751207951723175096, guid: 7d47d85073581d34b9ec3ebaa039b62b, type: 3}
     - {fileID: 1951066832835675159, guid: d9433f891c25f464eb906715ea3c0009, type: 3}
+    sprite:
+    - {fileID: 21300000, guid: f42a74a06120a9a43b554cce239eb9af, type: 3}
+    - {fileID: 21300000, guid: f42a74a06120a9a43b554cce239eb9af, type: 3}
+    - {fileID: 21300000, guid: f42a74a06120a9a43b554cce239eb9af, type: 3}
   speed: 5
-  moveDistance: 3
+--- !u!114 &-2767975078055095457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992416932478775070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7f26feada2e99499c23c7b0f00b8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  totalHP: 30
+  hpBar: {fileID: 234596905}
 --- !u!61 &2369051958119050158
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -533,18 +553,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.2356484, y: 3.1785226}
   m_EdgeRadius: 0
---- !u!114 &-2767975078055095457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1992416932478775070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e7f26feada2e99499c23c7b0f00b8fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 0
-  totalHP: 30
-  hpBar: {fileID: 234596905}

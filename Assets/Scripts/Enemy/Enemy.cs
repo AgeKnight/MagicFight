@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
 {
     bool canReturn = true;
     [HideInInspector]
+    public SpriteRenderer sprite;
+    [HideInInspector]
     public float AnabiosisTime = 0;
     [HideInInspector]
     public bool isInBubble = false;
@@ -25,16 +27,25 @@ public class Enemy : MonoBehaviour
         public int damage;
         public float AllAnabiosisTime;
         public GameObject[] items;
+        //0 一般 1 攻擊 2 受擊
+        public Sprite[] sprite;
     }
     public EnemyType enemyType;
     public onDamage damage;
     public float speed;
-    public float moveDistance;
+    void Awake() 
+    {
+        sprite = GetComponent<SpriteRenderer>();  
+    }
     void Update()
     {
         if (!UsageCase.isLocked||GameManager.Instance.isEsc)
         {
             return;
+        }
+        if(sprite.sprite != damage.sprite[0])
+        {
+            Invoke("SpriteChange",0.3f);
         }
         if (canMove)
         {
@@ -46,6 +57,10 @@ public class Enemy : MonoBehaviour
         {
             Anabiosis();
         }
+    }
+    void SpriteChange()
+    {
+        sprite.sprite = damage.sprite[0];
     }
     void Anabiosis()
     {
@@ -102,6 +117,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "Player"&&canMove)
         {
+            sprite.sprite = damage.sprite[1];
             other.gameObject.GetComponent<HpController>().OnDamage(damage.damage);
         }
     }
