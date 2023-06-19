@@ -274,7 +274,7 @@ MonoBehaviour:
     allDestroyTime: 15
     allFlyTime: 3
   damage: 10
-  useMP: 5
+  useMP: 100
   hurtDistance: 1
   bulletCanceled: {fileID: 951366846}
   bubbleClose: {fileID: 622269659130632334}

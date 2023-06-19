@@ -49,7 +49,6 @@ public class Player : MonoBehaviour
     public float totalMP;
     public float allDodge;
     public float hurtDistance;
-    float time = 0;
     #endregion
     void Awake()
     {
@@ -67,7 +66,7 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        time += Time.deltaTime;
+        StartCoroutine(MpRecover());
         slider.value = mp / totalMP;
         if (isDodge || isInvincible)
         {
@@ -88,6 +87,12 @@ public class Player : MonoBehaviour
         point1 = transform.position.y;
         Invoke("JumpFall", 0.02f);
 
+    }
+    IEnumerator MpRecover()
+    {
+        if(mp<totalMP)
+            mp+=0.1f;
+        yield return new WaitForSeconds(5000);      
     }
     void JumpFall()
     {

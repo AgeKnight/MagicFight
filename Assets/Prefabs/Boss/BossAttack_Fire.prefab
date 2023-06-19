@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1.3359219, y: 1.3359219, z: 1.3359219}
   m_Children: []
   m_Father: {fileID: 7862315509849402817}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &218703856858928836
 SpriteRenderer:
@@ -149,7 +149,7 @@ Transform:
   m_LocalScale: {x: 0.776, y: 0.776, z: 0.776}
   m_Children: []
   m_Father: {fileID: 7862315509849402817}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8701953967521705802
 MonoBehaviour:
@@ -164,8 +164,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allAttackTime: 5
-  Laser: {fileID: 0}
-  Direction: 1
   attack:
     attackType: 0
     canAttack: 1
@@ -315,8 +313,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.4551, y: 0.4551, z: 0.4551}
   m_Children:
-  - {fileID: 8404741998123683590}
   - {fileID: 3308348134378677701}
+  - {fileID: 8404741998123683590}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
